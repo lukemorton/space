@@ -5,14 +5,20 @@ module Space
     class Travel
       Response = Struct.new(:successful?, :errors)
 
-      def travel(person, to:)
+      def initialize(person_gateway:)
+        @person_gateway = person_gateway
+      end
+
+      def travel(person_id, to:)
+        person = person_gateway.find(person_id)
+
         travel_validator = Validator.new(
           existing_station: person.location,
           destination_station: to
         )
 
         if travel_validator.valid?
-          person.location = to
+          person_gateway.update(person)
           Response.new(true, {})
         else
           Response.new(false, travel_validator.errors)
@@ -20,6 +26,8 @@ module Space
       end
 
       private
+
+      attr_reader :person_gateway
 
       class Validator
         include ActiveModel::Model

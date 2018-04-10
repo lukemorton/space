@@ -5,8 +5,12 @@ module Space
         @person_repository = person_repository
       end
 
+      def find(person_id)
+        person_repository.find(person_id)
+      end
+
       def update(person)
-        person_repository.find(person.id).update!(person.to_h)
+        person.save!
       end
 
       private
