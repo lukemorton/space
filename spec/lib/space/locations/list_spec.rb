@@ -7,6 +7,8 @@ RSpec.describe Space::Locations::List do
 
     subject { described_class.new(location_gateway: location_gateway).list }
 
-    it { is_expected.to_not be_empty }
+    it 'should have locations' do
+      expect(subject.locations).to_not be_empty
+    end
   end
 end

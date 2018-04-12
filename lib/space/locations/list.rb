@@ -1,12 +1,14 @@
 module Space
   module Locations
     class List
+      Response = Struct.new(:locations)
+
       def initialize(location_gateway:)
         @location_gateway = location_gateway
       end
 
       def list
-        location_gateway.all
+        Response.new(location_gateway.all)
       end
 
       private
