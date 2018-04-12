@@ -15,6 +15,6 @@ RSpec.feature 'Space flight travel' do
   end
 
   def then_my_location_should_be_updated
-    expect(person.reload.location).to eq('New location')
+    expect(page).to have_content('New location')
   end
 end

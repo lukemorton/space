@@ -1,7 +1,8 @@
 module Actions
   class FlightController < ApplicationController
     def travel
-      use_case.travel(travel_params[:person_id], to: travel_params[:location])
+      response = use_case.travel(travel_params[:person_id], to: travel_params[:location])
+      redirect_to person_url(travel_params[:person_id])
     end
 
     private
