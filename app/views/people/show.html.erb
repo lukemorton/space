@@ -1,0 +1,7 @@
+<%= @person.name %>
+
+<%= form_tag travel_url do %>
+  <%= hidden_field_tag "travel[person_id]", @person.id %>
+  <%= text_field_tag "travel[location]" %>
+  <%= submit_tag %>
+<% end %>

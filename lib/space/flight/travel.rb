@@ -18,6 +18,7 @@ module Space
         )
 
         if travel_validator.valid?
+          person.location = to
           person_gateway.update(person)
           Response.new(true, {})
         else
