@@ -2,6 +2,6 @@
 
 <%= form_tag travel_url do %>
   <%= hidden_field_tag "travel[person_id]", @controls.person.id %>
-  <%= collection_radio_buttons(:travel, :location, @controls.locations, :name, :name, prompt: true) %>
+  <%= collection_radio_buttons(:travel, :location, @controls.locations, :name, :name, prompt: true, checked: @controls.person.location) %>
   <%= submit_tag %>
 <% end %>
