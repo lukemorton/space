@@ -4,13 +4,16 @@ RSpec.describe Space::Flight::Travel do
   context 'when travelling from station to station' do
     let(:current_station) { instance_double('Location') }
     let(:destination_station) { instance_double('Location') }
-
-    let(:location_gateway) { instance_double('Space::Locations::LocationGateway', find: destination_station) }
-
     let(:person) { double(location: current_station, :location= => nil) }
-    let(:person_gateway) { instance_double('Space::Flight::PersonGateway', find: person, update: true) }
 
-    subject { described_class.new(location_gateway: location_gateway, person_gateway: person_gateway).travel(1, to: destination_station) }
+    let(:use_case) do
+      described_class.new(
+        location_gateway: instance_double('Space::Locations::LocationGateway', find: destination_station),
+        person_gateway: instance_double('Space::Flight::PersonGateway', find: person, update: true)
+      )
+    end
+
+    subject { use_case.travel(1, to: destination_station) }
 
     it 'allows valid travel' do
       expect(subject).to be_successful
