@@ -10,7 +10,8 @@ module Actions
     def use_case
       Space::Flight::Travel.new(
         location_gateway: location_gateway,
-        person_gateway: person_gateway
+        person_gateway: person_gateway,
+        ship_gateway: ship_gateway
       )
     end
 

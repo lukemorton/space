@@ -5,9 +5,10 @@ module Space
     class Travel
       Response = Struct.new(:successful?, :errors)
 
-      def initialize(location_gateway:, person_gateway:)
+      def initialize(location_gateway:, person_gateway:, ship_gateway:)
         @location_gateway = location_gateway
         @person_gateway = person_gateway
+        @ship_gateway = ship_gateway
       end
 
       def travel(person_id, to:)
@@ -30,7 +31,7 @@ module Space
 
       private
 
-      attr_reader :location_gateway, :person_gateway
+      attr_reader :location_gateway, :person_gateway, :ship_gateway
 
       class Validator
         include ActiveModel::Model
