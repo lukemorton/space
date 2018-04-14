@@ -1,7 +1,7 @@
-<%= @controls.person.name %> is at <%= @controls.person.location %>
+<%= @controls.person.name %> is at <%= @controls.person.location.name %>
 
 <%= form_tag travel_url do %>
   <%= hidden_field_tag "travel[person_id]", @controls.person.id %>
-  <%= collection_radio_buttons(:travel, :location, @controls.locations, :name, :name, prompt: true, checked: @controls.person.location) %>
+  <%= collection_radio_buttons(:travel, :location_id, @controls.locations, :id, :name, prompt: true, checked: @controls.person.location_id) %>
   <%= submit_tag 'Travel' %>
 <% end %>

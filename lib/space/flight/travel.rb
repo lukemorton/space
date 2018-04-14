@@ -5,20 +5,22 @@ module Space
     class Travel
       Response = Struct.new(:successful?, :errors)
 
-      def initialize(person_gateway:)
+      def initialize(location_gateway:, person_gateway:)
+        @location_gateway = location_gateway
         @person_gateway = person_gateway
       end
 
       def travel(person_id, to:)
         person = person_gateway.find(person_id)
+        location = location_gateway.find(to)
 
         travel_validator = Validator.new(
-          existing_station: person.location,
-          destination_station: to
+          existing_location: person.location,
+          destination_location: to
         )
 
         if travel_validator.valid?
-          person.location = to
+          person.location = location
           person_gateway.update(person)
           Response.new(true, {})
         else
@@ -28,20 +30,20 @@ module Space
 
       private
 
-      attr_reader :person_gateway
+      attr_reader :location_gateway, :person_gateway
 
       class Validator
         include ActiveModel::Model
 
-        attr_accessor :existing_station, :destination_station
+        attr_accessor :existing_location, :destination_location
 
-        validate :not_travelling_to_same_station
+        validate :not_travelling_to_same_location
 
         private
 
-        def not_travelling_to_same_station
-          if existing_station == destination_station
-            errors.add(:destination_station, 'Cannot travel to current location')
+        def not_travelling_to_same_location
+          if existing_location == destination_location
+            errors.add(:destination_location, 'Cannot travel to current location')
           end
         end
       end

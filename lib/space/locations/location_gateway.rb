@@ -9,6 +9,10 @@ module Space
         location_repository.all
       end
 
+      def find(id)
+        location_repository.find(id)
+      end
+
       private
 
       attr_reader :location_repository

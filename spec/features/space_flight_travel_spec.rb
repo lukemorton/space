@@ -17,7 +17,7 @@ RSpec.feature 'Space flight travel' do
 
   given(:location) { create(:location) }
   given(:new_location) { create(:location, name: 'New location') }
-  given(:person) { create(:person, location: location.name) }
+  given(:person) { create(:person, location: location) }
 
   def when_viewing_controls
     visit person_url(person)
