@@ -6,11 +6,7 @@ module Actions
     end
 
     private
-
-    def person_gateway
-      Space::Flight::PersonGateway.new(person_repository: Person)
-    end
-
+    
     def use_case
       Space::Flight::Travel.new(person_gateway: person_gateway)
     end
