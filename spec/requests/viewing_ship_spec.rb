@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Viewing person' do
+RSpec.describe 'Viewing ship' do
   it 'returned successfully' do
-    get person_url(create(:person))
+    get ship_url(create(:person))
     assert_response :success
   end
 end

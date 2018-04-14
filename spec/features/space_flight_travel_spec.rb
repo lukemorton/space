@@ -20,7 +20,7 @@ RSpec.feature 'Space flight travel' do
   given(:person) { create(:person, location: location) }
 
   def when_viewing_controls
-    visit person_url(person)
+    visit ship_url(person)
   end
 
   def then_my_current_location_should_be_selected
@@ -28,7 +28,7 @@ RSpec.feature 'Space flight travel' do
   end
 
   def when_i_travel_to_a_valid_location
-    visit person_url(person)
+    visit ship_url(person)
     choose new_location.name
     click_button
   end

@@ -1,4 +1,4 @@
-class PeopleController < ApplicationController
+class ShipsController < ApplicationController
   def show
     @controls = use_case.view(params.fetch(:id))
   end

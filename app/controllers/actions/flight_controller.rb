@@ -2,7 +2,7 @@ module Actions
   class FlightController < ApplicationController
     def travel
       use_case.travel(travel_params[:person_id], to: travel_params[:location_id])
-      redirect_to person_url(travel_params[:person_id])
+      redirect_to ship_url(travel_params[:person_id])
     end
 
     private
