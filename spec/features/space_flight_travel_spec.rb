@@ -6,6 +6,10 @@ RSpec.feature 'Space flight travel' do
     then_my_location_should_be_updated
   end
 
+  background do
+    create(:location)
+  end
+
   given(:person) { create(:person) }
 
   def when_i_travel_to_a_valid_location

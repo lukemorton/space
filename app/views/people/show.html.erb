@@ -1,7 +1,7 @@
-<%= @person.name %> is at <%= @person.location %>
+<%= @controls.person.name %> is at <%= @controls.person.location %>
 
 <%= form_tag travel_url do %>
-  <%= hidden_field_tag "travel[person_id]", @person.id %>
+  <%= hidden_field_tag "travel[person_id]", @controls.person.id %>
   <%= text_field_tag "travel[location]" %>
   <%= submit_tag %>
 <% end %>
