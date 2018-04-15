@@ -4,23 +4,27 @@ module Space
   module Flight
     class ViewControls
       Response = Struct.new(:ship, :person, :locations)
-      Ship = Struct.new(:id)
 
-      def initialize(person_gateway:, location_gateway:)
-        @person_gateway = person_gateway
+      def initialize(location_gateway:, ship_gateway:)
         @location_gateway = location_gateway
+        @ship_gateway = ship_gateway
       end
 
       def view(ship_id)
-        Response.new(Ship.new(ship_id), person(ship_id), locations)
+        ship = ship(ship_id)
+        Response.new(ship, person(ship), locations)
       end
 
       private
 
-      attr_reader :person_gateway, :location_gateway
+      attr_reader :location_gateway, :ship_gateway
 
-      def person(person_id)
-        person_gateway.find(person_id)
+      def ship(ship_id)
+        ship_gateway.find(ship_id)
+      end
+
+      def person(ship)
+        ship.crew.first
       end
 
       def locations

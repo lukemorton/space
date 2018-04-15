@@ -2,21 +2,21 @@ require_relative '../../../../lib/space/flight/view_controls'
 
 RSpec.describe Space::Flight::ViewControls do
   context 'when viewing flight controls' do
-    let(:person) { double(name: 'Luke') }
+    let(:person) { instance_double('Person', name: 'Luke') }
+    let(:ship) { instance_double('Ship', id: 1, crew: [person]) }
     let(:locations) { [double] }
-    let(:ship_id) { 1 }
 
     let(:use_case) do
       described_class.new(
-        person_gateway: instance_double('Space::Flight::PersonGateway', find: person),
-        location_gateway: instance_double('Space::Locations::LocationGateway', all: locations)
+        location_gateway: instance_double('Space::Locations::LocationGateway', all: locations),
+        ship_gateway: instance_double('Space::Flight::ShipGateway', find: ship)
       )
     end
 
-    subject { use_case.view(ship_id) }
+    subject { use_case.view(ship.id) }
 
     it 'should have ship' do
-      expect(subject.ship.id).to eq(ship_id)
+      expect(subject.ship.id).to eq(ship.id)
     end
 
     it 'should have person' do
