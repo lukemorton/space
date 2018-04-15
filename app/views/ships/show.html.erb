@@ -1,3 +1,8 @@
+  <nav>
+    <%= link_to 'Ship', ship_path(@controls.ship) %>
+    <%= link_to @controls.person.location.name, location_path(@controls.person.location) %>
+  </nav>
+
 <%= @controls.person.name %> is at <%= @controls.person.location.name %>
 
 <%= form_tag travel_url do %>

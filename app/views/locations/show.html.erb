@@ -1,0 +1,6 @@
+<nav>
+  <%= link_to 'Ship', ship_path(1) %>
+  <%= link_to @location.name, location_path(@location.id) %>
+</nav>
+
+<h1><%= @location.name %></h1>
