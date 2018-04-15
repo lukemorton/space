@@ -5,20 +5,30 @@ RSpec.describe Space::Flight::Travel do
     let(:current_station) { instance_double('Location') }
     let(:destination_station) { instance_double('Location') }
     let(:person) { instance_double('Person', location: current_station, :location= => nil) }
-    let(:ship) { instance_double('Ship', location: current_station, :location= => nil) }
+    let(:ship) { instance_double('Ship', id: 1, crew: [person], location: current_station, :location= => nil) }
 
     let(:use_case) do
       described_class.new(
         location_gateway: instance_double('Space::Locations::LocationGateway', find: destination_station),
-        person_gateway: instance_double('Space::Flight::PersonGateway', find: person, update: true),
-        ship_gateway: instance_double('Space::Flight::ShipGateway', find: person, update: true)
+        person_gateway: instance_double('Space::Flight::PersonGateway', update: true),
+        ship_gateway: instance_double('Space::Flight::ShipGateway', find: ship, update: true)
       )
     end
 
-    subject { use_case.travel(1, to: destination_station) }
+    subject { use_case.travel(ship.id, to: destination_station) }
 
     it 'allows valid travel' do
       expect(subject).to be_successful
+    end
+
+    it 'updates persons location' do
+      subject
+      expect(person).to have_received(:location=).with(destination_station)
+    end
+
+    it 'updates ships location' do
+      subject
+      expect(ship).to have_received(:location=).with(destination_station)
     end
 
     context 'and trying to travel to current station' do

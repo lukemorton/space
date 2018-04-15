@@ -11,18 +11,24 @@ module Space
         @ship_gateway = ship_gateway
       end
 
-      def travel(person_id, to:)
-        person = person_gateway.find(person_id)
+      def travel(ship_id, to:)
+        ship = ship_gateway.find(ship_id)
         location = location_gateway.find(to)
 
         travel_validator = Validator.new(
-          existing_location: person.location,
+          existing_location: ship.location,
           destination_location: to
         )
 
         if travel_validator.valid?
-          person.location = location
-          person_gateway.update(person)
+          ship.location = location
+          ship_gateway.update(ship)
+
+          ship.crew.each do |person|
+            person.location = location
+            person_gateway.update(person)
+          end
+
           Response.new(true, {})
         else
           Response.new(false, travel_validator.errors)

@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Travelling' do
   it 'redirects on success' do
-    person = create(:person)
+    ship = create(:ship)
     location = create(:location)
 
     post(travel_url, params: {
       travel: {
-        person_id: person.id,
+        ship_id: ship.id,
         location_id: location.id
       }
     })
