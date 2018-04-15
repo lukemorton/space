@@ -4,5 +4,6 @@ Location.create!(name: 'Tokyo')
 
 Person.create!(
   name: 'Luke',
-  location: london
+  location: london,
+  ship: Ship.create!(location: london)
 )
