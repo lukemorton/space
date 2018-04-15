@@ -8,7 +8,11 @@ module Space
       end
 
       def list
-        Response.new(location_gateway.all)
+        Response.new(
+          location_gateway.all.map do |location|
+            LocationResponse.new(location.id, location.name)
+          end
+        )
       end
 
       private

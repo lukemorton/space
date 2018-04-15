@@ -4,7 +4,7 @@ RSpec.describe Space::Flight::ViewControls do
   context 'when viewing flight controls' do
     let(:person) { instance_double('Person', name: 'Luke') }
     let(:ship) { instance_double('Ship', id: 1, crew: [person]) }
-    let(:locations) { [double] }
+    let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
     let(:use_case) do
       described_class.new(

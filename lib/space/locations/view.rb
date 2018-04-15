@@ -1,17 +1,15 @@
-require_relative '../locations/list'
+require_relative 'location_response'
 
 module Space
   module Locations
     class View
-      Response = Struct.new(:id, :name)
-
       def initialize(location_gateway:)
         @location_gateway = location_gateway
       end
 
       def view(location_id)
         location = location(location_id)
-        Response.new(location.id, location.name)
+        LocationResponse.new(location.id, location.name)
       end
 
       private
