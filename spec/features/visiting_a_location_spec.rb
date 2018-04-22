@@ -6,6 +6,10 @@ RSpec.feature 'Visiting a location' do
     then_i_should_see_its_name
   end
 
+  background do
+    create(:person)
+  end
+
   given(:location) { create(:location) }
 
   def when_i_visit_a_valid_location

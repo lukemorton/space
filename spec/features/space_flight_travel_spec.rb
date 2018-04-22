@@ -12,14 +12,13 @@ RSpec.feature 'Space flight travel' do
   end
 
   background do
-    person
-    create_locations
+    create(:person, location: location, ship: ship)
+    new_location
   end
 
   given(:location) { create(:location) }
   given(:new_location) { create(:location, name: 'New location') }
   given(:ship) { create(:ship, location: location) }
-  given(:person) { create(:person, location: location, ship: ship) }
 
   def when_viewing_controls
     visit ship_url(ship)
@@ -37,12 +36,5 @@ RSpec.feature 'Space flight travel' do
 
   def then_my_location_should_be_updated
     expect(page).to have_content(new_location.name)
-  end
-
-  private
-
-  def create_locations
-    create(:location)
-    new_location
   end
 end
