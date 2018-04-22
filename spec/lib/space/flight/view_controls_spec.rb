@@ -2,10 +2,14 @@ require_relative '../../../../lib/space/flight/view_controls'
 
 RSpec.describe Space::Flight::ViewControls do
   let(:use_case) do
+    ship_gateway = instance_double('Space::Flight::ShipGateway', find: nil).tap do |double|
+      allow(double).to receive(:find).with(ship.id).and_return(ship)
+    end
+
     described_class.new(
       location_gateway: instance_double('Space::Locations::LocationGateway', all: locations),
       person_gateway: instance_double('Space::Locations::PersonGateway', find: person),
-      ship_gateway: instance_double('Space::Flight::ShipGateway', find: ship)
+      ship_gateway: ship_gateway
     )
   end
 
@@ -32,15 +36,25 @@ RSpec.describe Space::Flight::ViewControls do
   end
 
   context 'when not in crew' do
-    context 'when viewing flight controls' do
-      let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-      let(:ship) { instance_double('Ship', id: 1, crew: []) }
-      let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
+    let(:person) { instance_double('Person', id: 1, name: 'Luke') }
+    let(:ship) { instance_double('Ship', id: 1, crew: []) }
+    let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
-      subject { use_case.view(ship.id, person.id) }
+    subject { use_case.view(ship.id, person.id) }
 
 
-      it { is_expected.to_not be_person_in_crew }
+    it { is_expected.to_not be_person_in_crew }
+  end
+
+  context 'when ship unknown' do
+    let(:person) { instance_double('Person', id: 1, name: 'Luke') }
+    let(:ship) { instance_double('Ship', id: 1, crew: []) }
+    let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
+
+    subject { use_case.view(nil, person.id) }
+
+    it 'should raise an error' do
+      expect { subject }.to raise_error(Space::Flight::UnknownShipError)
     end
   end
 end

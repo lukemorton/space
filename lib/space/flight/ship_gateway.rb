@@ -6,7 +6,7 @@ module Space
       end
 
       def find(ship_id)
-        ship_repository.find(ship_id)
+        ship_repository.find_by(id: ship_id)
       end
 
       def update(ship)

@@ -1,3 +1,4 @@
+require_relative 'unknown_ship_error'
 require_relative '../locations/list'
 
 module Space
@@ -13,6 +14,7 @@ module Space
 
       def view(ship_id, person_id)
         ship = ship(ship_id)
+        raise UnknownShipError.new if ship.nil?
         person = person(person_id)
         Response.new(person_in_crew?(person, ship.crew), ship, person, locations)
       end
