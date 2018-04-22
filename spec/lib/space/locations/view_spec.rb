@@ -11,4 +11,14 @@ RSpec.describe Space::Locations::View do
       expect(subject.name).to eq(location.name)
     end
   end
+
+  context 'when viewing invalid location' do
+    let(:location_gateway) { instance_double('Space::Locations::LocationGateway', find: nil) }
+
+    subject { described_class.new(location_gateway: location_gateway).view(nil) }
+
+    it 'should raise an error' do
+      expect { subject }.to raise_error(Space::Locations::UnknownLocationError)
+    end
+  end
 end

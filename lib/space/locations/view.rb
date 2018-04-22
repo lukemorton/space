@@ -1,4 +1,5 @@
 require_relative 'location_response'
+require_relative 'unknown_location_error'
 
 module Space
   module Locations
@@ -9,6 +10,7 @@ module Space
 
       def view(location_id)
         location = location(location_id)
+        raise UnknownLocationError.new if location.nil?
         LocationResponse.new(location.id, location.name)
       end
 

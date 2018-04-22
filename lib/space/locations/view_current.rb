@@ -1,4 +1,5 @@
 require_relative 'location_response'
+require_relative 'view'
 
 module Space
   module Locations
@@ -11,10 +12,11 @@ module Space
       end
 
       def view(location_id, person_id)
+        location = location(location_id)
         person = person(person_id)
 
-        if valid_location?(location_id, person.location_id)
-          Response.new(true, location(location_id))
+        if valid_location?(location.id, person.location_id)
+          Response.new(true, location)
         else
           Response.new(false)
         end
