@@ -9,6 +9,26 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-md bg-light">
+      <div class="container">
+        <%= link_to 'Space', ship_path(1), class: 'navbar-brand mb-0 h1' %>
+        <nav class="navbar-nav mr-auto">
+          <%= active_link_to 'Ship', ship_path(1), class: 'nav-item nav-link' %>
+          <%= link_to 'Help', ship_path(1), class: 'nav-item nav-link' %>
+        </nav>
+        <nav class="navbar-nav">
+          <%= link_to 'Login', ship_path(1), class: 'nav-item nav-link' %>
+          <%= link_to 'Sign Up for Free', ship_path(1), class: 'nav-item btn btn-outline-primary ml-2' %>
+        </nav>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

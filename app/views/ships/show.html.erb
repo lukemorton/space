@@ -1,12 +1,16 @@
-  <nav>
-    <%= link_to 'Ship', ship_path(@controls.ship) %>
-    <%= link_to @controls.person.location.name, location_path(@controls.person.location) %>
-  </nav>
+<nav class="nav nav-pills">
+  <%= active_link_to 'Ship', ship_path(@controls.ship), class: 'nav-item nav-link' %>
+  <%= active_link_to @controls.ship.location.name, location_path(@controls.ship.location), class: 'nav-item nav-link' %>
+</nav>
 
-<%= @controls.person.name %> is at <%= @controls.person.location.name %>
+<h1>Ship</h1>
 
-<%= form_tag travel_url do %>
-  <%= hidden_field_tag "travel[ship_id]", @controls.ship.id %>
-  <%= collection_radio_buttons(:travel, :location_id, @controls.locations, :id, :name, prompt: true, checked: @controls.person.location_id) %>
-  <%= submit_tag 'Travel' %>
+You are docked at <%= @controls.ship.location.name %>.
+
+<h2>Controls</h2>
+
+<%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
+  <%= f.hidden_field :ship_id, value: @controls.ship.id %>
+  <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, prompt: true, checked: @controls.ship.location_id %>
+  <%= submit_tag 'Travel', class: 'btn btn-primary' %>
 <% end %>

@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+$primary: #4d7eb3;
+@import "bootstrap";
+
+.navbar {
+  margin-bottom: 1em;
+}
