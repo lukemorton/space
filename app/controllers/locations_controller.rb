@@ -5,6 +5,8 @@ class LocationsController < ApplicationController
     else
       redirect_to location_path(current_person.location_id)
     end
+  rescue Space::Locations::UnknownLocationError
+    raise_not_found
   end
 
   private

@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def raise_not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   def current_person
     Person.first
   end
