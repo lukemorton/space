@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180414221403) do
+ActiveRecord::Schema.define(version: 2018_04_22_193032) do
+
+  create_table "docks", force: :cascade do |t|
+    t.integer "location_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_docks_on_location_id"
+  end
 
   create_table "locations", force: :cascade do |t|
     t.string "name"

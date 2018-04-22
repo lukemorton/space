@@ -11,7 +11,7 @@ module Space
       def view(location_id)
         location = location(location_id)
         raise UnknownLocationError.new if location.nil?
-        LocationResponse.new(location.id, location.name)
+        LocationResponse.new(location.id, location.name, location.establishments)
       end
 
       private
