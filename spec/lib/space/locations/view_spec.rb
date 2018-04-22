@@ -1,4 +1,4 @@
-require_relative '../../../../lib/space/locations/list'
+require_relative '../../../../lib/space/locations/view'
 
 RSpec.describe Space::Locations::View do
   context 'when viewing location' do
