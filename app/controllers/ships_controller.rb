@@ -1,6 +1,7 @@
 class ShipsController < ApplicationController
   def show
-    @controls = use_case.view(params.fetch(:id))
+    @controls = use_case.view(params.fetch(:id), current_person.id)
+    redirect_to ship_path(current_person.ship) unless @controls.person_in_crew?
   end
 
   private
@@ -8,6 +9,7 @@ class ShipsController < ApplicationController
   def use_case
     Space::Flight::ViewControls.new(
       location_gateway: location_gateway,
+      person_gateway: person_gateway,
       ship_gateway: ship_gateway
     )
   end

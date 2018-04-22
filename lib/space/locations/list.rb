@@ -1,3 +1,5 @@
+require_relative 'location_response'
+
 module Space
   module Locations
     class List

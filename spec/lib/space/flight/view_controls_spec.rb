@@ -1,19 +1,22 @@
 require_relative '../../../../lib/space/flight/view_controls'
 
 RSpec.describe Space::Flight::ViewControls do
+  let(:use_case) do
+    described_class.new(
+      location_gateway: instance_double('Space::Locations::LocationGateway', all: locations),
+      person_gateway: instance_double('Space::Locations::PersonGateway', find: person),
+      ship_gateway: instance_double('Space::Flight::ShipGateway', find: ship)
+    )
+  end
+
   context 'when viewing flight controls' do
-    let(:person) { instance_double('Person', name: 'Luke') }
+    let(:person) { instance_double('Person', id: 1, name: 'Luke') }
     let(:ship) { instance_double('Ship', id: 1, crew: [person]) }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
-    let(:use_case) do
-      described_class.new(
-        location_gateway: instance_double('Space::Locations::LocationGateway', all: locations),
-        ship_gateway: instance_double('Space::Flight::ShipGateway', find: ship)
-      )
-    end
+    subject { use_case.view(ship.id, person.id) }
 
-    subject { use_case.view(ship.id) }
+    it { is_expected.to be_person_in_crew }
 
     it 'should have ship' do
       expect(subject.ship.id).to eq(ship.id)
@@ -25,6 +28,19 @@ RSpec.describe Space::Flight::ViewControls do
 
     it 'should have locations' do
       expect(subject.locations).to_not be_empty
+    end
+  end
+
+  context 'when not in crew' do
+    context 'when viewing flight controls' do
+      let(:person) { instance_double('Person', id: 1, name: 'Luke') }
+      let(:ship) { instance_double('Ship', id: 1, crew: []) }
+      let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
+
+      subject { use_case.view(ship.id, person.id) }
+
+
+      it { is_expected.to_not be_person_in_crew }
     end
   end
 end
