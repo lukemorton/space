@@ -9,3 +9,8 @@
   <p>&ldquo;Hi <%= current_person.name %>,
     welcome to <%= @location.name %>.&rdquo;</p>
 </blockquote>
+
+<ul>
+  <% @location.establishments.each do |establishment| %>
+    <li><%= establishment.class.name %>
+  <% end %>
