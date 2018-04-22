@@ -11,10 +11,15 @@ RSpec.describe Space::Locations::LocationGateway do
   end
 
   context 'when finding a location record' do
-    let(:location_record) { instance_double('Location') }
-    let(:location_repository) { class_double('Location', find: location_record) }
+    let(:location_record) { instance_double('Location', id: 1) }
 
-    subject { described_class.new(location_repository: location_repository).find(1) }
+    let(:location_repository) do
+      class_double('Location').tap do |double|
+        allow(double).to receive(:find_by).with(id: location_record.id).and_return(location_record)
+      end
+    end
+
+    subject { described_class.new(location_repository: location_repository).find(location_record.id) }
 
     it { is_expected.to be(location_record) }
   end

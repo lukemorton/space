@@ -10,7 +10,7 @@ module Space
       end
 
       def find(id)
-        location_repository.find(id)
+        location_repository.find_by(id: id)
       end
 
       private
