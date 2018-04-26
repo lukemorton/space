@@ -9,7 +9,7 @@
 <p>Ships docked currently:</p>
 
 <ul>
-  <% @dock.location.ships.each do |ship| %>
+  <% @dock.ships.each do |ship| %>
     <li><%= ship.id %> with crew <%= ship.crew.map(&:name).join(', ') %></li>
   <% end %>
 </ul>
