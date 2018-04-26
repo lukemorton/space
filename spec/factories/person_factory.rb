@@ -4,5 +4,9 @@ FactoryBot.define do
     name 'Cool'
     location
     ship
+
+    after(:create) do |person|
+      person.ship.crew << person
+    end
   end
 end

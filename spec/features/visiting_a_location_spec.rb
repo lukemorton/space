@@ -7,7 +7,7 @@ RSpec.feature 'Visiting a location' do
   end
 
   background do
-    create(:person)
+    create(:person, location: location, ship: create(:ship, location: location))
   end
 
   given(:location) { create(:location) }

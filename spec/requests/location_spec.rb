@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Location' do
   it 'renders on success' do
     location = create(:location)
-    create(:person, location: location)
+    create(:person, location: location, ship: create(:ship, location: location))
     get location_url(location)
     assert_response :success
   end
