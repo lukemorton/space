@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :person do
     id { FactoryBot.generate(:random_id) }
-    name 'Cool'
+    name { Faker::Zelda.character }
     location
     ship
 
