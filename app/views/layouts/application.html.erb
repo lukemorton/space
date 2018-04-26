@@ -13,6 +13,7 @@
       <div class="container">
         <%= link_to 'Space', ship_path(1), class: 'navbar-brand mb-0 h1' %>
         <nav class="navbar-nav mr-auto">
+          <%= active_link_to 'Current Location', location_path(1), class: 'nav-item nav-link' %>
           <%= active_link_to 'Ship', ship_path(1), class: 'nav-item nav-link' %>
           <%= link_to 'Help', ship_path(1), class: 'nav-item nav-link' %>
         </nav>

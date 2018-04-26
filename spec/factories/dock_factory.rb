@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :dock do
-    location nil
+    location
   end
 end
