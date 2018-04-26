@@ -11,7 +11,7 @@ RSpec.feature 'Visiting a Dock' do
   end
 
   given(:dock) { create(:dock) }
-  given(:ship) { create(:ship, :with_crew, location: dock.location) }
+  given(:ship) { create(:ship, :with_crew, dock: dock) }
 
   def when_i_visit_a_valid_dock
     visit dock_url(dock)

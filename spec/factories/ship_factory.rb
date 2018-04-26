@@ -1,7 +1,11 @@
 FactoryBot.define do
   factory :ship do
     id { FactoryBot.generate(:random_id) }
-    location
+    dock
+
+    after :build do |ship|
+      ship.location = ship.dock.location
+    end
 
     trait :with_crew do
       after :create do |ship, evaluator|
