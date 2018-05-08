@@ -15,8 +15,7 @@ module Space
         LocationResponse.new(
           location.id,
           location.name,
-          location.establishments,
-          location.dock
+          location.establishments
         )
       end
 

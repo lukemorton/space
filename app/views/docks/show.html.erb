@@ -1,7 +1,6 @@
 <nav class="nav nav-pills">
   <%= active_link_to @dock.location.name, location_path(@dock.location.id), class: 'nav-link' %>
   <%= active_link_to @dock.class.name, dock_path(@dock), class: 'nav-link' %>
-  <%= active_link_to 'Ship', ship_path(1), class: 'nav-link' %>
 </nav>
 
 <h1><%= @dock.location.name %> <%= @dock.class.name %></h1>
@@ -10,6 +9,6 @@
 
 <ul>
   <% @dock.ships.each do |ship| %>
-    <li><%= ship.id %> with crew <%= ship.crew.map(&:name).join(', ') %></li>
+    <li><%= link_to ship.id, ship_path(ship) %> with crew <%= ship.crew.map(&:name).join(', ') %></li>
   <% end %>
 </ul>

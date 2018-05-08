@@ -13,7 +13,7 @@ RSpec.describe Space::Locations::ViewCurrent do
   end
 
   context 'when viewing current location' do
-    let(:location) { instance_double('Location', id: 1, name: 'London', establishments: [], dock: nil) }
+    let(:location) { instance_double('Location', id: 1, name: 'London', establishments: []) }
     let(:person) { instance_double('Person', id: 1, location_id: location.id) }
 
     subject { use_case.view(location.id, person.id) }
@@ -26,7 +26,7 @@ RSpec.describe Space::Locations::ViewCurrent do
   end
 
   context 'when viewing location other than current' do
-    let(:location) { instance_double('Location', id: 1, name: 'London', establishments: [], dock: nil) }
+    let(:location) { instance_double('Location', id: 1, name: 'London', establishments: []) }
     let(:person) { instance_double('Person', id: 1, location_id: 2) }
 
     subject { use_case.view(location.id, person.id) }
@@ -35,7 +35,7 @@ RSpec.describe Space::Locations::ViewCurrent do
   end
 
   context 'when viewing invalid location' do
-    let(:location) { instance_double('Location', id: 1, name: 'London', establishments: [], dock: nil) }
+    let(:location) { instance_double('Location', id: 1, name: 'London', establishments: []) }
     let(:person) { instance_double('Person', id: 1, location_id: 2) }
 
     subject { use_case.view(nil, person.id) }
