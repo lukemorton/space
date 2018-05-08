@@ -22,6 +22,7 @@ module Space
 
         if travel_validator.valid?
           ship.location = location
+          ship.dock = location.establishments.first
           ship_gateway.update(ship)
 
           ship.crew.each do |person|
