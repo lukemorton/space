@@ -31,7 +31,7 @@ RSpec.feature 'Space flight travel' do
   def when_i_travel_to_a_valid_location
     visit ship_url(ship)
     choose new_location.name
-    click_button
+    click_button 'Travel'
   end
 
   def then_my_location_should_be_updated
