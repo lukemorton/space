@@ -5,7 +5,7 @@ RSpec.describe Space::Flight::ShipGateway do
     let(:ship_record) { instance_double('Ship', id: 1, crew_ids: [], crew: [], dock: nil, location: nil, location_id: nil) }
     let(:ship_repository) do
       class_double('Ship').tap do |double|
-        allow(double).to receive(:find_by).with(id: ship_record.id).and_return(ship_record)
+        allow(double).to receive(:find).with(ship_record.id).and_return(ship_record)
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Space::Flight::ShipGateway do
     let(:ship_record) { instance_double('Ship', id: 1, crew_ids: [crew_member_id], crew: crew, dock: nil, location: nil, location_id: nil) }
     let(:ship_repository) do
       class_double('Ship').tap do |double|
-        allow(double).to receive(:find_by).with(id: ship_record.id).and_return(ship_record)
+        allow(double).to receive(:find).with(ship_record.id).and_return(ship_record)
       end
     end
 

@@ -9,7 +9,7 @@ module Space
       end
 
       def find(ship_id)
-        ship = ship_repository.find_by(id: ship_id)
+        ship = ship_repository.find(ship_id)
         Ship.new(
           id: ship.id,
           crew_ids: ship.crew_ids,
@@ -25,7 +25,7 @@ module Space
       end
 
       def remove_crew_member(ship_id, person_id)
-        ship = ship_repository.find_by(id: ship_id)
+        ship = ship_repository.find(ship_id)
         ship.crew.delete(person_id)
       end
 
