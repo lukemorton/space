@@ -6,8 +6,8 @@ module Actions
     end
 
     def disembark
-      ship = Ship.find(disembark_params[:ship_id])
-      redirect_to location_url(ship.location)
+      disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
+      redirect_to location_url(current_person.location)
     end
 
     private
@@ -16,6 +16,12 @@ module Actions
       Space::Flight::Travel.new(
         location_gateway: location_gateway,
         person_gateway: person_gateway,
+        ship_gateway: ship_gateway
+      )
+    end
+
+    def disembark_use_case
+      Space::Flight::Disembark.new(
         ship_gateway: ship_gateway
       )
     end
