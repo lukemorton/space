@@ -11,10 +11,10 @@ RSpec.describe Space::Flight::PersonGateway do
   end
 
   context 'when updating a person record' do
-    let(:person_repository) { class_double('Person') }
-    let(:person) { instance_double('Person', save!: true) }
+    let(:person_record) { instance_double('Person', id: 1, update: true) }
+    let(:person_repository) { class_double('Person', find: person_record) }
 
-    subject { described_class.new(person_repository: person_repository).update(person) }
+    subject { described_class.new(person_repository: person_repository).update(person_record.id, location: nil) }
 
     it { is_expected.to be(true) }
   end

@@ -15,7 +15,7 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when viewing flight controls' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: [person]) }
+    let(:ship) { instance_double('Ship', id: 1, crew_ids: [person.id]) }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
     subject { use_case.view(ship.id, person.id) }
@@ -37,7 +37,7 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when not in crew' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: []) }
+    let(:ship) { instance_double('Ship', id: 1, crew_ids: []) }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
     subject { use_case.view(ship.id, person.id) }
@@ -48,7 +48,7 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when ship unknown' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: []) }
+    let(:ship) { instance_double('Ship', id: 1, crew_ids: []) }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
     subject { use_case.view(nil, person.id) }

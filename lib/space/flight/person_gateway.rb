@@ -9,8 +9,8 @@ module Space
         person_repository.find(person_id)
       end
 
-      def update(person)
-        person.save!
+      def update(person_id, attrs)
+        person_repository.find(person_id).update(attrs)
       end
 
       private

@@ -5,14 +5,15 @@ RSpec.describe Space::Flight::Travel do
     let(:current_station) { instance_double('Location') }
     let(:destination_dock) { instance_double('Dock') }
     let(:destination_station) { instance_double('Location', establishments: [destination_dock]) }
-    let(:person) { instance_double('Person', location: current_station, :location= => nil) }
+    let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
     let(:ship) { instance_double('Ship', id: 1, crew: [person], location: current_station, :location= => nil, :dock= => nil) }
+    let(:person_gateway) { instance_double('Space::Flight::PersonGateway', update: true) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, update: true) }
 
     let(:use_case) do
       described_class.new(
         location_gateway: instance_double('Space::Locations::LocationGateway', find: destination_station),
-        person_gateway: instance_double('Space::Flight::PersonGateway', update: true),
+        person_gateway: person_gateway,
         ship_gateway: ship_gateway
       )
     end
@@ -25,7 +26,10 @@ RSpec.describe Space::Flight::Travel do
 
     it 'updates persons location' do
       subject
-      expect(person).to have_received(:location=).with(destination_station)
+      expect(person_gateway).to have_received(:update).with(
+        person.id,
+        location: destination_station
+      )
     end
 
     it 'updates ships location' do

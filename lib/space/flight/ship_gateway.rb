@@ -1,4 +1,5 @@
 require 'active_model'
+require_relative 'crew_member'
 require_relative 'ship'
 
 module Space
@@ -13,7 +14,7 @@ module Space
         Ship.new(
           id: ship.id,
           crew_ids: ship.crew_ids,
-          crew: ship.crew,
+          crew: ship.crew.map { |member| CrewMember.new(id: member.id) },
           dock: ship.dock,
           location: ship.location,
           location_id: ship.location_id

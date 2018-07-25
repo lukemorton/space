@@ -27,9 +27,8 @@ module Space
             location: location
           )
 
-          ship.crew.each do |person|
-            person.location = location
-            person_gateway.update(person)
+          ship.crew.each do |member|
+            person_gateway.update(member.id, location: location)
           end
 
           Response.new(true, {})
