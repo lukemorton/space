@@ -2,16 +2,16 @@ require_relative '../../../../lib/space/flight/person_gateway'
 
 RSpec.describe Space::Flight::PersonGateway do
   context 'when finding a person record' do
-    let(:person_record) { instance_double('Person') }
+    let(:person_record) { instance_double('Person', id: 1, location_id: 1) }
     let(:person_repository) { class_double('Person', find: person_record) }
 
     subject { described_class.new(person_repository: person_repository).find(1) }
 
-    it { is_expected.to be(person_record) }
+    it { is_expected.to be_a(Space::Flight::Person) }
   end
 
   context 'when updating a person record' do
-    let(:person_record) { instance_double('Person', id: 1, update: true) }
+    let(:person_record) { instance_double('Person', id: 1, location_id: 1, update: true) }
     let(:person_repository) { class_double('Person', find: person_record) }
 
     subject { described_class.new(person_repository: person_repository).update(person_record.id, location: nil) }

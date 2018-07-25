@@ -1,3 +1,5 @@
+require_relative 'person'
+
 module Space
   module Flight
     class PersonGateway
@@ -6,7 +8,11 @@ module Space
       end
 
       def find(person_id)
-        person_repository.find(person_id)
+        person = person_repository.find(person_id)
+        Person.new(
+          id: person.id,
+          location_id: person.location_id
+        )
       end
 
       def update(person_id, attrs)
