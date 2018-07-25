@@ -21,9 +21,11 @@ module Space
         )
 
         if travel_validator.valid?
-          ship.location = location
-          ship.dock = location.establishments.first
-          ship_gateway.update(ship)
+          ship_gateway.update(
+            ship.id,
+            dock: location.establishments.first,
+            location: location
+          )
 
           ship.crew.each do |person|
             person.location = location
