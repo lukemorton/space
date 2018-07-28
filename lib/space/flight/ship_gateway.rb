@@ -13,7 +13,6 @@ module Space
         ship = ship_repository.find(ship_id)
         Ship.new(
           id: ship.id,
-          crew_ids: ship.crew_ids,
           crew: ship.crew.map { |member| CrewMember.new(id: member.id) },
           dock: ship.dock,
           location: Space::Locations::Location.new(

@@ -16,7 +16,7 @@ module Space
         ship = ship(ship_id)
         raise UnknownShipError.new if ship.nil?
         person = person(person_id)
-        Response.new(person_in_crew?(person.id, ship.crew_ids), ship, person, locations)
+        Response.new(person_in_crew?(person.id, ship.crew), ship, person, locations)
       end
 
       private
@@ -31,7 +31,8 @@ module Space
         person_gateway.find(person_id)
       end
 
-      def person_in_crew?(person_id, crew_ids)
+      def person_in_crew?(person_id, crew)
+        crew_ids = crew.map(&:id)
         crew_ids.include?(person_id)
       end
 

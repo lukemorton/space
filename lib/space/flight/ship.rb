@@ -6,12 +6,12 @@ module Space
       include ActiveModel::Model
 
       attr_accessor :id
-      attr_accessor :crew_ids
       attr_accessor :crew
       attr_accessor :dock
       attr_accessor :location
 
       def has_crew_member_id?(person_id)
+        crew_ids = crew.map(&:id)
         crew_ids.include?(person_id)
       end
 

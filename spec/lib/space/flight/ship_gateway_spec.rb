@@ -14,7 +14,6 @@ RSpec.describe Space::Flight::ShipGateway do
     instance_double(
       'Ship',
       id: 1,
-      crew_ids: [],
       crew: [],
       dock: nil,
       location: location_record,
@@ -59,7 +58,7 @@ RSpec.describe Space::Flight::ShipGateway do
   context 'when removing a crew member from ship' do
     let(:crew_member_id) { 1 }
     let(:crew) { double(:crew, delete: true) }
-    let(:ship_record) { instance_double('Ship', id: 1, crew_ids: [crew_member_id], crew: crew, dock: nil, location: location_record) }
+    let(:ship_record) { instance_double('Ship', id: 1, crew: crew, dock: nil, location: location_record) }
     let(:ship_repository) do
       class_double('Ship').tap do |double|
         allow(double).to receive(:find).with(ship_record.id).and_return(ship_record)
