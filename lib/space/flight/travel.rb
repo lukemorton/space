@@ -24,11 +24,11 @@ module Space
           ship_gateway.update(
             ship.id,
             dock: location.establishments.first,
-            location: location
+            location_id: location.id
           )
 
           ship.crew.each do |member|
-            person_gateway.update(member.id, location: location)
+            person_gateway.update(member.id, location_id: location.id)
           end
 
           Response.new(true, {})
