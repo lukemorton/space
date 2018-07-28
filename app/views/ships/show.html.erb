@@ -12,7 +12,7 @@ You are docked at <%= @controls.ship.location.name %>.
 
 <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
   <%= f.hidden_field :ship_id, value: @controls.ship.id %>
-  <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, prompt: true, checked: @controls.ship.location_id %>
+  <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, prompt: true, checked: @controls.ship.location.id %>
   <p><%= submit_tag 'Travel', class: 'btn btn-primary' %></p>
 <% end %>
 

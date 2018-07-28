@@ -16,8 +16,11 @@ module Space
           crew_ids: ship.crew_ids,
           crew: ship.crew.map { |member| CrewMember.new(id: member.id) },
           dock: ship.dock,
-          location: ship.location,
-          location_id: ship.location_id
+          location: Space::Locations::Location.new(
+            id: ship.location.id,
+            establishments: ship.location.establishments,
+            name: ship.location.name
+          )
         )
       end
 

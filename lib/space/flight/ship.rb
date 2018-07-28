@@ -10,7 +10,6 @@ module Space
       attr_accessor :crew
       attr_accessor :dock
       attr_accessor :location
-      attr_accessor :location_id
 
       def has_crew_member_id?(person_id)
         crew_ids.include?(person_id)
