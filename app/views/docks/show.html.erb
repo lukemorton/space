@@ -1,5 +1,5 @@
 <nav class="nav nav-pills">
-  <%= active_link_to @dock.location.name, location_path(@dock.location.id), class: 'nav-link' %>
+  <%= active_link_to @dock.location.name, location_path(@dock.location), class: 'nav-link' %>
   <%= active_link_to @dock.name, dock_path(@dock), class: 'nav-link' %>
 </nav>
 
