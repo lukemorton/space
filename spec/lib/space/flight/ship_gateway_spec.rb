@@ -6,7 +6,8 @@ RSpec.describe Space::Flight::ShipGateway do
       'Location',
       id: 1,
       establishments: [],
-      name: 'London'
+      name: 'London',
+      slug: 'london'
     )
   end
 

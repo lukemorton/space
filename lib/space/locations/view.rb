@@ -8,14 +8,15 @@ module Space
         @location_gateway = location_gateway
       end
 
-      def view(location_id)
-        location = location(location_id)
+      def view(location_slug)
+        location = location(location_slug)
         raise UnknownLocationError.new if location.nil?
 
         LocationResponse.new(
           location.id,
           location.name,
-          location.establishments
+          location.establishments,
+          location.slug
         )
       end
 
@@ -23,8 +24,8 @@ module Space
 
       attr_reader :location_gateway
 
-      def location(location_id)
-        location_gateway.find(location_id)
+      def location(location_slug)
+        location_gateway.find_by_slug(location_slug)
       end
     end
   end

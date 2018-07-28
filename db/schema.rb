@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_28_154246) do
+ActiveRecord::Schema.define(version: 2018_07_28_163630) do
 
   create_table "docks", force: :cascade do |t|
     t.integer "location_id"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(version: 2018_07_28_154246) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["slug"], name: "index_locations_on_slug", unique: true
   end
 
   create_table "people", force: :cascade do |t|

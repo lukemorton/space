@@ -11,8 +11,8 @@ module Space
         @person_gateway = person_gateway
       end
 
-      def view(location_id, person_id)
-        location = location(location_id)
+      def view(location_slug, person_id)
+        location = location(location_slug)
         person = person(person_id)
 
         if valid_location?(location.id, person.location.id)
@@ -34,8 +34,8 @@ module Space
         person_gateway.find(person_id)
       end
 
-      def location(location_id)
-        View.new(location_gateway: location_gateway).view(location_id)
+      def location(location_slug)
+        View.new(location_gateway: location_gateway).view(location_slug)
       end
     end
   end

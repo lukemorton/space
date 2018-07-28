@@ -16,6 +16,11 @@ module Space
         Space::Locations::Location.from_object(location) unless location.nil?
       end
 
+      def find_by_slug(slug)
+        location = location_repository.find_by(slug: slug)
+        Space::Locations::Location.from_object(location) unless location.nil?
+      end
+
       private
 
       attr_reader :location_repository
