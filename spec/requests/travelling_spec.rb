@@ -8,6 +8,7 @@ RSpec.describe 'Travelling' do
     post(travel_url, params: {
       travel: {
         ship_id: ship.id,
+        ship_slug: ship.slug,
         location_id: location.id
       }
     })

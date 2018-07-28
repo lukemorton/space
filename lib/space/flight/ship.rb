@@ -13,7 +13,9 @@ module Space
           id: object.id,
           crew: object.crew.map { |member| Space::Flight::CrewMember.from_object(member) },
           dock: Space::Locations::Establishment.from_object(object.dock),
-          location: Space::Locations::Location.from_object(object.location)
+          location: Space::Locations::Location.from_object(object.location),
+          name: object.name,
+          slug: object.slug
         )
       end
 
@@ -21,6 +23,8 @@ module Space
       attr_accessor :crew
       attr_accessor :dock
       attr_accessor :location
+      attr_accessor :name
+      attr_accessor :slug
 
       def has_crew_member_id?(person_id)
         crew_ids = crew.map(&:id)
@@ -28,7 +32,7 @@ module Space
       end
 
       def to_param
-        id.to_s
+        slug.to_s
       end
     end
   end
