@@ -8,7 +8,7 @@ module Space
       end
 
       def find(id)
-        dock = dock_repository.find(id)
+        dock = dock_repository.find_by(id: id)
         Dock.from_object(dock)
       end
 

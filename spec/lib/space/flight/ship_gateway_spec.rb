@@ -24,7 +24,7 @@ RSpec.describe Space::Flight::ShipGateway do
   context 'when finding a ship record' do
     let(:ship_repository) do
       class_double('Ship').tap do |double|
-        allow(double).to receive(:find).with(ship_record.id).and_return(ship_record)
+        allow(double).to receive(:find_by).with(id: ship_record.id).and_return(ship_record)
       end
     end
 

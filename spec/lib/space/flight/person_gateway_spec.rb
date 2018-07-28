@@ -4,7 +4,7 @@ RSpec.describe Space::Flight::PersonGateway do
   context 'when finding a person record' do
     let(:location_record) { instance_double('Location', id: 1, establishments: [], name: 'London') }
     let(:person_record) { instance_double('Person', id: 1, location: location_record) }
-    let(:person_repository) { class_double('Person', find: person_record) }
+    let(:person_repository) { class_double('Person', find_by: person_record) }
 
     subject { described_class.new(person_repository: person_repository).find(1) }
 

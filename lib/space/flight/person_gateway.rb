@@ -8,7 +8,7 @@ module Space
       end
 
       def find(person_id)
-        person = person_repository.find(person_id)
+        person = person_repository.find_by(id: person_id)
         Space::Flight::Person.new(
           id: person.id,
           location: Space::Locations::Location.from_object(person.location)

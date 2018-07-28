@@ -1,4 +1,7 @@
 require 'active_model'
+require_relative 'crew_member'
+require_relative '../locations/establishment'
+require_relative '../locations/location'
 
 module Space
   module Flight

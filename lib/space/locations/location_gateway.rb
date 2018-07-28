@@ -12,7 +12,7 @@ module Space
       end
 
       def find(id)
-        location = location_repository.find(id)
+        location = location_repository.find_by(id: id)
         Location.from_object(location)
       end
 

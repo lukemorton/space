@@ -11,7 +11,7 @@ RSpec.describe Space::Locations::DockGateway do
 
     let(:dock_repository) do
       class_double('Dock').tap do |double|
-        allow(double).to receive(:find).with(dock_record.id).and_return(dock_record)
+        allow(double).to receive(:find_by).with(id: dock_record.id).and_return(dock_record)
       end
     end
 
