@@ -9,5 +9,5 @@ end
 Person.create!(
   name: 'Luke',
   location: london,
-  ship: Ship.create!(location: london)
+  ship: Ship.create!(dock: london.establishments.first, location: london)
 )
