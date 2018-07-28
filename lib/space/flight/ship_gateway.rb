@@ -14,6 +14,11 @@ module Space
         Space::Flight::Ship.from_object(ship) unless ship.nil?
       end
 
+      def find_by_slug(ship_slug)
+        ship = ship_repository.find_by(slug: ship_slug)
+        Space::Flight::Ship.from_object(ship) unless ship.nil?
+      end
+
       def update(ship_id, attrs)
         ship_repository.find(ship_id).update(attrs)
       end

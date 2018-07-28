@@ -12,6 +12,7 @@ RSpec.describe Space::Flight::ShipGateway do
   end
 
   let(:ship_record_id) { 1 }
+  let(:ship_record_slug) { 'endeavor' }
   let(:ship_record) do
     instance_double(
       'Ship',
@@ -19,6 +20,8 @@ RSpec.describe Space::Flight::ShipGateway do
       crew: [],
       dock: nil,
       location: location_record,
+      name: 'Endeavour',
+      slug: ship_record_slug,
       update: true
     )
   end
@@ -31,6 +34,27 @@ RSpec.describe Space::Flight::ShipGateway do
     end
 
     subject { described_class.new(ship_repository: ship_repository).find(ship_record_id) }
+
+    it { is_expected.to be_a(Space::Flight::Ship) }
+
+    it 'has correct ID' do
+      expect(subject.id).to eq(ship_record_id)
+    end
+
+    context 'and ship does not exist' do
+      let(:ship_record) { nil }
+      it { is_expected.to be_nil }
+    end
+  end
+
+  context 'when finding a ship record by slug' do
+    let(:ship_repository) do
+      class_double('Ship').tap do |double|
+        allow(double).to receive(:find_by).with(slug: ship_record_slug).and_return(ship_record)
+      end
+    end
+
+    subject { described_class.new(ship_repository: ship_repository).find_by_slug(ship_record_slug) }
 
     it { is_expected.to be_a(Space::Flight::Ship) }
 
