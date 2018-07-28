@@ -3,7 +3,7 @@ Location.create!(name: 'Paris')
 Location.create!(name: 'Tokyo')
 
 Location.all.each do |location|
-  Dock.create!(location: location)
+  Dock.create!(name: "#{location.name} Dock", location: location)
 end
 
 Person.create!(
