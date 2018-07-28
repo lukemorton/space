@@ -36,7 +36,7 @@ gem 'sprockets', '~> 3.7.2'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'bullet'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug', '~> 3.6'
   gem 'rspec-rails', '~> 3.7'
