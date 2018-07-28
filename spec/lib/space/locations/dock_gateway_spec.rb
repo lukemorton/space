@@ -7,7 +7,7 @@ RSpec.describe Space::Locations::DockGateway do
       instance_double(
         'Dock',
         id: 1,
-        location: instance_double('Location', id: 1, establishments: [], name: 'London'),
+        location: instance_double('Location', id: 1, establishments: [], name: 'London', slug: 'london'),
         ships: [],
         slug: dock_record_slug
       )

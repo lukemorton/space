@@ -9,7 +9,8 @@ module Space
         attrs = {
           id: object.id,
           establishments: object.establishments&.map { |establishment| Space::Locations::Establishment.from_object(establishment) },
-          name: object.name
+          name: object.name,
+          slug: object.slug
         }
         yield(object, attrs) if block_given?
         new(attrs)
@@ -18,9 +19,10 @@ module Space
       attr_accessor :id
       attr_accessor :name
       attr_accessor :establishments
+      attr_accessor :slug
 
       def to_param
-        id.to_s
+        slug.to_s
       end
     end
   end
