@@ -11,7 +11,11 @@ module Space
         person = person_repository.find(person_id)
         Person.new(
           id: person.id,
-          location_id: person.location_id
+          location: Space::Locations::Location.new(
+            id: person.location.id,
+            establishments: person.location.establishments,
+            name: person.location.name
+          )
         )
       end
 

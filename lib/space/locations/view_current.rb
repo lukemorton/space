@@ -15,7 +15,7 @@ module Space
         location = location(location_id)
         person = person(person_id)
 
-        if valid_location?(location.id, person.location_id)
+        if valid_location?(location.id, person.location.id)
           Response.new(true, location)
         else
           Response.new(false)

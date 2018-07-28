@@ -6,7 +6,7 @@ module Space
       include ActiveModel::Model
 
       attr_accessor :id
-      attr_accessor :location_id
+      attr_accessor :location
 
       def to_param
         id.to_s
