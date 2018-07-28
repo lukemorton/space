@@ -31,6 +31,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'active_link_to', '~> 1.0'
 gem 'sprockets', '~> 3.7.2'
+gem 'friendly_id', '~> 5.2.4'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
