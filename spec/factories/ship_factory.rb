@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :ship do
     id { FactoryBot.generate(:random_id) }
     dock
+    name { Faker::Space.nasa_space_craft }
 
     after :build do |ship|
       ship.location = ship.dock.location
