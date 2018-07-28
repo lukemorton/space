@@ -9,6 +9,6 @@
 
 <ul>
   <% @dock.ships.each do |ship| %>
-    <li><%= link_to ship.id, ship_path(ship) %> with crew <%= ship.crew.map(&:name).join(', ') %></li>
+    <li><%= link_to ship.name, ship_path(ship) %> crew=<%= ship.crew.map(&:name).join(',') %></li>
   <% end %>
 </ul>

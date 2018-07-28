@@ -20,7 +20,7 @@ RSpec.feature 'Visiting a Dock' do
   def then_i_should_see_its_name_and_have_ships_listed
     expect(page).to have_content(dock.location.name)
     expect(page).to have_content('Dock')
-    expect(page).to have_content(ship.id)
-    expect(page).to have_content(ship.crew.map(&:name).join(', '))
+    expect(page).to have_content(ship.name)
+    expect(page).to have_content(ship.crew.map(&:name).join(','))
   end
 end

@@ -7,6 +7,10 @@ RSpec.feature 'Disembarking a ship' do
     and_i_should_no_longer_be_able_to_travel
   end
 
+  background do
+    # create(:person)
+  end
+
   given(:ship) { create(:ship, :with_crew) }
 
   def when_i_disembark_a_ship
