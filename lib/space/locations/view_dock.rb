@@ -3,21 +3,22 @@ require_relative 'unknown_dock_error'
 module Space
   module Locations
     class ViewDock
-      Response = Struct.new(:id, :location, :name, :ships)
+      Response = Struct.new(:id, :location, :name, :ships, :to_param)
 
       def initialize(dock_gateway:)
         @dock_gateway = dock_gateway
       end
 
-      def view(dock_id)
-        dock = dock_gateway.find(dock_id)
+      def view(dock_slug)
+        dock = dock_gateway.find_by_slug(dock_slug)
         raise Space::Locations::UnknownDockError.new if dock.nil?
         
         Response.new(
           dock.id,
           dock.location,
           dock.name,
-          dock.ships
+          dock.ships,
+          dock.slug
         )
       end
 

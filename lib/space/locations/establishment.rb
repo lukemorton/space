@@ -6,7 +6,8 @@ module Space
       def self.from_object(object)
         return if object.nil?
         Space::Locations::Dock.new(
-          id: object.id
+          id: object.id,
+          slug: object.slug
         )
       end
     end
