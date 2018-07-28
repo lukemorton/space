@@ -9,7 +9,7 @@ module Space
 
       def find(id)
         dock = dock_repository.find_by(id: id)
-        Dock.from_object(dock)
+        Dock.from_object(dock) unless dock.nil?
       end
 
       private

@@ -9,6 +9,11 @@ RSpec.describe Space::Flight::PersonGateway do
     subject { described_class.new(person_repository: person_repository).find(1) }
 
     it { is_expected.to be_a(Space::Flight::Person) }
+
+    context 'and person does not exist' do
+      let(:person_record) { nil }
+      it { is_expected.to be_nil }
+    end
   end
 
   context 'when updating a person record' do

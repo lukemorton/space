@@ -11,7 +11,7 @@ module Space
 
       def find(ship_id)
         ship = ship_repository.find_by(id: ship_id)
-        Space::Flight::Ship.from_object(ship)
+        Space::Flight::Ship.from_object(ship) unless ship.nil?
       end
 
       def update(ship_id, attrs)
