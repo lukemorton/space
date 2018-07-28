@@ -8,7 +8,7 @@ module Space
       end
 
       def all
-        location_repository.all.map { |location| Location.from_object(location) }
+        location_repository.all.includes(:establishments).map { |location| Location.from_object(location) }
       end
 
       def find(id)

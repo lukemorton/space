@@ -13,7 +13,7 @@ RSpec.describe Space::Locations::LocationGateway do
 
   context 'when finding all location record' do
     let(:location_records) { [location_record] }
-    let(:location_repository) { class_double('Location', all: location_records) }
+    let(:location_repository) { class_double('Location', all: double(includes: location_records)) }
 
     subject { described_class.new(location_repository: location_repository).all }
 
