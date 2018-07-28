@@ -8,13 +8,14 @@ RSpec.describe Space::Locations::DockGateway do
         'Dock',
         id: dock_record_id,
         location: instance_double('Location', id: 1, establishments: [], name: 'London'),
-        ships: []
+        ships: [],
+        slug: 'Dock at London'
       )
     end
 
     let(:dock_repository) do
       class_double('Dock').tap do |double|
-        allow(double).to receive(:find_by).with(id: dock_record_id).and_return(dock_record)
+        allow(double).to receive(:find_by).with(slug: dock_record_id).and_return(dock_record)
       end
     end
 

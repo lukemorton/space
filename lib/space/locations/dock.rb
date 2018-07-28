@@ -12,7 +12,8 @@ module Space
         return if object.nil?
         attrs = {
           id: object.id,
-          ships: object.ships.map { |ship| Space::Flight::Ship.from_object(ship) }
+          ships: object.ships.map { |ship| Space::Flight::Ship.from_object(ship) },
+          slug: object.slug
         }
         yield(object, attrs) if block_given?
         new(attrs)
@@ -21,6 +22,7 @@ module Space
       attr_accessor :id
       attr_accessor :location
       attr_accessor :ships
+      attr_accessor :slug
 
       def name
         'Dock'
@@ -31,7 +33,7 @@ module Space
       end
 
       def to_param
-        id.to_s
+        slug.to_s
       end
     end
   end
