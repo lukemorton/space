@@ -1,19 +1,22 @@
 require 'active_model'
 
 module Space
-  module Flight
-    class CrewMember
+  module Locations
+    class Establishment
       include ActiveModel::Model
 
       def self.from_object(object)
+        return if object.nil?
         new(
-          id: object.id,
-          name: object.name
+          id: object.id
         )
       end
 
       attr_accessor :id
-      attr_accessor :name
+
+      def name
+        'Dock'
+      end
 
       def to_param
         id.to_s

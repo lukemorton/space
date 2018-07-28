@@ -8,7 +8,7 @@ module Space
       def self.from_object(object)
         new(
           id: object.id,
-          establishments: object.establishments,
+          establishments: object.establishments.map { |establishment| Space::Locations::Establishment.from_object(establishment) },
           name: object.name
         )
       end

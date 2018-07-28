@@ -11,6 +11,6 @@
 
 <ul>
   <% @location.establishments.each do |establishment| %>
-    <li><%= link_to establishment.class.name, dock_path(establishment) %></li>
+    <li><%= link_to establishment.name, dock_path(establishment) %></li>
   <% end %>
 </ul>

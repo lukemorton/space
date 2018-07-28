@@ -5,6 +5,15 @@ module Space
     class Ship
       include ActiveModel::Model
 
+      def self.from_object(object)
+        new(
+          id: object.id,
+          crew: object.crew.map { |member| Space::Flight::CrewMember.from_object(member) },
+          dock: Space::Locations::Establishment.from_object(object.dock),
+          location: Space::Locations::Location.from_object(object.location)
+        )
+      end
+
       attr_accessor :id
       attr_accessor :crew
       attr_accessor :dock
