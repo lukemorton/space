@@ -2,8 +2,8 @@ require_relative '../../../../lib/space/flight/view_controls'
 
 RSpec.describe Space::Flight::ViewControls do
   let(:use_case) do
-    ship_gateway = instance_double('Space::Flight::ShipGateway', find: nil).tap do |double|
-      allow(double).to receive(:find).with(ship.id).and_return(ship)
+    ship_gateway = instance_double('Space::Flight::ShipGateway', find_by_slug: nil).tap do |double|
+      allow(double).to receive(:find_by_slug).with(ship.slug).and_return(ship)
     end
 
     described_class.new(
@@ -15,10 +15,10 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when viewing flight controls' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: [person]) }
+    let(:ship) { instance_double('Ship', id: 1, crew: [person], name: 'Endeavour', slug: 'endeavour') }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
-    subject { use_case.view(ship.id, person.id) }
+    subject { use_case.view(ship.slug, person.id) }
 
     it { is_expected.to be_person_in_crew }
 
@@ -37,10 +37,10 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when not in crew' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: []) }
+    let(:ship) { instance_double('Ship', id: 1, crew: [], name: 'Endeavour', slug: 'endeavour') }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
-    subject { use_case.view(ship.id, person.id) }
+    subject { use_case.view(ship.slug, person.id) }
 
 
     it { is_expected.to_not be_person_in_crew }
@@ -48,7 +48,7 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when ship unknown' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: []) }
+    let(:ship) { instance_double('Ship', id: 1, crew: [], name: 'Endeavour', slug: 'endeavour') }
     let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
 
     subject { use_case.view(nil, person.id) }

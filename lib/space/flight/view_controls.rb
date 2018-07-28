@@ -12,8 +12,8 @@ module Space
         @ship_gateway = ship_gateway
       end
 
-      def view(ship_id, person_id)
-        ship = ship(ship_id)
+      def view(ship_slug, person_id)
+        ship = ship(ship_slug)
         raise UnknownShipError.new if ship.nil?
         person = person(person_id)
         Response.new(person_in_crew?(person.id, ship.crew), ship, person, locations)
@@ -23,8 +23,8 @@ module Space
 
       attr_reader :location_gateway, :person_gateway, :ship_gateway
 
-      def ship(ship_id)
-        ship_gateway.find(ship_id)
+      def ship(ship_slug)
+        ship_gateway.find_by_slug(ship_slug)
       end
 
       def person(person_id)

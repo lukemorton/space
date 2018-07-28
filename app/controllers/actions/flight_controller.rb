@@ -1,8 +1,9 @@
 module Actions
   class FlightController < ApplicationController
     def travel
+      ship = Ship.find(travel_params[:ship_id])
       travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
-      redirect_to ship_url(travel_params[:ship_id])
+      redirect_to ship_url(ship)
     end
 
     def disembark
