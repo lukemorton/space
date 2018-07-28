@@ -23,7 +23,7 @@ module Space
         if travel_validator.valid?
           ship_gateway.update(
             ship.id,
-            dock: location.establishments.first,
+            dock_id: location.establishments.first.id,
             location_id: location.id
           )
 

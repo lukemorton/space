@@ -3,7 +3,7 @@ require_relative '../../../../lib/space/flight/travel'
 RSpec.describe Space::Flight::Travel do
   context 'when travelling from station to station' do
     let(:current_station) { instance_double('Location', id: 1) }
-    let(:destination_dock) { instance_double('Dock') }
+    let(:destination_dock) { instance_double('Dock', id: 1) }
     let(:destination_station) { instance_double('Location', id: 1, establishments: [destination_dock]) }
     let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
     let(:ship) { instance_double('Ship', id: 1, crew: [person], location: current_station, :location= => nil, :dock= => nil) }
@@ -44,7 +44,7 @@ RSpec.describe Space::Flight::Travel do
       subject
       expect(ship_gateway).to have_received(:update).with(
         ship.id,
-        a_hash_including(dock: destination_dock)
+        a_hash_including(dock_id: destination_dock.id)
       )
     end
 
