@@ -11,9 +11,9 @@ module Space
 
       def find(ship_id)
         ship = ship_repository.find(ship_id)
-        Ship.new(
+        Space::Flight::Ship.new(
           id: ship.id,
-          crew: ship.crew.map { |member| CrewMember.new(id: member.id) },
+          crew: ship.crew.map { |member| Space::Flight::CrewMember.new(id: member.id) },
           dock: ship.dock,
           location: Space::Locations::Location.new(
             id: ship.location.id,

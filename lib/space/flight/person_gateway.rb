@@ -9,7 +9,7 @@ module Space
 
       def find(person_id)
         person = person_repository.find(person_id)
-        Person.new(
+        Space::Flight::Person.new(
           id: person.id,
           location: Space::Locations::Location.new(
             id: person.location.id,
