@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     Person.first
   end
 
+  def dock_gateway
+    Space::Locations::DockGateway.new(dock_repository: Dock)
+  end
+
   def location_gateway
     Space::Locations::LocationGateway.new(location_repository: Location)
   end

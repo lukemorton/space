@@ -6,6 +6,8 @@ class DocksController < ApplicationController
   private
 
   def view_dock_use_case
-    Space::Locations::ViewDock.new
+    Space::Locations::ViewDock.new(
+      dock_gateway: dock_gateway
+    )
   end
 end

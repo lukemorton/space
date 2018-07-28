@@ -4,7 +4,12 @@ RSpec.describe Space::Locations::DockGateway do
   context 'when finding a dock record' do
     let(:dock_record_id) { 1 }
     let(:dock_record) do
-      instance_double('Dock', id: dock_record_id)
+      instance_double(
+        'Dock',
+        id: dock_record_id,
+        location: instance_double('Location', id: 1, establishments: [], name: 'London'),
+        ships: []
+      )
     end
 
     let(:dock_repository) do
@@ -16,6 +21,10 @@ RSpec.describe Space::Locations::DockGateway do
     subject { described_class.new(dock_repository: dock_repository).find(dock_record_id) }
 
     it { is_expected.to be_a(Space::Locations::Dock) }
+
+    it 'should return dock with location' do
+      expect(subject.location).to be_a(Space::Locations::Location)
+    end
 
     context 'and dock does not exist' do
       let(:dock_record) { nil }

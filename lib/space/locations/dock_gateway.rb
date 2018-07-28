@@ -1,4 +1,5 @@
 require_relative 'dock'
+require_relative 'location'
 
 module Space
   module Locations
@@ -9,7 +10,12 @@ module Space
 
       def find(id)
         dock = dock_repository.find_by(id: id)
-        Dock.from_object(dock) unless dock.nil?
+        return if dock.nil?
+        Space::Locations::Dock.from_object(dock) do |object, attrs|
+          attrs[:location] = Space::Locations::Location.from_object(object.location) do |object, attrs|
+            attrs.delete(:establishments) # this stops recursion
+          end
+        end
       end
 
       private

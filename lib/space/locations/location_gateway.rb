@@ -13,7 +13,7 @@ module Space
 
       def find(id)
         location = location_repository.find_by(id: id)
-        Location.from_object(location) unless location.nil?
+        Space::Locations::Location.from_object(location) unless location.nil?
       end
 
       private

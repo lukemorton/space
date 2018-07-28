@@ -6,11 +6,13 @@ module Space
       include ActiveModel::Model
 
       def self.from_object(object)
-        new(
+        attrs = {
           id: object.id,
-          establishments: object.establishments.map { |establishment| Space::Locations::Establishment.from_object(establishment) },
+          establishments: object.establishments&.map { |establishment| Space::Locations::Establishment.from_object(establishment) },
           name: object.name
-        )
+        }
+        yield(object, attrs) if block_given?
+        new(attrs)
       end
 
       attr_accessor :id
