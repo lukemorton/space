@@ -1,10 +1,5 @@
 module Actions
   class FlightController < ApplicationController
-    def travel
-      travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
-      redirect_to ship_url(travel_params[:ship_slug])
-    end
-
     def board
       board_use_case.board(current_person.id, board_params[:ship_id])
       redirect_to ship_url(board_params[:ship_slug])
@@ -15,15 +10,12 @@ module Actions
       redirect_to location_url(current_person.location)
     end
 
-    private
-
-    def travel_use_case
-      Space::Flight::Travel.new(
-        location_gateway: location_gateway,
-        person_gateway: person_gateway,
-        ship_gateway: ship_gateway
-      )
+    def travel
+      travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
+      redirect_to ship_url(travel_params[:ship_slug])
     end
+
+    private
 
     def board_use_case
       Space::Flight::Board.new(
@@ -37,8 +29,12 @@ module Actions
       )
     end
 
-    def travel_params
-      params.require(:travel).permit(:ship_id, :ship_slug, :location_id)
+    def travel_use_case
+      Space::Flight::Travel.new(
+        location_gateway: location_gateway,
+        person_gateway: person_gateway,
+        ship_gateway: ship_gateway
+      )
     end
 
     def board_params
@@ -47,6 +43,10 @@ module Actions
 
     def disembark_params
       params.require(:disembark).permit(:ship_id)
+    end
+
+    def travel_params
+      params.require(:travel).permit(:ship_id, :ship_slug, :location_id)
     end
   end
 end
