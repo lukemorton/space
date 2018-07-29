@@ -14,6 +14,7 @@ module Actions
 
     def disembark
       disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
+      flash.notice = 'You disembarked'
       redirect_to location_url(current_person.location)
     end
 

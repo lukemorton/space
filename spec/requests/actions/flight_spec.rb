@@ -38,7 +38,7 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#disembark' do
-    it 'redirects on success' do
+    before do
       create(:person)
       ship = create(:ship)
 
@@ -47,8 +47,14 @@ RSpec.describe Actions::FlightController do
           ship_id: ship.id
         }
       })
+    end
 
+    it 'redirects on success' do
       assert_response :redirect
+    end
+
+    it 'sets flash notice' do
+      expect(flash.notice).to be_present
     end
   end
 
