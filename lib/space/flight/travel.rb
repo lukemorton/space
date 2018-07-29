@@ -66,7 +66,7 @@ module Space
         end
 
         def not_travelling_to_same_location
-          if ship.location == destination_location
+          if ship.location.id.to_s == destination_location.to_s
             errors.add(:destination_location, 'Cannot travel to current location')
           end
         end

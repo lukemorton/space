@@ -5,7 +5,7 @@ RSpec.describe Space::Flight::Travel do
   context 'when travelling from station to station' do
     let(:current_station) { instance_double('Location', id: 1) }
     let(:destination_dock) { instance_double('Dock', id: 1) }
-    let(:destination_station) { instance_double('Location', id: 1, establishments: [destination_dock]) }
+    let(:destination_station) { instance_double('Location', id: 2, establishments: [destination_dock]) }
     let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::FUEL_MAX, location: current_station) }
     let(:person_gateway) { instance_double('Space::Flight::PersonGateway', update: true) }
@@ -19,7 +19,7 @@ RSpec.describe Space::Flight::Travel do
       )
     end
 
-    subject { use_case.travel(ship.id, to: destination_station) }
+    subject { use_case.travel(ship.id, to: destination_station.id) }
 
     it 'allows valid travel' do
       expect(subject).to be_successful
