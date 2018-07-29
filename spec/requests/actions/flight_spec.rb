@@ -75,7 +75,7 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#travel' do
-    it 'redirects on success' do
+    before do
       location = create(:location)
 
       post(travel_url, params: {
@@ -85,8 +85,10 @@ RSpec.describe Actions::FlightController do
           location_id: location.id
         }
       })
+    end
 
-      assert_response :redirect
+    it 'redirects' do
+      assert_redirected_to ship
     end
   end
 end
