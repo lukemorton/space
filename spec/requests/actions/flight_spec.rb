@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Actions::FlightController do
   describe '#board' do
+    let(:person) { create(:person) }
     let(:ship) { create(:ship) }
 
     before do
-      create(:person)
+      person
 
       post(board_url, params: {
         board: {
@@ -16,7 +17,7 @@ RSpec.describe Actions::FlightController do
     end
 
     it 'redirects' do
-      assert_response :redirect
+      assert_redirected_to ship
     end
 
     it 'sets flash notice' do
@@ -27,7 +28,7 @@ RSpec.describe Actions::FlightController do
       let(:ship) { double(id: 0, slug: '') }
 
       it 'redirects' do
-        assert_response :redirect
+        assert_redirected_to person.location
       end
 
       it 'sets flash alert' do
