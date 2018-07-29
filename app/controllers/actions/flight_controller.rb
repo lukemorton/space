@@ -25,8 +25,14 @@ module Actions
     end
 
     def travel
-      travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
-      flash.notice = 'You travelled'
+      travelling = travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
+
+      if travelling.successful?
+        flash.notice = 'You travelled'
+      else
+        flash.alert = 'You were not able to travel'
+      end
+
       redirect_to ship_url(travel_params[:ship_slug])
     end
 

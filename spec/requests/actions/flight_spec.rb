@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Actions::FlightController do
+  let(:person) { create(:person) }
   let(:ship) { create(:ship) }
   let(:ship_id) { ship.id }
 
   describe '#board' do
-    let(:person) { create(:person) }
-
     before do
       person
 
@@ -75,14 +74,17 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#travel' do
+    let(:location) { create(:location) }
+    let(:location_id) { location.id }
+
     before do
-      location = create(:location)
+      person
 
       post(travel_url, params: {
         travel: {
           ship_id: ship_id,
           ship_slug: ship.slug,
-          location_id: location.id
+          location_id: location_id
         }
       })
     end
@@ -93,6 +95,18 @@ RSpec.describe Actions::FlightController do
 
     it 'sets flash notice' do
       expect(flash.notice).to be_present
+    end
+
+    context 'and travelling unsuccessful' do
+      let(:location_id) { ship.location.id }
+
+      it 'redirects' do
+        assert_redirected_to ship
+      end
+
+      it 'sets flash alert' do
+        expect(flash.alert).to be_present
+      end
     end
   end
 end
