@@ -21,7 +21,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
 
   # Controllers, views and routes are covered by feature and request specs
   [rails.controllers, rails.views, rails.routes].each do |path|
-    watch(path) { ["#{rspec.spec_dir}/features", "#{rspec.spec_dir}/requests"] }
+    watch(path) { ["#{rspec.spec_dir}/requests", "#{rspec.spec_dir}/features"] }
   end
 
   # Rails config changes
