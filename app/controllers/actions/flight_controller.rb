@@ -1,8 +1,15 @@
 module Actions
   class FlightController < ApplicationController
     def board
-      board_use_case.board(current_person.id, board_params[:ship_id])
-      redirect_to ship_url(board_params[:ship_slug])
+      boarding = board_use_case.board(current_person.id, board_params[:ship_id])
+
+      if boarding.successful?
+        flash.notice = 'You boarded'
+        redirect_to ship_url(board_params[:ship_slug])
+      else
+        flash.alert = 'You were not able to board'
+        redirect_to location_url(current_person.location)
+      end
     end
 
     def disembark
