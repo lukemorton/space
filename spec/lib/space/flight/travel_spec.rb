@@ -57,10 +57,22 @@ RSpec.describe Space::Flight::Travel do
       )
     end
 
+    context 'and trying to travel without enough fuel' do
+      let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 0, location: current_station) }
+
+      it 'disallows travel' do
+        expect(subject).to_not be_successful
+      end
+
+      it 'provides an error' do
+        expect(subject.errors).to include(:fuel)
+      end
+    end
+
     context 'and trying to travel to current station' do
       let(:destination_station) { current_station }
 
-      it 'disallows valid travel' do
+      it 'disallows travel' do
         expect(subject).to_not be_successful
       end
 

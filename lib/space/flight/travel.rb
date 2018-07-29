@@ -17,8 +17,8 @@ module Space
         location = location_gateway.find(to)
 
         travel_validator = Validator.new(
-          existing_location: ship.location,
-          destination_location: to
+          destination_location: to,
+          ship: ship
         )
 
         if travel_validator.valid?
@@ -50,14 +50,23 @@ module Space
       class Validator
         include ActiveModel::Model
 
-        attr_accessor :existing_location, :destination_location
+        attr_accessor :ship, :destination_location
 
+        validate :ship_has_enough_fuel
         validate :not_travelling_to_same_location
 
         private
 
+        def ship_has_enough_fuel
+          new_fuel = ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
+
+          if new_fuel < 0
+            errors.add(:fuel, 'Not enough fuel to travel')
+          end
+        end
+
         def not_travelling_to_same_location
-          if existing_location == destination_location
+          if ship.location == destination_location
             errors.add(:destination_location, 'Cannot travel to current location')
           end
         end
