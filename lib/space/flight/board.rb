@@ -23,7 +23,9 @@ module Space
       attr_reader :ship_gateway
 
       def can_board_ship?(ship, person_id)
-        if ship.has_crew_member_id?(person_id)
+        if ship.nil?
+          false
+        elsif ship.has_crew_member_id?(person_id)
           false
         else
           true

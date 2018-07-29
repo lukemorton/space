@@ -4,7 +4,8 @@ require_relative '../../../../lib/space/flight/ship'
 RSpec.describe Space::Flight::Board do
   context 'when boarding ship' do
     let(:person) { instance_double('Person', id: 1) }
-    let(:ship) { Space::Flight::Ship.new(id: 1, crew: []) }
+    let(:ship_id) { 1 }
+    let(:ship) { Space::Flight::Ship.new(id: ship_id, crew: []) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, add_crew_member: true) }
 
     let(:use_case) do
@@ -13,7 +14,7 @@ RSpec.describe Space::Flight::Board do
       )
     end
 
-    subject { use_case.board(person.id, ship.id) }
+    subject { use_case.board(person.id, ship_id) }
 
     it 'allows a person to board' do
       expect(subject).to be_successful
@@ -21,13 +22,21 @@ RSpec.describe Space::Flight::Board do
 
     it 'adds boarding person to crew' do
       subject
-      expect(ship_gateway).to have_received(:add_crew_member).with(ship.id, person.id)
+      expect(ship_gateway).to have_received(:add_crew_member).with(ship_id, person.id)
+    end
+
+    context 'and ship does not exist' do
+      let(:ship) { nil }
+
+      it 'disallows person to board' do
+        expect(subject).not_to be_successful
+      end
     end
 
     context 'and person is part of crew' do
-      let(:ship) { Space::Flight::Ship.new(id: 1, crew: [person]) }
+      let(:ship) { Space::Flight::Ship.new(id: ship_id, crew: [person]) }
 
-      it 'disallows person to disembark' do
+      it 'disallows person to board' do
         expect(subject).not_to be_successful
       end
     end
