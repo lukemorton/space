@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Actions::FlightController do
+  let(:ship) { create(:ship) }
+  let(:ship_id) { ship.id }
+
   describe '#board' do
     let(:person) { create(:person) }
-    let(:ship) { create(:ship) }
 
     before do
       person
 
       post(board_url, params: {
         board: {
-          ship_id: ship.id,
+          ship_id: ship_id,
           ship_slug: ship.slug
         }
       })
@@ -25,7 +27,7 @@ RSpec.describe Actions::FlightController do
     end
 
     context 'and boarding unsuccessful' do
-      let(:ship) { double(id: 0, slug: '') }
+      let(:ship_id) { 0 }
 
       it 'redirects' do
         assert_redirected_to person.location
@@ -42,16 +44,15 @@ RSpec.describe Actions::FlightController do
 
     before do
       person
-      ship = create(:ship)
 
       post(disembark_url, params: {
         disembark: {
-          ship_id: ship.id
+          ship_id: ship_id
         }
       })
     end
 
-    it 'redirects on success' do
+    it 'redirects' do
       assert_redirected_to person.location
     end
 
@@ -62,12 +63,11 @@ RSpec.describe Actions::FlightController do
 
   describe '#travel' do
     it 'redirects on success' do
-      ship = create(:ship)
       location = create(:location)
 
       post(travel_url, params: {
         travel: {
-          ship_id: ship.id,
+          ship_id: ship_id,
           ship_slug: ship.slug,
           location_id: location.id
         }
