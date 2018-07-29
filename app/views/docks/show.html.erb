@@ -9,6 +9,19 @@
 
 <ul>
   <% @dock.ships.each do |ship| %>
-    <li><%= link_to ship.name, ship_path(ship) %> crew=<%= ship.crew.map(&:name).join(',') %></li>
+    <li>
+      <% if ship.has_crew_member_id?(current_person.id) %>
+        <%= link_to ship.name, ship_path(ship) %>
+        crew=<%= ship.crew.map(&:name).join(',') %>
+      <% else %>
+        <%= ship.name %>
+        crew=<%= ship.crew.map(&:name).join(',') %>
+        <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
+          <%= f.hidden_field :ship_id, value: ship.id %>
+          <%= f.hidden_field :ship_slug, value: ship.slug %>
+          <%= submit_tag 'Board', class: 'btn btn-primary' %>
+        <% end %>
+      <% end %>
+    </li>
   <% end %>
 </ul>

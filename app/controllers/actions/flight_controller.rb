@@ -5,6 +5,11 @@ module Actions
       redirect_to ship_url(travel_params[:ship_slug])
     end
 
+    def board
+      board_use_case.board(current_person.id, board_params[:ship_id])
+      redirect_to ship_url(board_params[:ship_slug])
+    end
+
     def disembark
       disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
       redirect_to location_url(current_person.location)
@@ -20,6 +25,12 @@ module Actions
       )
     end
 
+    def board_use_case
+      Space::Flight::Board.new(
+        ship_gateway: ship_gateway
+      )
+    end
+
     def disembark_use_case
       Space::Flight::Disembark.new(
         ship_gateway: ship_gateway
@@ -28,6 +39,10 @@ module Actions
 
     def travel_params
       params.require(:travel).permit(:ship_id, :ship_slug, :location_id)
+    end
+
+    def board_params
+      params.require(:board).permit(:ship_id, :ship_slug)
     end
 
     def disembark_params
