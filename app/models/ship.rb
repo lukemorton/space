@@ -9,4 +9,5 @@ class Ship < ApplicationRecord
 
   validates :fuel, presence: true
   validates :name, presence: true
+  validates :slug, presence: true
 end

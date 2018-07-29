@@ -6,4 +6,5 @@ class Dock < ApplicationRecord
   has_many :ships
 
   validates :name, presence: true
+  validates :slug, presence: true
 end
