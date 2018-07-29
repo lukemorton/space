@@ -19,6 +19,7 @@ RSpec.feature 'Disembarking a ship' do
   end
 
   def then_i_should_see_a_list_of_places_to_visit
+    expect(page).to have_content('You disembarked')
     expect(page).to have_content(ship.location.name)
     expect(page).to have_content('Dock')
   end

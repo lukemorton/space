@@ -40,6 +40,7 @@ RSpec.feature 'Space flight travel' do
   end
 
   def then_my_location_should_be_updated
+    expect(page).to have_content('You travelled')
     expect(page).to have_content(new_location.name)
   end
 
