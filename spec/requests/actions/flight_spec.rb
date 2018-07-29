@@ -8,7 +8,9 @@ RSpec.describe Actions::FlightController do
   describe '#board' do
     before do
       person
+    end
 
+    subject do
       post(board_url, params: {
         board: {
           ship_id: ship_id,
@@ -18,22 +20,20 @@ RSpec.describe Actions::FlightController do
     end
 
     it 'redirects' do
+      subject
       assert_redirected_to ship
     end
 
     it 'sets flash notice' do
+      subject
       expect(flash.notice).to be_present
     end
 
     context 'and boarding unsuccessful' do
       let(:ship_id) { 0 }
 
-      it 'redirects' do
-        assert_redirected_to person.location
-      end
-
-      it 'sets flash alert' do
-        expect(flash.alert).to be_present
+      it 'raises error' do
+        expect{subject}.to raise_error(Space::Flight::CannotBoardError)
       end
     end
   end

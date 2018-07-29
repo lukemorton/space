@@ -1,3 +1,5 @@
+require_relative 'cannot_board_error'
+
 module Space
   module Flight
     class Board
@@ -14,7 +16,7 @@ module Space
           ship_gateway.add_crew_member(ship_id, person_id)
           Response.new(true)
         else
-          Response.new(false)
+          raise Space::Flight::CannotBoardError.new
         end
       end
 
