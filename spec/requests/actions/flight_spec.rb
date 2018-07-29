@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Actions::FlightController do
+  before do
+    sign_in create(:user)
+  end
+
   let(:person) { create(:person) }
   let(:ship) { create(:ship) }
   let(:ship_id) { ship.id }

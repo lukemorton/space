@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ShipsController do
+  before do
+    sign_in create(:user)
+  end
+
   describe '#show' do
     it 'returns successfully' do
       get ship_url(create(:ship, crew: [create(:person)]))

@@ -7,6 +7,7 @@ RSpec.feature 'Visiting a location' do
   end
 
   background do
+    sign_in create(:user)
     create(:person, location: location, ship: create(:ship, location: location))
   end
 

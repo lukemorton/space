@@ -8,7 +8,7 @@ RSpec.feature 'Disembarking a ship' do
   end
 
   background do
-    # create(:person)
+    sign_in create(:user)
   end
 
   given(:ship) { create(:ship, :with_crew) }

@@ -8,6 +8,7 @@ RSpec.feature 'Boarding a ship' do
   end
 
   background do
+    sign_in create(:user)
     create(:person, location: ship.location)
   end
 

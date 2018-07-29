@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe LocationsController do
+  before do
+    sign_in create(:user)
+  end
+
   describe '#show' do
     it 'renders on success' do
       location = create(:location)
