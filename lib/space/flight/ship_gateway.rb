@@ -23,6 +23,11 @@ module Space
         ship_repository.find(ship_id).update(attrs)
       end
 
+      def add_crew_member(ship_id, person_id)
+        ship = ship_repository.find(ship_id)
+        ship.update!(crew_ids: ship.crew_ids << person_id)
+      end
+
       def remove_crew_member(ship_id, person_id)
         ship = ship_repository.find(ship_id)
         ship.crew.delete(person_id)

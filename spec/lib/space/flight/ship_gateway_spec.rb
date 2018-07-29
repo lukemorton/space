@@ -86,6 +86,25 @@ RSpec.describe Space::Flight::ShipGateway do
     end
   end
 
+  context 'when adding a person to ship crew' do
+    let(:crew_member_id) { 1 }
+    let(:ship_record) { instance_double('Ship', id: 1, crew_ids: [], dock: nil, location: location_record, update!: true) }
+    let(:ship_repository) do
+      class_double('Ship').tap do |double|
+        allow(double).to receive(:find).with(ship_record.id).and_return(ship_record)
+      end
+    end
+
+    subject { described_class.new(ship_repository: ship_repository).add_crew_member(ship_record.id, crew_member_id) }
+
+    it { is_expected.to be(true) }
+
+    it 'should update ship with array of crew_ids including person' do
+      subject
+      expect(ship_record).to have_received(:update!).with(crew_ids: [crew_member_id])
+    end
+  end
+
   context 'when removing a crew member from ship' do
     let(:crew_member_id) { 1 }
     let(:crew) { double(:crew, delete: true) }
