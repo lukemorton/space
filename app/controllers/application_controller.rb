@@ -27,4 +27,12 @@ class ApplicationController < ActionController::Base
   def ship_gateway
     Space::Flight::ShipGateway.new(ship_repository: Ship)
   end
+
+  def after_sign_in_path_for(resource)
+    location_path current_person.location
+  end
+
+  def after_sign_out_path_for(resource)
+    new_user_session_path
+  end
 end
