@@ -26,6 +26,7 @@ module Actions
 
     def travel
       travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
+      flash.notice = 'You travelled'
       redirect_to ship_url(travel_params[:ship_slug])
     end
 

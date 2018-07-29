@@ -90,5 +90,9 @@ RSpec.describe Actions::FlightController do
     it 'redirects' do
       assert_redirected_to ship
     end
+
+    it 'sets flash notice' do
+      expect(flash.notice).to be_present
+    end
   end
 end
