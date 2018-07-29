@@ -29,7 +29,10 @@ group :development, :test do
 end
 
 group :development do
-  gem 'bootsnap', '~> 1.3.0'
+  gem 'bootsnap', '>= 1.3.0'
+  gem 'guard-rspec', '~> 4.7.3'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'terminal-notifier', '>= 2.0.0'
+  gem 'terminal-notifier-guard', '>= 1.7.0'
   gem 'web-console', '>= 3.3.0'
 end
