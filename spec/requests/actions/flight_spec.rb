@@ -48,8 +48,7 @@ RSpec.describe Actions::FlightController do
     subject do
       post(disembark_url, params: {
         disembark: {
-          ship_id: ship_id,
-          ship_slug: ship.slug
+          ship_id: ship_id
         }
       })
     end
