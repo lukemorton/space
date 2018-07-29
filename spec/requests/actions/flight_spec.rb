@@ -24,9 +24,9 @@ RSpec.describe Actions::FlightController do
       assert_redirected_to ship
     end
 
-    it 'sets flash notice' do
+    it 'sets flash success' do
       subject
-      expect(flash.notice).to be_present
+      expect(flash[:success]).to be_present
     end
 
     context 'and boarding unsuccessful' do
@@ -59,9 +59,9 @@ RSpec.describe Actions::FlightController do
       assert_redirected_to person.location
     end
 
-    it 'sets flash notice' do
+    it 'sets flash success' do
       subject
-      expect(flash.notice).to be_present
+      expect(flash[:success]).to be_present
     end
 
     context 'and disembarking unsuccessful' do
@@ -93,8 +93,8 @@ RSpec.describe Actions::FlightController do
       assert_redirected_to ship
     end
 
-    it 'sets flash notice' do
-      expect(flash.notice).to be_present
+    it 'sets flash success' do
+      expect(flash[:success]).to be_present
     end
 
     context 'and travelling unsuccessful' do

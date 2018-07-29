@@ -2,13 +2,13 @@ module Actions
   class FlightController < ApplicationController
     def board
       board_use_case.board(current_person.id, board_params[:ship_id])
-      flash.notice = 'You boarded'
+      flash[:success] = 'You boarded'
       redirect_to ship_url(board_params[:ship_slug])
     end
 
     def disembark
       disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
-      flash.notice = 'You disembarked'
+      flash[:success] = 'You disembarked'
       redirect_to location_url(current_person.location)
     end
 
@@ -16,7 +16,7 @@ module Actions
       travelling = travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
 
       if travelling.successful?
-        flash.notice = 'You travelled'
+        flash[:success] = 'You travelled'
       else
         flash[:errors] = travelling.errors
       end
