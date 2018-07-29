@@ -1,3 +1,5 @@
+require_relative 'cannot_disembark_error'
+
 module Space
   module Flight
     class Disembark
@@ -14,7 +16,7 @@ module Space
           ship_gateway.remove_crew_member(ship_id, person_id)
           Response.new(true)
         else
-          Response.new(false)
+          raise CannotDisembarkError.new
         end
       end
 

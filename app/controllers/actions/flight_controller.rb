@@ -7,15 +7,9 @@ module Actions
     end
 
     def disembark
-      disembarking = disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
-
-      if disembarking.successful?
-        flash.notice = 'You disembarked'
-        redirect_to location_url(current_person.location)
-      else
-        flash.alert = 'You were not able to disembark'
-        redirect_to ship_url(disembark_params[:ship_slug])
-      end
+      disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
+      flash.notice = 'You disembarked'
+      redirect_to location_url(current_person.location)
     end
 
     def travel
@@ -57,7 +51,7 @@ module Actions
     end
 
     def disembark_params
-      params.require(:disembark).permit(:ship_id, :ship_slug)
+      params.require(:disembark).permit(:ship_id)
     end
 
     def travel_params

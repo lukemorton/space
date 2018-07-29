@@ -29,7 +29,7 @@ RSpec.describe Space::Flight::Disembark do
       let(:ship) { nil }
 
       it 'disallows person to disembark' do
-        expect(subject).not_to be_successful
+        expect{subject}.to raise_error(Space::Flight::CannotDisembarkError)
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.describe Space::Flight::Disembark do
       let(:ship) { Space::Flight::Ship.new(id: 1, crew: []) }
 
       it 'disallows person to disembark' do
-        expect(subject).not_to be_successful
+        expect{subject}.to raise_error(Space::Flight::CannotDisembarkError)
       end
     end
   end
