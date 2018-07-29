@@ -27,6 +27,20 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
+          <% if flash.alert.present? %>
+            <% flash.alert.each do |alert| %>
+              <div class="alert alert-warning" role="alert">
+                <%= alert %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
           <%= yield %>
         </div>
       </div>
