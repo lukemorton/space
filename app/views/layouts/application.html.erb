@@ -27,12 +27,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8">
-          <% if flash.alert.present? %>
-            <% flash.alert.each do |alert| %>
-              <div class="alert alert-warning" role="alert">
-                <%= alert %>
-              </div>
-            <% end %>
+          <% if flash[:errors].present? %>
+            <div class="alert alert-warning" role="alert">
+              <%= flash[:errors].join('<hr />').html_safe %>
+            </div>
           <% end %>
         </div>
       </div>

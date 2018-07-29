@@ -18,7 +18,7 @@ module Actions
       if travelling.successful?
         flash.notice = 'You travelled'
       else
-        flash.alert = travelling.errors
+        flash[:errors] = travelling.errors
       end
 
       redirect_to ship_url(travel_params[:ship_slug])
