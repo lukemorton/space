@@ -38,8 +38,10 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#disembark' do
+    let(:person) { create(:person) }
+
     before do
-      create(:person)
+      person
       ship = create(:ship)
 
       post(disembark_url, params: {
@@ -50,7 +52,7 @@ RSpec.describe Actions::FlightController do
     end
 
     it 'redirects on success' do
-      assert_response :redirect
+      assert_redirected_to person.location
     end
 
     it 'sets flash notice' do
