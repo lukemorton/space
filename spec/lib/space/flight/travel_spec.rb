@@ -65,7 +65,7 @@ RSpec.describe Space::Flight::Travel do
       end
 
       it 'provides an error' do
-        expect(subject.errors).to include(:fuel)
+        expect(subject.errors).to include('Fuel too low')
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe Space::Flight::Travel do
       end
 
       it 'provides an error' do
-        expect(subject.errors).to include(:destination_location)
+        expect(subject.errors).to include('Destination location is same as current location')
       end
     end
   end

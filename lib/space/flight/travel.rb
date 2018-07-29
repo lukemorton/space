@@ -35,7 +35,7 @@ module Space
 
           Response.new(true, {})
         else
-          Response.new(false, travel_validator.errors)
+          Response.new(false, travel_validator.errors.full_messages)
         end
       end
 
@@ -61,13 +61,13 @@ module Space
           new_fuel = ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
 
           if new_fuel < 0
-            errors.add(:fuel, 'Not enough fuel to travel')
+            errors.add(:fuel, 'too low')
           end
         end
 
         def not_travelling_to_same_location
           if ship.location.id.to_s == destination_location.to_s
-            errors.add(:destination_location, 'Cannot travel to current location')
+            errors.add(:destination_location, 'is same as current location')
           end
         end
       end
