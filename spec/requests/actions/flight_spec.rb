@@ -40,14 +40,15 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#disembark' do
-    let(:person) { create(:person) }
+    let(:person) { create(:person, ship: ship) }
 
     before do
       person
 
       post(disembark_url, params: {
         disembark: {
-          ship_id: ship_id
+          ship_id: ship_id,
+          ship_slug: ship.slug
         }
       })
     end
@@ -58,6 +59,18 @@ RSpec.describe Actions::FlightController do
 
     it 'sets flash notice' do
       expect(flash.notice).to be_present
+    end
+
+    context 'and disembarking unsuccessful' do
+      let(:ship_id) { nil }
+
+      it 'redirects' do
+        assert_redirected_to ship
+      end
+
+      it 'sets flash alert' do
+        expect(flash.alert).to be_present
+      end
     end
   end
 
