@@ -1,4 +1,5 @@
 require 'active_model'
+require_relative 'ship'
 
 module Space
   module Flight
@@ -24,6 +25,7 @@ module Space
           ship_gateway.update(
             ship.id,
             dock_id: location.establishments.first.id,
+            fuel: new_fuel_level(ship),
             location_id: location.id
           )
 
@@ -40,6 +42,10 @@ module Space
       private
 
       attr_reader :location_gateway, :person_gateway, :ship_gateway
+
+      def new_fuel_level(ship)
+        ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
+      end
 
       class Validator
         include ActiveModel::Model

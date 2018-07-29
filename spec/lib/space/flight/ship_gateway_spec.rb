@@ -19,6 +19,7 @@ RSpec.describe Space::Flight::ShipGateway do
       id: ship_record_id,
       crew: [],
       dock: nil,
+      fuel: 100,
       location: location_record,
       name: 'Endeavour',
       slug: ship_record_slug,

@@ -8,11 +8,15 @@ module Space
     class Ship
       include ActiveModel::Model
 
+      FUEL_MAX = 100
+      FUEL_TO_TRAVEL = 10
+
       def self.from_object(object)
         new(
           id: object.id,
           crew: object.crew.map { |member| Space::Flight::CrewMember.from_object(member) },
           dock: Space::Locations::Establishment.from_object(object.dock),
+          fuel: object.fuel,
           location: Space::Locations::Location.from_object(object.location),
           name: object.name,
           slug: object.slug
@@ -22,6 +26,7 @@ module Space
       attr_accessor :id
       attr_accessor :crew
       attr_accessor :dock
+      attr_accessor :fuel
       attr_accessor :location
       attr_accessor :name
       attr_accessor :slug

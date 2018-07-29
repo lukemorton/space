@@ -11,6 +11,7 @@ Person.create!(
   location: london,
   ship: Ship.create!(
     dock: london.establishments.first,
+    fuel: Space::Flight::Ship::FUEL_MAX,
     name: 'Endeavour',
     location: london
   )
