@@ -7,5 +7,6 @@ class Ship < ApplicationRecord
 
   has_many :crew, class_name: 'Person'
 
+  validates :fuel, presence: true
   validates :name, presence: true
 end

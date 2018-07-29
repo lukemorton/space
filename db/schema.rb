@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_28_171031) do
+ActiveRecord::Schema.define(version: 2018_07_29_160310) do
 
   create_table "docks", force: :cascade do |t|
     t.integer "location_id"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2018_07_28_171031) do
     t.integer "dock_id"
     t.string "name"
     t.string "slug"
+    t.integer "fuel", default: 0, null: false
     t.index ["dock_id"], name: "index_ships_on_dock_id"
     t.index ["location_id"], name: "index_ships_on_location_id"
     t.index ["slug"], name: "index_ships_on_slug", unique: true
