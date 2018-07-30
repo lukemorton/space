@@ -15,4 +15,8 @@ Person.create!(
     name: 'Endeavour',
     location: london
   )
+User.create!(
+  email: 'luke@example.com',
+  password: 'password'
+)
 )
