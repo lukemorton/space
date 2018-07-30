@@ -15,9 +15,9 @@
 
         <% if user_signed_in? %>
           <nav class="navbar-nav mr-auto">
-            <%= active_link_to 'Current Location', location_path(current_person&.location), class: 'nav-item nav-link' %>
+            <%= active_link_to 'Current Location', location_path(current_person&.location), class: 'nav-item nav-link' if current_person&.location.present? %>
             <%= active_link_to 'Ship', ship_path(current_person&.ship), class: 'nav-item nav-link' if current_person&.ship.present? %>
-            <%= link_to 'Help', location_path(current_person&.location), class: 'nav-item nav-link' %>
+            <%= link_to 'Help', '', class: 'nav-item nav-link' %>
           </nav>
         <% end %>
 
