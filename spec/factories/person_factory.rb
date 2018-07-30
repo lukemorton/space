@@ -4,6 +4,7 @@ FactoryBot.define do
     name { Faker::Zelda.character }
     location
     ship
+    user
 
     after(:create) do |person|
       person.ship.crew << person

@@ -1,0 +1,7 @@
+<h2>Create your Character</h2>
+
+<%= bootstrap_form_with(model: @person, local: true) do |f| %>
+  <%= f.text_field :name, autofocus: true %>
+
+  <p><%= submit_tag 'Create', class: 'btn btn-primary' %></p>
+<% end %>
