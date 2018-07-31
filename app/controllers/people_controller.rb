@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+  skip_before_action :redirect_if_user_does_not_have_person
   before_action :redirect_if_user_has_person
 
   def new

@@ -17,8 +17,8 @@ RSpec.feature 'Space flight travel' do
   end
 
   background do
-    sign_in create(:user)
-    create(:person, location: location, ship: ship)
+    person = create(:person, location: location, ship: ship)
+    sign_in create(:user, person: person)
     new_location
   end
 

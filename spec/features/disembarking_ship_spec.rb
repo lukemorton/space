@@ -7,11 +7,12 @@ RSpec.feature 'Disembarking a ship' do
     and_i_should_no_longer_be_able_to_travel
   end
 
-  background do
-    sign_in create(:user)
-  end
-
   given(:ship) { create(:ship, :with_crew) }
+  given(:person) { create(:person, location: ship.location, ship: ship) }
+
+  background do
+    sign_in create(:user, person: person)
+  end
 
   def when_i_disembark_a_ship
     visit ship_url(ship)

@@ -1,19 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Actions::FlightController do
-  before do
-    sign_in create(:user)
-  end
-
   let(:person) { create(:person) }
   let(:ship) { create(:ship) }
   let(:ship_id) { ship.id }
 
-  describe '#board' do
-    before do
-      person
-    end
+  before do
+    sign_in create(:user, person: person)
+  end
 
+  describe '#board' do
     subject do
       post(board_url, params: {
         board: {
@@ -44,10 +40,6 @@ RSpec.describe Actions::FlightController do
 
   describe '#disembark' do
     let(:person) { create(:person, ship: ship) }
-
-    before do
-      person
-    end
 
     subject do
       post(disembark_url, params: {
@@ -81,8 +73,6 @@ RSpec.describe Actions::FlightController do
     let(:location_id) { location.id }
 
     before do
-      person
-
       post(travel_url, params: {
         travel: {
           ship_id: ship_id,

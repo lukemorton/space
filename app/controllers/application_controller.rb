@@ -1,12 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  before_action :redirect_if_user_does_not_have_person
   helper_method :current_person
 
   private
 
   def raise_not_found
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def redirect_if_user_does_not_have_person
+    redirect_to new_person_path unless current_user&.person.present?
   end
 
   def current_person

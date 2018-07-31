@@ -7,7 +7,7 @@ RSpec.feature 'Visiting a Dock' do
   end
 
   background do
-    sign_in create(:user)
+    sign_in create(:user, :with_person)
     ship
   end
 
