@@ -12,6 +12,12 @@ RSpec.describe ShipsController do
       get new_person_path
       assert_response :success
     end
+
+    it 'redirects if user has person' do
+      create(:person, user: user)
+      get new_person_path
+      assert_redirected_to root_path
+    end
   end
 
   describe '#create' do
