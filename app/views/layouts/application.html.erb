@@ -13,23 +13,36 @@
       <div class="container">
         <%= link_to 'Space', root_path, class: 'navbar-brand mb-0 h1' %>
 
-        <% if user_signed_in? %>
-          <nav class="navbar-nav mr-auto">
-            <%= active_link_to 'Current Location', location_path(current_person&.location), class: 'nav-item nav-link' if current_person&.location.present? %>
-            <%= active_link_to 'Ship', ship_path(current_person&.ship), class: 'nav-item nav-link' if current_person&.ship.present? %>
-            <%= link_to 'Help', '', class: 'nav-item nav-link' %>
-          </nav>
-        <% end %>
-
-        <nav class="navbar-nav">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <% if user_signed_in? %>
-            <%= link_to 'Account', edit_user_registration_path, class: 'nav-item nav-link' %>
-            <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
-          <% else %>
-            <%= link_to 'Log in', new_user_session_path, class: 'nav-item nav-link' %>
-            <%= link_to 'Sign up for free', new_user_registration_path, class: 'nav-item btn btn-outline-primary ml-2' %>
+            <nav class="navbar-nav mr-auto">
+              <%= active_link_to 'Current Location', location_path(current_person&.location), class: 'nav-item nav-link' if current_person&.location.present? %>
+              <%= active_link_to 'Ship', ship_path(current_person&.ship), class: 'nav-item nav-link' if current_person&.ship.present? %>
+              <%= link_to 'Help', '', class: 'nav-item nav-link' %>
+            </nav>
           <% end %>
-        </nav>
+
+          <nav class="navbar-nav">
+            <% if user_signed_in? %>
+              <%= link_to 'Account', edit_user_registration_path, class: 'nav-item nav-link' %>
+              <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
+            <% else %>
+              <%= link_to 'Log in', new_user_session_path, class: 'nav-item nav-link' %>
+              <%= link_to 'Sign up for free', new_user_registration_path, class: 'nav-item btn btn-outline-primary ml-2' %>
+            <% end %>
+          </nav>
+        </div>
       </div>
     </nav>
 
