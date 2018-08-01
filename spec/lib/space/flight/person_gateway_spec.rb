@@ -2,7 +2,7 @@ require_relative '../../../../lib/space/flight/person_gateway'
 
 RSpec.describe Space::Flight::PersonGateway do
   context 'when finding a person record' do
-    let(:location_record) { instance_double('Location', id: 1, establishments: [], name: 'London', slug: 'london') }
+    let(:location_record) { instance_double('Location', id: 1) }
     let(:person_record) { instance_double('Person', id: 1, location: location_record) }
     let(:person_repository) { class_double('Person', find_by: person_record) }
 

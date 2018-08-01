@@ -9,7 +9,9 @@ module Space
       def self.from_object(object)
         new(
           id: object.id,
-          location: Space::Locations::Location.from_object(object.location)
+          location: Location.new(
+            id: object.location.id
+          )
         )
       end
 
@@ -18,6 +20,16 @@ module Space
 
       def to_param
         id.to_s
+      end
+
+      class Location
+        include ActiveModel::Model
+
+        attr_accessor :id
+
+        def to_param
+          id.to_s
+        end
       end
     end
   end
