@@ -14,9 +14,9 @@ module Space
         new(
           id: object.id,
           crew: object.crew.map { |member| CrewMember.from_object(member) },
-          dock: Space::Locations::Establishment.from_object(object.dock),
+          dock: Dock.from_object(object.dock),
           fuel: object.fuel,
-          location: Space::Locations::Location.from_object(object.location),
+          location: Location.from_object(object.location),
           name: object.name,
           slug: object.slug
         )
@@ -46,6 +46,44 @@ module Space
           new(
             id: object.id,
             name: object.name
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :name
+
+        def to_param
+          id.to_s
+        end
+      end
+
+      class Dock
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          return if object.nil?
+          new(
+            id: object.id,
+            name: object.name
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :name
+
+        def to_param
+          id.to_s
+        end
+      end
+
+      class Location
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          return if object.nil?
+          new(
+            id: object.id,
+            # name: object.name
           )
         end
 
