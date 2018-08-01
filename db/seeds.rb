@@ -18,6 +18,13 @@ ship = Ship.create!(
   location: london
 )
 
+Ship.create!(
+  dock: london.establishments.first,
+  fuel: Space::Flight::Ship::FUEL_MAX,
+  name: 'Deadly',
+  location: london
+)
+
 %i(Jim Gem).each do |name|
   user = User.create!(
     email: "#{name.downcase}@example.com",
