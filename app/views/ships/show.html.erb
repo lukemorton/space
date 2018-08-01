@@ -19,5 +19,5 @@ You are docked at <%= @controls.ship.location.name %> with <%= @controls.ship.fu
 
 <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
   <%= f.hidden_field :ship_id, value: @controls.ship.id %>
-  <%= submit_tag 'Disembark', class: 'btn btn-primary' %>
+  <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
 <% end %>
