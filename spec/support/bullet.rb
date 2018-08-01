@@ -1,3 +1,3 @@
 require 'bullet'
-Bullet.enable = true
+Bullet.enable = ENV['BULLET']
 Bullet.raise = true
