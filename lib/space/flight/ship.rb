@@ -1,5 +1,4 @@
 require 'active_model'
-require_relative 'crew_member'
 require_relative '../locations/establishment'
 require_relative '../locations/location'
 
@@ -14,7 +13,7 @@ module Space
       def self.from_object(object)
         new(
           id: object.id,
-          crew: object.crew.map { |member| Space::Flight::CrewMember.from_object(member) },
+          crew: object.crew.map { |member| CrewMember.from_object(member) },
           dock: Space::Locations::Establishment.from_object(object.dock),
           fuel: object.fuel,
           location: Space::Locations::Location.from_object(object.location),
@@ -38,6 +37,24 @@ module Space
 
       def to_param
         slug.to_s
+      end
+
+      class CrewMember
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          new(
+            id: object.id,
+            name: object.name
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :name
+
+        def to_param
+          id.to_s
+        end
       end
     end
   end

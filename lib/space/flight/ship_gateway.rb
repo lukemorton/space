@@ -1,5 +1,4 @@
 require 'active_model'
-require_relative 'crew_member'
 require_relative 'ship'
 
 module Space
