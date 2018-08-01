@@ -14,8 +14,12 @@ class ApplicationController < ActionController::Base
     redirect_to new_person_path unless current_user&.person.present?
   end
 
+  def user_has_character?
+    current_person.present?
+  end
+
   def current_person
-    Person.first
+    current_user&.person
   end
 
   def dock_gateway
@@ -35,7 +39,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    location_path current_person.location
+    if user_has_character?
+      location_path current_person.location
+    else
+      new_person_path
+    end
   end
 
   def after_sign_out_path_for(resource)
