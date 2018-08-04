@@ -19,6 +19,6 @@ RSpec.feature 'Visiting a location' do
 
   def then_i_should_see_its_name_and_establishments
     expect(page).to have_content(location.name)
-    expect(page).to have_content('Dock')
+    expect(page).to have_content(location.establishments.first.name)
   end
 end

@@ -1,4 +1,3 @@
-require 'active_model'
 require_relative 'ship'
 
 module Space

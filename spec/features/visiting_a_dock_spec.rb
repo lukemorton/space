@@ -11,7 +11,7 @@ RSpec.feature 'Visiting a Dock' do
     ship
   end
 
-  given(:dock) { create(:dock) }
+  given(:dock) { create(:dock, name: 'London Dock') }
   given(:ship) { create(:ship, :with_crew, dock: dock) }
 
   def when_i_visit_a_valid_dock
@@ -20,7 +20,7 @@ RSpec.feature 'Visiting a Dock' do
 
   def then_i_should_see_its_name_and_have_ships_listed
     expect(page).to have_content(dock.location.name)
-    expect(page).to have_content('Dock')
+    expect(page).to have_content(dock.name)
     expect(page).to have_content(ship.name)
     expect(page).to have_content(ship.crew.map(&:name).join(','))
   end
