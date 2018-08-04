@@ -6,9 +6,17 @@ RSpec.describe Space::Flight::PersonGateway do
     let(:person_record) { instance_double('Person', id: 1, location: location_record) }
     let(:person_repository) { class_double('Person', find_by: person_record) }
 
-    subject { described_class.new(person_repository: person_repository).find(1) }
+    subject(:person) { described_class.new(person_repository: person_repository).find(1) }
 
     it { is_expected.to be_a(Space::Flight::Person) }
+
+    it 'has an id' do
+      expect(person.id).to eq(person_record.id)
+    end
+
+    it 'has an location' do
+      expect(person.location.id).to eq(location_record.id)
+    end
 
     context 'and person does not exist' do
       let(:person_record) { nil }

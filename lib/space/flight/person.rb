@@ -18,10 +18,6 @@ module Space
       attr_accessor :id
       attr_accessor :location
 
-      def to_param
-        id.to_s
-      end
-
       class Location
         include ActiveModel::Model
 
