@@ -51,10 +51,6 @@ module Space
 
         attr_accessor :id
         attr_accessor :name
-
-        def to_param
-          id.to_s
-        end
       end
 
       class Dock
@@ -64,15 +60,17 @@ module Space
           return if object.nil?
           new(
             id: object.id,
-            name: object.name
+            name: object.name,
+            slug: object.slug
           )
         end
 
         attr_accessor :id
         attr_accessor :name
+        attr_accessor :slug
 
         def to_param
-          id.to_s
+          slug.to_s
         end
       end
 
@@ -83,15 +81,17 @@ module Space
           return if object.nil?
           new(
             id: object.id,
-            # name: object.name
+            name: object.name,
+            slug: object.slug
           )
         end
 
         attr_accessor :id
         attr_accessor :name
+        attr_accessor :slug
 
         def to_param
-          id.to_s
+          slug.to_s
         end
       end
     end

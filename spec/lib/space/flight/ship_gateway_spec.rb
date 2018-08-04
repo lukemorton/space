@@ -1,14 +1,16 @@
 require_relative '../../../../lib/space/flight/ship_gateway'
 
 RSpec.describe Space::Flight::ShipGateway do
+  let(:person_record) do
+    instance_double('Person', id: 1, name: 'Luke')
+  end
+
+  let(:dock_record) do
+    instance_double('Dock', id: 1, name: 'London Dock', slug: 'london-dock')
+  end
+
   let(:location_record) do
-    instance_double(
-      'Location',
-      id: 1,
-      establishments: [],
-      name: 'London',
-      slug: 'london'
-    )
+    instance_double('Location', id: 1, name: 'London', slug: 'london')
   end
 
   let(:ship_record_id) { 1 }
@@ -17,8 +19,8 @@ RSpec.describe Space::Flight::ShipGateway do
     instance_double(
       'Ship',
       id: ship_record_id,
-      crew: [],
-      dock: nil,
+      crew: [person_record],
+      dock: dock_record,
       fuel: 100,
       location: location_record,
       name: 'Endeavour',
@@ -27,20 +29,65 @@ RSpec.describe Space::Flight::ShipGateway do
     )
   end
 
-  context 'when finding a ship record' do
+  shared_examples 'a ship' do
+    it { is_expected.to be_a(Space::Flight::Ship) }
+
+    it 'has correct ID' do
+      expect(ship.id).to eq(ship_record_id)
+    end
+
+    it 'has crew' do
+      expect(ship.crew.first.name).to eq(person_record.name)
+    end
+
+    it 'can check if person is in crew' do
+      expect(ship.has_crew_member_id?(person_record.id)).to be(true)
+      expect(ship.has_crew_member_id?(0)).to be(false)
+    end
+
+    it 'has a dock' do
+      expect(ship.dock.name).to eq(dock_record.name)
+    end
+
+    it 'can generate dock param from dock slug' do
+      expect(ship.dock.to_param).to eq(dock_record.slug)
+    end
+
+    it 'has fuel' do
+      expect(ship.fuel).to eq(ship_record.fuel)
+    end
+
+    it 'has a location' do
+      expect(ship.location.name).to eq(location_record.name)
+    end
+
+    it 'can generate location param from location slug' do
+      expect(ship.location.to_param).to eq(location_record.slug)
+    end
+
+    it 'has name' do
+      expect(ship.name).to eq(ship_record.name)
+    end
+
+    it 'has slug' do
+      expect(ship.slug).to eq(ship_record.slug)
+    end
+
+    it 'can generate param from slug' do
+      expect(ship.to_param).to eq(ship_record.slug)
+    end
+  end
+
+  context 'when finding a ship by id' do
     let(:ship_repository) do
       class_double('Ship').tap do |double|
         allow(double).to receive(:find_by).with(id: ship_record_id).and_return(ship_record)
       end
     end
 
-    subject { described_class.new(ship_repository: ship_repository).find(ship_record_id) }
+    subject(:ship) { described_class.new(ship_repository: ship_repository).find(ship_record_id) }
 
-    it { is_expected.to be_a(Space::Flight::Ship) }
-
-    it 'has correct ID' do
-      expect(subject.id).to eq(ship_record_id)
-    end
+    it_behaves_like 'a ship'
 
     context 'and ship does not exist' do
       let(:ship_record) { nil }
@@ -55,13 +102,9 @@ RSpec.describe Space::Flight::ShipGateway do
       end
     end
 
-    subject { described_class.new(ship_repository: ship_repository).find_by_slug(ship_record_slug) }
+    subject(:ship) { described_class.new(ship_repository: ship_repository).find_by_slug(ship_record_slug) }
 
-    it { is_expected.to be_a(Space::Flight::Ship) }
-
-    it 'has correct ID' do
-      expect(subject.id).to eq(ship_record_id)
-    end
+    it_behaves_like 'a ship'
 
     context 'and ship does not exist' do
       let(:ship_record) { nil }
