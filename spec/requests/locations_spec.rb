@@ -21,5 +21,10 @@ RSpec.describe LocationsController do
       get location_url(location)
       assert_response :redirect
     end
+
+    it 'raises not found when location not found' do
+      create(:person, location: create(:location), user: user)
+      expect{get location_url('not a location')}.to raise_error(ActionController::RoutingError)
+    end
   end
 end

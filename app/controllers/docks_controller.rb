@@ -1,6 +1,8 @@
 class DocksController < ApplicationController
   def show
     @dock = view_dock_use_case.view(params.fetch(:id))
+  rescue Space::Locations::UnknownDockError
+    raise_not_found
   end
 
   private

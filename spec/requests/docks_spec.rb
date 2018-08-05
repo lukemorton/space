@@ -6,9 +6,13 @@ RSpec.describe DocksController do
   end
 
   describe '#show' do
-    it 'returns successfully' do
+    it 'returns successfully for valid dock' do
       get dock_url(create(:dock))
       assert_response :success
+    end
+
+    it 'raises not found when dock not found' do
+      expect{get dock_url('not a dock')}.to raise_error(ActionController::RoutingError)
     end
   end
 end
