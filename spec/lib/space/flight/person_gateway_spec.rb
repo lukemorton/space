@@ -14,7 +14,11 @@ RSpec.describe Space::Flight::PersonGateway do
       expect(person.id).to eq(person_record.id)
     end
 
-    it 'has an location' do
+    it 'has location' do
+      expect(person.location).to_not be_nil
+    end
+
+    it 'has location with id' do
       expect(person.location.id).to eq(location_record.id)
     end
 
