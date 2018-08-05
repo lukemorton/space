@@ -32,37 +32,12 @@ RSpec.describe Space::Flight::ShipGateway do
   shared_examples 'a ship' do
     it { is_expected.to be_a(Space::Flight::Ship) }
 
-    it 'has correct ID' do
+    it 'has id' do
       expect(ship.id).to eq(ship_record_id)
-    end
-
-    it 'has crew' do
-      expect(ship.crew.first.name).to eq(person_record.name)
-    end
-
-    it 'can check if person is in crew' do
-      expect(ship.has_crew_member_id?(person_record.id)).to be(true)
-      expect(ship.has_crew_member_id?(0)).to be(false)
-    end
-
-    it 'has a dock' do
-      expect(ship.dock.name).to eq(dock_record.name)
-    end
-
-    it 'can generate dock param from dock slug' do
-      expect(ship.dock.to_param).to eq(dock_record.slug)
     end
 
     it 'has fuel' do
       expect(ship.fuel).to eq(ship_record.fuel)
-    end
-
-    it 'has a location' do
-      expect(ship.location.name).to eq(location_record.name)
-    end
-
-    it 'can generate location param from location slug' do
-      expect(ship.location.to_param).to eq(location_record.slug)
     end
 
     it 'has name' do
@@ -75,6 +50,63 @@ RSpec.describe Space::Flight::ShipGateway do
 
     it 'can generate param from slug' do
       expect(ship.to_param).to eq(ship_record.slug)
+    end
+
+    it 'can check if person is in crew' do
+      expect(ship.has_crew_member_id?(person_record.id)).to be(true)
+      expect(ship.has_crew_member_id?(0)).to be(false)
+    end
+
+    it 'has crew' do
+      expect(ship.crew).to_not be_empty
+    end
+
+    it 'has crew with id' do
+      expect(ship.crew.first.id).to eq(person_record.id)
+    end
+
+    it 'has crew with name' do
+      expect(ship.crew.first.name).to eq(person_record.name)
+    end
+
+    it 'has a dock' do
+      expect(ship.dock).to_not be_nil
+    end
+
+    it 'has a dock with id' do
+      expect(ship.dock.id).to eq(dock_record.id)
+    end
+
+    it 'has a dock with name' do
+      expect(ship.dock.name).to eq(dock_record.name)
+    end
+
+    it 'has a dock with slug' do
+      expect(ship.dock.slug).to eq(dock_record.slug)
+    end
+
+    it 'can generate dock param from dock slug' do
+      expect(ship.dock.to_param).to eq(dock_record.slug)
+    end
+
+    it 'has a location' do
+      expect(ship.location).to_not be_nil
+    end
+
+    it 'has a location with id' do
+      expect(ship.location.id).to eq(location_record.id)
+    end
+
+    it 'has a location with name' do
+      expect(ship.location.name).to eq(location_record.name)
+    end
+
+    it 'has a location with slug' do
+      expect(ship.location.slug).to eq(location_record.slug)
+    end
+
+    it 'can generate location param from location slug' do
+      expect(ship.location.to_param).to eq(location_record.slug)
     end
   end
 
