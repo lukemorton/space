@@ -6,14 +6,12 @@ module Space
       include ActiveModel::Model
 
       def self.from_object(object)
-        attrs = {
+        new(
           id: object.id,
-          establishments: object.establishments&.map { |establishment| Space::Locations::Establishment.from_object(establishment) },
+          establishments: object.establishments.map { |establishment| Establishment.from_object(establishment) },
           name: object.name,
           slug: object.slug
-        }
-        yield(object, attrs) if block_given?
-        new(attrs)
+        )
       end
 
       attr_accessor :id
@@ -23,6 +21,33 @@ module Space
 
       def to_param
         slug.to_s
+      end
+
+      class Establishment
+        def self.from_object(object)
+          Dock.from_object(object) unless object.nil?
+        end
+      end
+
+      class Dock
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          return if object.nil?
+          new(
+            id: object.id,
+            name: object.name,
+            slug: object.slug
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :name
+        attr_accessor :slug
+
+        def to_param
+          slug.to_s
+        end
       end
     end
   end
