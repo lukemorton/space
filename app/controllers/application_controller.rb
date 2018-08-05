@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def person_gateway
-    Space::Flight::PersonGateway.new(person_repository: Person)
+    Space::Folk::PersonGateway.new(person_repository: Person)
   end
 
   def ship_gateway

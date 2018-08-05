@@ -1,6 +1,6 @@
-require_relative '../../../../lib/space/flight/person_gateway'
+require_relative '../../../../lib/space/folk/person_gateway'
 
-RSpec.describe Space::Flight::PersonGateway do
+RSpec.describe Space::Folk::PersonGateway do
   context 'when finding a person record' do
     let(:location_record) { instance_double('Location', id: 1) }
     let(:person_record) { instance_double('Person', id: 1, location: location_record) }
@@ -8,7 +8,7 @@ RSpec.describe Space::Flight::PersonGateway do
 
     subject(:person) { described_class.new(person_repository: person_repository).find(1) }
 
-    it { is_expected.to be_a(Space::Flight::Person) }
+    it { is_expected.to be_a(Space::Folk::Person) }
 
     it 'has an id' do
       expect(person.id).to eq(person_record.id)

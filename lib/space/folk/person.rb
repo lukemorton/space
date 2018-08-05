@@ -2,7 +2,7 @@ require 'active_model'
 require_relative '../locations/location'
 
 module Space
-  module Flight
+  module Folk
     class Person
       include ActiveModel::Model
 

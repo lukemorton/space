@@ -1,7 +1,7 @@
 require_relative 'person'
 
 module Space
-  module Flight
+  module Folk
     class PersonGateway
       def initialize(person_repository:)
         @person_repository = person_repository
@@ -9,7 +9,7 @@ module Space
 
       def find(person_id)
         person = person_repository.find_by(id: person_id)
-        Space::Flight::Person.from_object(person) unless person.nil?
+        Space::Folk::Person.from_object(person) unless person.nil?
       end
 
       def update(person_id, attrs)

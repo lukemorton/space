@@ -8,7 +8,7 @@ RSpec.describe Space::Flight::Travel do
     let(:destination_station) { instance_double('Location', id: 2, establishments: [destination_dock]) }
     let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::FUEL_MAX, location: current_station) }
-    let(:person_gateway) { instance_double('Space::Flight::PersonGateway', update: true) }
+    let(:person_gateway) { instance_double('Space::Folk::PersonGateway', update: true) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, update: true) }
 
     let(:use_case) do
