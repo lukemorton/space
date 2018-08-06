@@ -28,6 +28,41 @@ RSpec.describe Space::Folk::PersonGateway do
     end
   end
 
+  context 'when creating a person record' do
+    let(:person_repository) { class_double('Person', create: true) }
+
+    subject do
+      described_class.new(person_repository: person_repository).create(
+        location_id: 1,
+        name: 'Luke',
+        user_id: 1
+      )
+    end
+
+    it { is_expected.to be(true) }
+
+    it 'sets name' do
+      subject
+      expect(person_repository).to have_received(:create).with(a_hash_including(
+        name: 'Luke'
+      ))
+    end
+
+    it 'sets user_id' do
+      subject
+      expect(person_repository).to have_received(:create).with(a_hash_including(
+        user_id: 1
+      ))
+    end
+
+    it 'sets location_id' do
+      subject
+      expect(person_repository).to have_received(:create).with(a_hash_including(
+        location_id: 1
+      ))
+    end
+  end
+
   context 'when updating a person record' do
     let(:person_record) { instance_double('Person', id: 1, update: true) }
     let(:person_repository) { class_double('Person', find: person_record) }
