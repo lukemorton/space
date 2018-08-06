@@ -13,6 +13,11 @@ module Space
         end
       end
 
+      def first
+        location = location_repository.first
+        Space::Locations::Location.from_object(location) unless location.nil?
+      end
+
       def find(id)
         location = location_repository.find_by(id: id)
         Space::Locations::Location.from_object(location) unless location.nil?

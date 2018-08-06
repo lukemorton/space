@@ -56,6 +56,23 @@ RSpec.describe Space::Locations::LocationGateway do
     end
   end
 
+  context 'when finding first location' do
+    let(:location_repository) do
+      class_double('Location').tap do |double|
+        allow(double).to receive(:first).and_return(location_record)
+      end
+    end
+
+    subject(:location) { described_class.new(location_repository: location_repository).first }
+
+    it_behaves_like 'a location'
+
+    context 'and location does not exist' do
+      let(:location_record) { nil }
+      it { is_expected.to be_nil }
+    end
+  end
+
   context 'when finding a location record' do
     let(:location_repository) do
       class_double('Location').tap do |double|
