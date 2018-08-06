@@ -41,7 +41,7 @@ RSpec.describe Space::Folk::CreatePerson do
       end
 
       it 'provides an error' do
-        expect(subject.errors).to include('Name can\'t be blank')
+        expect(subject.validation.errors).to include('Name can\'t be blank')
       end
     end
 

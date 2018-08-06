@@ -4,7 +4,7 @@ require_relative 'could_not_create_person_error'
 module Space
   module Folk
     class CreatePerson
-      Response = Struct.new(:successful?, :errors)
+      Response = Struct.new(:successful?, :validator)
 
       def initialize(person_gateway:)
         @person_gateway = person_gateway
@@ -21,7 +21,7 @@ module Space
           raise CouldNotCreatePersonError.new unless successful
           Response.new(true)
         else
-          Response.new(false, validator.errors.full_messages)
+          Response.new(false, validator)
         end
       end
 
