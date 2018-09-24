@@ -2,10 +2,13 @@ require_relative '../../../../lib/space/folk/create_person'
 
 RSpec.describe Space::Folk::CreatePerson do
   context 'when creating person' do
+    let(:location) { instance_double('Space::Locations::Location', id: 2) }
+    let(:location_gateway) { instance_double('Space::Flight::LocationGateway', first: location) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: true) }
 
     let(:use_case) do
       described_class.new(
+        location_gateway: location_gateway,
         person_gateway: person_gateway
       )
     end
@@ -20,6 +23,13 @@ RSpec.describe Space::Folk::CreatePerson do
       subject
       expect(person_gateway).to have_received(:create).with(a_hash_including(
         name: 'Luke'
+      ))
+    end
+
+    it 'passes location_id' do
+      subject
+      expect(person_gateway).to have_received(:create).with(a_hash_including(
+        location_id: location.id
       ))
     end
 

@@ -6,7 +6,8 @@ module Space
     class CreatePerson
       Response = Struct.new(:successful?, :validator)
 
-      def initialize(person_gateway:)
+      def initialize(location_gateway:, person_gateway:)
+        @location_gateway = location_gateway
         @person_gateway = person_gateway
       end
 
@@ -15,6 +16,7 @@ module Space
 
         if validator.valid?
           successful = person_gateway.create(
+            location_id: default_location_id,
             name: attrs[:name],
             user_id: user_id
           )
@@ -27,7 +29,12 @@ module Space
 
       private
 
+      attr_reader :location_gateway
       attr_reader :person_gateway
+
+      def default_location_id
+        location_gateway.first.id
+      end
 
       class Validator
         include ActiveModel::Model
