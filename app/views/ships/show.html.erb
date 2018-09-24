@@ -4,11 +4,14 @@
 
 <h1><%= @controls.ship.name %></h1>
 
-You are docked at <%= @controls.ship.location.name %> with <%= @controls.ship.fuel %> fuel.
+<h2>Location</h2>
+
+<p>You are docked at <%= @controls.ship.location.name %>.</p>
 
 <h2>Controls</h2>
 
 <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
+  <p>Fuel remaining: <%= @controls.ship.fuel %></p>
   <%= f.hidden_field :ship_id, value: @controls.ship.id %>
   <%= f.hidden_field :ship_slug, value: @controls.ship.slug %>
   <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, checked: @controls.ship.location.id %>
@@ -19,3 +22,11 @@ You are docked at <%= @controls.ship.location.name %> with <%= @controls.ship.fu
   <%= f.hidden_field :ship_id, value: @controls.ship.id %>
   <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
 <% end %>
+
+<h2>Crew</h2>
+
+<ul>
+  <% @controls.ship.crew.each do |crew_member| %>
+    <li><%= crew_member.name %></li>
+  <% end %>
+</ul>
