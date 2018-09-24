@@ -3,7 +3,7 @@ require_relative '../../../../lib/space/folk/person_gateway'
 RSpec.describe Space::Folk::PersonGateway do
   context 'when finding a person record' do
     let(:location_record) { instance_double('Location', id: 1) }
-    let(:person_record) { instance_double('Person', id: 1, location: location_record) }
+    let(:person_record) { instance_double('Person', id: 1, location: location_record, ship_id: nil) }
     let(:person_repository) { class_double('Person', find_by: person_record) }
 
     subject(:person) { described_class.new(person_repository: person_repository).find(1) }
@@ -16,6 +16,10 @@ RSpec.describe Space::Folk::PersonGateway do
 
     it 'has location' do
       expect(person.location).to_not be_nil
+    end
+
+    it 'can be aboard ship' do
+      expect(person).to_not be_aboard_ship
     end
 
     it 'has location with id' do
