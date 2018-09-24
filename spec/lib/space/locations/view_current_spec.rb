@@ -30,7 +30,9 @@ RSpec.describe Space::Locations::ViewCurrent do
 
     subject { use_case.view(location.slug, person.id) }
 
-    it { is_expected.to_not be_current }
+    it 'should raise an error' do
+      expect { subject }.to raise_error(Space::Locations::PersonNotInLocationError)
+    end
   end
 
   context 'when viewing invalid location' do

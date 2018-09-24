@@ -1,10 +1,8 @@
 class LocationsController < ApplicationController
   def show
-    if person_is_currently_at_location?
-      @location = location
-    else
-      redirect_to location_path(current_person.location_id)
-    end
+    @location = location
+  rescue Space::Locations::PersonNotInLocationError
+    redirect_to location_path(current_person.location_id)
   rescue Space::Locations::UnknownLocationError
     raise_not_found
   end

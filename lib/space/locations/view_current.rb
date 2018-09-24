@@ -1,4 +1,5 @@
 require_relative 'location_response'
+require_relative 'person_not_in_location_error'
 require_relative 'view'
 
 module Space
@@ -18,7 +19,7 @@ module Space
         if valid_location?(location.id, person.location.id)
           Response.new(true, location)
         else
-          Response.new(false)
+          raise PersonNotInLocationError.new
         end
       end
 
