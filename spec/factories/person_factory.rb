@@ -3,11 +3,13 @@ FactoryBot.define do
     id { FactoryBot.generate(:random_id) }
     name { Faker::Zelda.character }
     location
-    ship
     user
 
-    after(:create) do |person|
-      person.ship.crew << person
+    trait :with_ship do
+      ship
+      after(:create) do |person|
+        person.ship.crew << person
+      end
     end
   end
 end

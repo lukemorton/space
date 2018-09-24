@@ -1,6 +1,8 @@
 class LocationsController < ApplicationController
   def show
     @location = location
+  rescue Space::Locations::PersonAboardShipError
+    redirect_to ship_path(current_person.ship)
   rescue Space::Locations::PersonNotInLocationError
     redirect_to location_path(current_person.location_id)
   rescue Space::Locations::UnknownLocationError

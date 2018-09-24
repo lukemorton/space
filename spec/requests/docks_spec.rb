@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe DocksController do
   let(:person) { create(:person) }
+  let(:user) { create(:user, person: person) }
 
   before do
-    sign_in create(:user, person: person)
+    sign_in user
   end
 
   describe '#show' do
@@ -20,6 +21,13 @@ RSpec.describe DocksController do
 
     it 'raises not found when dock not found' do
       expect{get dock_url('not a dock')}.to raise_error(ActionController::RoutingError)
+    end
+
+    it 'redirects when person is aboard ship' do
+      location = create(:location)
+      person = create(:person, :with_ship, location: create(:location), user: user)
+      get dock_url(person.ship.dock)
+      assert_redirected_to ship_path(person.ship)
     end
   end
 end
