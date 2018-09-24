@@ -24,10 +24,6 @@ RSpec.describe Space::Flight::ViewControls do
       expect(subject.ship.id).to eq(ship.id)
     end
 
-    it 'should have person' do
-      expect(subject.person.name).to eq('Luke')
-    end
-
     it 'should have locations' do
       expect(subject.locations).to_not be_empty
     end
