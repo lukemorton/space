@@ -1,6 +1,4 @@
 <nav class="nav nav-pills">
-  <%= active_link_to @controls.ship.location.name, location_path(@controls.ship.location), class: 'nav-item nav-link' %>
-  <%= active_link_to @controls.ship.dock.name, dock_path(@controls.ship.dock), class: 'nav-link' %>
   <%= active_link_to 'Ship', ship_path(@controls.ship), class: 'nav-item nav-link' %>
 </nav>
 
