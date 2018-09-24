@@ -20,8 +20,6 @@ RSpec.describe Space::Flight::ViewControls do
 
     subject { use_case.view(ship.slug, person.id) }
 
-    it { is_expected.to be_person_in_crew }
-
     it 'should have ship' do
       expect(subject.ship.id).to eq(ship.id)
     end
@@ -42,8 +40,9 @@ RSpec.describe Space::Flight::ViewControls do
 
     subject { use_case.view(ship.slug, person.id) }
 
-
-    it { is_expected.to_not be_person_in_crew }
+    it 'should raise an error' do
+      expect { subject }.to raise_error(Space::Flight::PersonNotInCrewError)
+    end
   end
 
   context 'when ship unknown' do

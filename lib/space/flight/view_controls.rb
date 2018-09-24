@@ -1,10 +1,11 @@
+require_relative 'person_not_in_crew_error'
 require_relative 'unknown_ship_error'
 require_relative '../locations/list'
 
 module Space
   module Flight
     class ViewControls
-      Response = Struct.new(:person_in_crew?, :ship, :person, :locations)
+      Response = Struct.new(:ship, :person, :locations)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:)
         @location_gateway = location_gateway
@@ -16,7 +17,8 @@ module Space
         ship = ship(ship_slug)
         raise UnknownShipError.new if ship.nil?
         person = person(person_id)
-        Response.new(person_in_crew?(person.id, ship.crew), ship, person, locations)
+        raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
+        Response.new(ship, person, locations)
       end
 
       private
