@@ -36,6 +36,6 @@ RSpec.feature 'Creating person' do
   end
 
   def then_i_should_see_an_error
-    expect(page).to have_content('Name can\'t be blank')
+    expect(page).to have_content('can\'t be blank')
   end
 end
