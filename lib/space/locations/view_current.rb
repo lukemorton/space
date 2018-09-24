@@ -5,7 +5,7 @@ require_relative 'view'
 module Space
   module Locations
     class ViewCurrent
-      Response = Struct.new(:current?, :location)
+      Response = Struct.new(:location)
 
       def initialize(location_gateway:, person_gateway:)
         @location_gateway = location_gateway
@@ -17,7 +17,7 @@ module Space
         person = person(person_id)
 
         if valid_location?(location.id, person.location.id)
-          Response.new(true, location)
+          Response.new(location)
         else
           raise PersonNotInLocationError.new
         end

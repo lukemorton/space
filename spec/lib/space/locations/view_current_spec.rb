@@ -17,8 +17,6 @@ RSpec.describe Space::Locations::ViewCurrent do
   context 'when viewing current location' do
     subject { use_case.view(location.slug, person.id) }
 
-    it { is_expected.to be_current }
-
     it 'should have name' do
       expect(subject.location.name).to eq(location.name)
     end
