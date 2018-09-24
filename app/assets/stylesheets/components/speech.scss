@@ -1,0 +1,27 @@
+.speech {
+ position: relative;
+ background: #eee;
+ border-radius: .4em;
+ color: #666;
+ display: inline-block;
+ padding: 1.5em;
+}
+
+.speech:after {
+ content: '';
+ position: absolute;
+ bottom: 0;
+ left: 70%;
+ width: 0;
+ height: 0;
+ border: 1em solid transparent;
+ border-top-color: #eee;
+ border-bottom: 0;
+ border-right: 0;
+ margin-left: -0.5em;
+ margin-bottom: -1em;
+}
+
+.speech p:last-of-type {
+  margin: 0;
+}
