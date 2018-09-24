@@ -46,7 +46,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <% if flash[:errors].present? %>
             <div class="alert alert-warning" role="alert">
               <%= flash[:errors].join('<hr />').html_safe %>
@@ -64,7 +64,7 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
           <%= yield %>
         </div>
       </div>
