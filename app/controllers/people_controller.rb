@@ -7,11 +7,12 @@ class PeopleController < ApplicationController
   end
 
   def create
-    @person = Person.create(create_params)
+    creation = create_person_use_case.create(current_user.id, create_params)
 
-    if @person.valid?
+    if creation.successful?
       redirect_to root_path
     else
+      @person = creation.validator
       render :new
     end
   end
@@ -25,9 +26,14 @@ class PeopleController < ApplicationController
   end
 
   def create_params
-    params.require(:person).permit(:name).merge(
-      location: Location.first,
-      user: current_user
+    params.require(:person).permit(:name)
+  end
+
+  private
+
+  def create_person_use_case
+    Space::Folk::CreatePerson.new(
+      person_gateway: person_gateway
     )
   end
 end

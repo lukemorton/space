@@ -2,10 +2,7 @@ require_relative '../../../../lib/space/folk/create_person'
 
 RSpec.describe Space::Folk::CreatePerson do
   context 'when creating person' do
-    # let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
-    # let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::FUEL_MAX, location: current_station) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: true) }
-    # let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, update: true) }
 
     let(:use_case) do
       described_class.new(
@@ -41,7 +38,7 @@ RSpec.describe Space::Folk::CreatePerson do
       end
 
       it 'provides an error' do
-        expect(subject.validation.errors).to include('Name can\'t be blank')
+        expect(subject.validator.errors.full_messages).to include('Name can\'t be blank')
       end
     end
 

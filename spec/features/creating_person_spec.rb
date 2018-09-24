@@ -6,6 +6,11 @@ RSpec.feature 'Creating person' do
     then_i_should_see_my_location
   end
 
+  scenario 'Invalid create' do
+    when_i_create_an_invalid_person
+    then_i_should_see_an_error
+  end
+
   background do
     sign_in create(:user)
     location
@@ -22,5 +27,15 @@ RSpec.feature 'Creating person' do
 
   def then_i_should_see_my_location
     expect(page).to have_content(location.name)
+  end
+
+  def when_i_create_an_invalid_person
+    visit root_path
+    fill_in :person_name, with: ''
+    click_button 'Create'
+  end
+
+  def then_i_should_see_an_error
+    expect(page).to have_content('Name can\'t be blank')
   end
 end
