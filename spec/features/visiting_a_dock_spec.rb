@@ -7,12 +7,13 @@ RSpec.feature 'Visiting a Dock' do
   end
 
   background do
-    sign_in create(:user, :with_person)
+    sign_in create(:user, person: person)
     ship
   end
 
-  given(:dock) { create(:dock, name: 'London Dock') }
-  given(:ship) { create(:ship, :with_crew, dock: dock) }
+  given(:person) { create(:person) }
+  given(:dock) { create(:dock, name: 'London Dock', location: person.location) }
+  given(:ship) { create(:ship, :with_crew, dock: dock, location: person.location) }
 
   def when_i_visit_a_valid_dock
     visit dock_url(dock)
