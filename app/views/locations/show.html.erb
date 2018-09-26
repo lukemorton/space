@@ -2,15 +2,20 @@
   <%= active_link_to @location.name, location_path(@location), class: 'nav-link' %>
 </nav>
 
-<h1><%= @location.name %></h1>
+<div class="row">
+  <div class="col-sm">
+    <h1><%= @location.name %></h1>
 
-<blockquote class="speech">
-  <p>&ldquo;Hi <%= current_person.name %>,
-    welcome to <%= @location.name %>,&rdquo; said the gritty old fella.</p>
-</blockquote>
-
-<ul>
-  <% @location.establishments.each do |establishment| %>
-    <li><%= link_to establishment.name, dock_path(establishment) %></li>
-  <% end %>
-</ul>
+    <ul>
+      <% @location.establishments.each do |establishment| %>
+        <li><%= link_to establishment.name, dock_path(establishment) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-sm text-right">
+    <blockquote class="speech">
+      <p>&ldquo;Hi <%= current_person.name %>,
+        welcome to <%= @location.name %>,&rdquo; said the gritty old fella.</p>
+    </blockquote>
+  </div>
+</div>

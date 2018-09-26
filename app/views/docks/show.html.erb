@@ -3,25 +3,34 @@
   <%= active_link_to @dock.name, dock_path(@dock), class: 'nav-link' %>
 </nav>
 
-<h1><%= @dock.name %></h1>
+<div class="row">
+  <div class="col-sm">
+    <h1><%= @dock.name %></h1>
 
-<p>Ships docked currently:</p>
+    <p>Ships docked currently:</p>
 
-<ul>
-  <% @dock.ships.each do |ship| %>
-    <li>
-      <% if ship.has_crew_member_id?(current_person.id) %>
-        <%= link_to ship.name, ship_path(ship) %>
-        crew=<%= ship.crew.map(&:name).join(',') %>
-      <% else %>
-        <%= ship.name %>
-        crew=<%= ship.crew.map(&:name).join(',') %>
-        <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
-          <%= f.hidden_field :ship_id, value: ship.id %>
-          <%= f.hidden_field :ship_slug, value: ship.slug %>
-          <%= submit_tag 'Board', class: 'btn btn-primary' %>
-        <% end %>
+    <ul>
+      <% @dock.ships.each do |ship| %>
+        <li>
+          <% if ship.has_crew_member_id?(current_person.id) %>
+            <%= link_to ship.name, ship_path(ship) %>
+            crew=<%= ship.crew.map(&:name).join(',') %>
+          <% else %>
+            <%= ship.name %>
+            crew=<%= ship.crew.map(&:name).join(',') %>
+            <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
+              <%= f.hidden_field :ship_id, value: ship.id %>
+              <%= f.hidden_field :ship_slug, value: ship.slug %>
+              <%= submit_tag 'Board', class: 'btn btn-primary' %>
+            <% end %>
+          <% end %>
+        </li>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+    </ul>
+  </div>
+  <div class="col-sm text-right">
+    <blockquote class="speech">
+      <p>&ldquo;These docks are ancient,&rdquo; said the longshoreman.</p>
+    </blockquote>
+  </div>
+</div>
