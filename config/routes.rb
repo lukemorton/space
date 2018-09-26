@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root to: redirect('/sign-up')
 
+  resources :help, only: :index
+
   resources :docks, only: :show
   resources :locations, only: :show
   resources :ships, only: :show
