@@ -16,7 +16,7 @@ RSpec.describe DocksController do
 
     it 'redirects to current location when dock not in location' do
       get dock_url(create(:dock))
-      assert_redirected_to location_path(person.location)
+      assert_redirected_to person.location
     end
 
     it 'raises not found when dock not found' do
@@ -27,7 +27,7 @@ RSpec.describe DocksController do
       location = create(:location)
       person = create(:person, :with_ship, location: create(:location), user: user)
       get dock_url(person.ship.dock)
-      assert_redirected_to ship_path(person.ship)
+      assert_redirected_to person.ship
     end
   end
 end

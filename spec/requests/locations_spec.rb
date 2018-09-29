@@ -19,7 +19,7 @@ RSpec.describe LocationsController do
       location = create(:location)
       person = create(:person, location: create(:location), user: user)
       get location_url(location)
-      assert_redirected_to location_path(person.location)
+      assert_redirected_to person.location
     end
 
     it 'raises not found when location not found' do
@@ -31,7 +31,7 @@ RSpec.describe LocationsController do
       location = create(:location)
       person = create(:person, :with_ship, location: create(:location), user: user)
       get location_url(location)
-      assert_redirected_to ship_path(person.ship)
+      assert_redirected_to person.ship
     end
   end
 end

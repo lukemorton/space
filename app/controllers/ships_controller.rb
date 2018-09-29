@@ -2,7 +2,7 @@ class ShipsController < ApplicationController
   def show
     @controls = use_case.view(params.fetch(:id), current_person.id)
   rescue Space::Flight::PersonNotInCrewError
-    redirect_to location_path(current_person.location)
+    redirect_to current_person.location
   rescue Space::Flight::UnknownShipError
     raise_not_found
   end
