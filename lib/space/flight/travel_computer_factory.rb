@@ -37,9 +37,9 @@ module Space
         private
 
         def ship_has_enough_fuel
-          new_fuel = ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
+          fuel_calculator = FuelCalculator.new(ship: ship)
 
-          if new_fuel < 0
+          if fuel_calculator.new_fuel_level < 0
             errors.add(:fuel, 'too low')
           end
         end
