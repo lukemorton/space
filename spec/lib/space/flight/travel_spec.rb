@@ -7,17 +7,22 @@ RSpec.describe Space::Flight::Travel do
     let(:current_station) { instance_double('Location', id: 1) }
     let(:destination_dock) { instance_double('Dock', id: 1) }
     let(:destination_station) { instance_double('Location', id: 2, establishments: [destination_dock]) }
+    let(:location_gateway) { instance_double('Space::Locations::LocationGateway', find: destination_station) }
+
     let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
-    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::FUEL_MAX, location: current_station) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', update: true) }
+
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::FUEL_MAX, location: current_station) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, update: true) }
+
+    let(:travel_computer_factory) { Space::Flight::TravelComputerFactory.new }
 
     let(:use_case) do
       described_class.new(
-        location_gateway: instance_double('Space::Locations::LocationGateway', find: destination_station),
+        location_gateway: location_gateway,
         person_gateway: person_gateway,
         ship_gateway: ship_gateway,
-        travel_computer_factory: Space::Flight::TravelComputerFactory.new
+        travel_computer_factory: travel_computer_factory
       )
     end
 
