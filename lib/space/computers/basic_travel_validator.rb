@@ -10,6 +10,14 @@ module Space
       validate :ship_has_enough_fuel
       validate :not_travelling_to_same_location
 
+      def name
+        'Basic Travel Validator by Space Inc.'
+      end
+
+      def description
+        'A basic travel calculator.'
+      end
+
       private
 
       def ship_has_enough_fuel

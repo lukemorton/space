@@ -24,9 +24,11 @@ module Space
         raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
 
         fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
+        travel_validator = travel_computer_factory.create_travel_validator(ship, nil)
 
         computers = Response::Computers.new(
-          Response::Computer.new(fuel_calculator.name, fuel_calculator.description)
+          Response::Computer.new(fuel_calculator.name, fuel_calculator.description),
+          Response::Computer.new(travel_validator.name, travel_validator.description)
         )
 
         Response.new(ship, locations, computers)

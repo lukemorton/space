@@ -37,6 +37,11 @@ RSpec.describe Space::Flight::ViewControls do
       expect(subject.computers.fuel_calculator.name).to eq(fuel_calculator.name)
       expect(subject.computers.fuel_calculator.description).to eq(fuel_calculator.description)
     end
+
+    it 'should have travel validator meta data' do
+      expect(subject.computers.travel_validator.name).to eq(travel_validator.name)
+      expect(subject.computers.travel_validator.description).to eq(travel_validator.description)
+    end
   end
 
   context 'when not in crew' do
