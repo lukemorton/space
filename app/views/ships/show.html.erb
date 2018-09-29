@@ -24,7 +24,9 @@
     </ul>
   </div>
 
-  <div class="col-sm"><h2>Controls</h2>
+  <div class="col-sm">
+    <h2>Controls</h2>
+
     <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
       <p>Fuel remaining: <%= @controls.ship.fuel %></p>
       <%= f.hidden_field :ship_id, value: @controls.ship.id %>
@@ -32,5 +34,15 @@
       <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, checked: @controls.ship.location.id %>
       <p><%= submit_tag 'Travel', class: 'btn btn-primary' %></p>
     <% end %>
+
+    <h2>Computers</h2>
+
+    <dl>
+      <dt><%= @controls.computers.fuel_calculator.name %></dt>
+      <dd><%= @controls.computers.fuel_calculator.description %></dd>
+
+      <dt><%= @controls.computers.travel_validator.name %></dt>
+      <dd><%= @controls.computers.travel_validator.description %></dd>
+    </dl>
   </div>
 </div>

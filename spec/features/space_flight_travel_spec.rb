@@ -4,6 +4,7 @@ RSpec.feature 'Space flight travel' do
   scenario 'Before travelling' do
     when_viewing_controls
     then_my_current_location_should_be_selected
+    and_i_should_see_my_ships_computers_listed
   end
 
   scenario 'Travelling' do
@@ -32,6 +33,11 @@ RSpec.feature 'Space flight travel' do
 
   def then_my_current_location_should_be_selected
     expect(page).to have_css('input[type=radio][checked]')
+  end
+
+  def and_i_should_see_my_ships_computers_listed
+    expect(page).to have_content('Basic Fuel Calculator')
+    expect(page).to have_content('Basic Travel Validator')
   end
 
   def when_i_travel_to_a_valid_location
