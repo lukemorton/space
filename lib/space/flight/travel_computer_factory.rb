@@ -1,3 +1,5 @@
+require 'active_model'
+
 module Space
   module Flight
     class TravelComputerFactory
