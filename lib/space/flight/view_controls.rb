@@ -5,12 +5,15 @@ require_relative '../locations/list'
 module Space
   module Flight
     class ViewControls
-      Response = Struct.new(:ship, :locations)
+      Response = Struct.new(:ship, :locations, :computers)
+      Response::Computers = Struct.new(:fuel_calculator, :travel_validator)
+      Response::Computer = Struct.new(:name, :description)
 
-      def initialize(location_gateway:, person_gateway:, ship_gateway:)
+      def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
         @person_gateway = person_gateway
         @ship_gateway = ship_gateway
+        @travel_computer_factory = travel_computer_factory
       end
 
       def view(ship_slug, person_id)
@@ -20,12 +23,18 @@ module Space
         person = person(person_id)
         raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
 
-        Response.new(ship, locations)
+        fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
+
+        computers = Response::Computers.new(
+          Response::Computer.new(fuel_calculator.name, fuel_calculator.description)
+        )
+
+        Response.new(ship, locations, computers)
       end
 
       private
 
-      attr_reader :location_gateway, :person_gateway, :ship_gateway
+      attr_reader :location_gateway, :person_gateway, :ship_gateway, :travel_computer_factory
 
       def ship(ship_slug)
         ship_gateway.find_by_slug(ship_slug)
