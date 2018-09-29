@@ -1,5 +1,9 @@
 <nav class="nav nav-pills">
   <%= active_link_to @location.name, location_path(@location), class: 'nav-link' %>
+
+  <% @location.establishments.each do |establishment| %>
+    <%= active_link_to establishment.name, dock_path(establishment), class: 'nav-link' %>
+  <% end %>
 </nav>
 
 <div class="row">

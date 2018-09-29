@@ -3,7 +3,7 @@ require_relative '../../../../lib/space/locations/dock_gateway'
 RSpec.describe Space::Locations::DockGateway do
   context 'when finding a dock record' do
     let(:location_record) do
-      instance_double('Location', id: 1, name: 'London', slug: 'london')
+      instance_double('Location', id: 1, establishments: [instance_double('Dock', id: 1, name: 'London Dock', slug: dock_record_slug)], name: 'London', slug: 'london')
     end
 
     let(:person_record) do
@@ -62,6 +62,10 @@ RSpec.describe Space::Locations::DockGateway do
 
     it 'has location with slug' do
       expect(dock.location.slug).to eq(location_record.slug)
+    end
+
+    it 'has location with establishements' do
+      expect(dock.location.establishments.first.name).to eq(dock.name)
     end
 
     it 'generates location param from slug' do

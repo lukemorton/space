@@ -35,17 +35,46 @@ module Space
         def self.from_object(object)
           new(
             id: object.id,
+            establishments: object.establishments.map { |establishment| Establishment.from_object(establishment) },
             name: object.name,
             slug: object.slug
           )
         end
 
         attr_accessor :id
+        attr_accessor :establishments
         attr_accessor :name
         attr_accessor :slug
 
         def to_param
           slug
+        end
+
+        class Establishment
+          def self.from_object(object)
+            Dock.from_object(object) unless object.nil?
+          end
+        end
+
+        class Dock
+          include ActiveModel::Model
+
+          def self.from_object(object)
+            return if object.nil?
+            new(
+              id: object.id,
+              name: object.name,
+              slug: object.slug
+            )
+          end
+
+          attr_accessor :id
+          attr_accessor :name
+          attr_accessor :slug
+
+          def to_param
+            slug.to_s
+          end
         end
       end
 
