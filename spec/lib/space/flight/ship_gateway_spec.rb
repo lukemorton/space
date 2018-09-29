@@ -49,7 +49,8 @@ RSpec.describe Space::Flight::ShipGateway do
     end
 
     it 'has computer references' do
-      expect(ship.computer_references).to_not be_empty
+      expect(ship.computer_references.fuel_calculator).to_not be_empty
+      expect(ship.computer_references.travel_validator).to_not be_empty
     end
 
     it 'can generate param from slug' do

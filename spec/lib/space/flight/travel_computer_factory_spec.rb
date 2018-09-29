@@ -2,7 +2,13 @@ require_relative '../../../../lib/space/flight/travel_computer_factory'
 require_relative '../../../../lib/space/flight/ship'
 
 RSpec.describe Space::Flight::TravelComputerFactory do
-  let(:ship) { instance_double('Space::Flight::Ship') }
+  let(:ship) do
+    instance_double('Space::Flight::Ship', computer_references: double(
+      fuel_calculator: :space_computers_basic_fuel_calculator,
+      travel_validator: :space_computers_basic_travel_validator
+    ))
+  end
+
   let(:destination_location) { instance_double('Location') }
 
   it 'creates a fuel calculator' do

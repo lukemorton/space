@@ -17,7 +17,10 @@ module Space
           location: Location.from_object(object.location),
           name: object.name,
           slug: object.slug,
-          computer_references: [:basic_travel_validator, :basic_fuel_calculator]
+          computer_references: ComputerReferences.new(
+            :space_computers_basic_fuel_calculator,
+            :space_computers_basic_travel_validator
+          )
         )
       end
 
@@ -38,6 +41,11 @@ module Space
       def to_param
         slug.to_s
       end
+
+      ComputerReferences = Struct.new(
+        :fuel_calculator,
+        :travel_validator
+      )
 
       class CrewMember
         include ActiveModel::Model
