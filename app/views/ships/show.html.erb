@@ -1,6 +1,8 @@
-<nav class="nav nav-pills">
-  <%= active_link_to 'Ship', ship_path(@controls.ship), class: 'nav-item nav-link' %>
-</nav>
+<% content_for :sub_navigation do %>
+  <nav class="nav nav-pills">
+    <%= active_link_to 'Ship', ship_path(@controls.ship), class: 'nav-item nav-link' %>
+  </nav>
+<% end %>
 
 <h1><%= @controls.ship.name %></h1>
 

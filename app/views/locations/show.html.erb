@@ -1,22 +1,29 @@
+<h1><%= @location.name %></h1>
+
+<hr />
+
 <nav class="nav nav-pills">
-  <%= active_link_to @location.name, location_path(@location), class: 'nav-link' %>
+  <%= active_link_to "About #{@location.name}", location_path(@location), class: 'nav-link' %>
 
   <% @location.establishments.each do |establishment| %>
     <%= active_link_to establishment.name, dock_path(establishment), class: 'nav-link' %>
   <% end %>
 </nav>
 
-<div class="row">
-  <div class="col-sm">
-    <h1><%= @location.name %></h1>
+<hr />
 
-    <ul>
-      <% @location.establishments.each do |establishment| %>
-        <li><%= link_to establishment.name, dock_path(establishment) %></li>
-      <% end %>
-    </ul>
+<div class="row">
+  <div class="col-sm-7">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit lectus quis mauris faucibus suscipit. Donec lectus erat, venenatis quis tincidunt eget, mollis eget leo. Fusce mattis, est vitae eleifend fringilla, neque justo placerat quam, id sollicitudin velit felis sit amet lacus. Pellentesque fringilla faucibus mi in convallis.</p>
+
+    <p>Nullam vehicula feugiat accumsan. Sed est nunc, dictum vitae faucibus lacinia, condimentum at mi. Maecenas mollis odio ac mi mollis sed pellentesque odio congue. Nulla et nibh lorem. Aenean justo sem, pulvinar sit amet egestas nec, euismod at mi.</p>
+
+    <p>Curabitur eu nunc erat, a hendrerit velit. Nulla nec ligula sapien, eu egestas massa. Duis a tellus ante, nec venenatis augue. Praesent luctus tellus nec velit facilisis scelerisque. Nunc justo odio, aliquet et pretium et, condimentum vel leo. Praesent porttitor facilisis cursus. Sed aliquam cursus risus in commodo. Nunc dignissim sodales sem, non sagittis nisi eleifend posuere. Sed varius pretium magna eget fermentum.</p>
   </div>
-  <div class="col-sm text-right">
+
+  <div class="col-sm-4 offset-sm-1">
+    <%= render 'shared/flash' %>
+
     <blockquote class="speech">
       <p>&ldquo;Hi <%= current_person.name %>,
         welcome to <%= @location.name %>,&rdquo; said the gritty old fella.</p>

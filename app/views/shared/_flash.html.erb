@@ -1,0 +1,11 @@
+<% if flash[:errors].present? %>
+  <div class="alert alert-warning" role="alert">
+    <%= flash[:errors].join('<hr />').html_safe %>
+  </div>
+<% end %>
+
+<% if flash[:success].present? %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:success] %>
+  </div>
+<% end %>
