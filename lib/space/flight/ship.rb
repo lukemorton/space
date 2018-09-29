@@ -16,7 +16,8 @@ module Space
           fuel: object.fuel,
           location: Location.from_object(object.location),
           name: object.name,
-          slug: object.slug
+          slug: object.slug,
+          computer_references: [:basic_travel_validator, :basic_fuel_calculator]
         )
       end
 
@@ -27,6 +28,7 @@ module Space
       attr_accessor :location
       attr_accessor :name
       attr_accessor :slug
+      attr_accessor :computer_references
 
       def has_crew_member_id?(person_id)
         crew_ids = crew.map(&:id)

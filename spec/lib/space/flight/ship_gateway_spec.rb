@@ -48,6 +48,10 @@ RSpec.describe Space::Flight::ShipGateway do
       expect(ship.slug).to eq(ship_record.slug)
     end
 
+    it 'has computer references' do
+      expect(ship.computer_references).to_not be_empty
+    end
+
     it 'can generate param from slug' do
       expect(ship.to_param).to eq(ship_record.slug)
     end
