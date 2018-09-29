@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_05_204033) do
+ActiveRecord::Schema.define(version: 2018_09_29_124305) do
 
   create_table "docks", force: :cascade do |t|
     t.integer "location_id"
@@ -116,6 +116,12 @@ ActiveRecord::Schema.define(version: 2018_08_05_204033) do
     t.index ["location_id"], name: "index_people_on_location_id"
     t.index ["ship_id"], name: "index_people_on_ship_id"
     t.index ["user_id"], name: "index_people_on_user_id"
+  end
+
+  create_table "ship_computers", force: :cascade do |t|
+    t.string "reference"
+    t.integer "ship_id"
+    t.index ["ship_id"], name: "index_ship_computers_on_ship_id"
   end
 
   create_table "ships", force: :cascade do |t|
