@@ -15,7 +15,7 @@ RSpec.describe ShipsController do
 
     it 'redirects when person not in crew' do
       get ship_url(create(:ship, crew: []))
-      assert_response :redirect
+      assert_redirected_to location_path(person.location)
     end
   end
 end
