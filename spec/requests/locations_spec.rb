@@ -17,9 +17,9 @@ RSpec.describe LocationsController do
 
     it 'redirects when person isnt currently at location' do
       location = create(:location)
-      create(:person, location: create(:location), user: user)
+      person = create(:person, location: create(:location), user: user)
       get location_url(location)
-      assert_response :redirect
+      assert_redirected_to location_path(person.location)
     end
 
     it 'raises not found when location not found' do

@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   rescue Space::Locations::PersonAboardShipError
     redirect_to ship_path(current_person.ship)
   rescue Space::Locations::PersonNotInLocationError
-    redirect_to location_path(current_person.location_id)
+    redirect_to location_path(current_person.location)
   rescue Space::Locations::UnknownLocationError
     raise_not_found
   end
