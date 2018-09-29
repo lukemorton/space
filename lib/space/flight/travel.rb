@@ -17,7 +17,7 @@ module Space
         ship = ship_gateway.find(ship_id)
         location = location_gateway.find(to)
 
-        travel_validator = travel_computer_factory.create_travel_validator(ship, to)
+        travel_validator = travel_computer_factory.create_travel_validator(ship, location)
 
         if travel_validator.valid?
           fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
