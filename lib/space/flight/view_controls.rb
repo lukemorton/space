@@ -16,8 +16,10 @@ module Space
       def view(ship_slug, person_id)
         ship = ship(ship_slug)
         raise UnknownShipError.new if ship.nil?
+
         person = person(person_id)
         raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
+
         Response.new(ship, locations)
       end
 
