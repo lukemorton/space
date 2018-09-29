@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     Space::Flight::ShipGateway.new(ship_repository: Ship)
   end
 
+  def travel_computer_factory
+    Space::Flight::TravelComputerFactory.new
+  end
+
   def after_sign_in_path_for(resource)
     if user_has_character?
       location_path current_person.location

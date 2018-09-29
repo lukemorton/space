@@ -1,4 +1,5 @@
 require_relative '../../../../lib/space/flight/travel'
+require_relative '../../../../lib/space/flight/travel_computer_factory'
 require_relative '../../../../lib/space/flight/ship'
 
 RSpec.describe Space::Flight::Travel do
@@ -15,7 +16,8 @@ RSpec.describe Space::Flight::Travel do
       described_class.new(
         location_gateway: instance_double('Space::Locations::LocationGateway', find: destination_station),
         person_gateway: person_gateway,
-        ship_gateway: ship_gateway
+        ship_gateway: ship_gateway,
+        travel_computer_factory: Space::Flight::TravelComputerFactory.new
       )
     end
 

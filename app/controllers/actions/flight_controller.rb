@@ -42,7 +42,8 @@ module Actions
       Space::Flight::Travel.new(
         location_gateway: location_gateway,
         person_gateway: person_gateway,
-        ship_gateway: ship_gateway
+        ship_gateway: ship_gateway,
+        travel_computer_factory: travel_computer_factory
       )
     end
 

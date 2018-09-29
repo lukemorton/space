@@ -6,26 +6,26 @@ module Space
     class Travel
       Response = Struct.new(:successful?, :errors)
 
-      def initialize(location_gateway:, person_gateway:, ship_gateway:)
+      def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
         @person_gateway = person_gateway
         @ship_gateway = ship_gateway
+        @travel_computer_factory = travel_computer_factory
       end
 
       def travel(ship_id, to:)
         ship = ship_gateway.find(ship_id)
         location = location_gateway.find(to)
 
-        travel_validator = Validator.new(
-          destination_location: to,
-          ship: ship
-        )
+        travel_validator = travel_computer_factory.create_travel_validator(ship, to)
 
         if travel_validator.valid?
+          fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
+
           ship_gateway.update(
             ship.id,
             dock_id: location.establishments.first.id,
-            fuel: new_fuel_level(ship),
+            fuel: fuel_calculator.new_fuel_level,
             location_id: location.id
           )
 
@@ -41,36 +41,10 @@ module Space
 
       private
 
-      attr_reader :location_gateway, :person_gateway, :ship_gateway
-
-      def new_fuel_level(ship)
-        ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
-      end
-
-      class Validator
-        include ActiveModel::Model
-
-        attr_accessor :ship, :destination_location
-
-        validate :ship_has_enough_fuel
-        validate :not_travelling_to_same_location
-
-        private
-
-        def ship_has_enough_fuel
-          new_fuel = ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
-
-          if new_fuel < 0
-            errors.add(:fuel, 'too low')
-          end
-        end
-
-        def not_travelling_to_same_location
-          if ship.location.id.to_s == destination_location.to_s
-            errors.add(:destination_location, 'is same as current location')
-          end
-        end
-      end
+      attr_reader :location_gateway,
+                  :person_gateway,
+                  :ship_gateway,
+                  :travel_computer_factory
     end
   end
 end
