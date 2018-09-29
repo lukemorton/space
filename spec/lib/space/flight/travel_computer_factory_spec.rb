@@ -14,6 +14,20 @@ RSpec.describe Space::Flight::TravelComputerFactory do
   end
 end
 
+RSpec.describe Space::Flight::TravelComputerFactory::FuelCalculator do
+  let(:ship) { instance_double('Space::Flight::Ship', fuel: Space::Flight::Ship::FUEL_MAX) }
+
+  subject do
+    described_class.new(
+      ship: ship
+    )
+  end
+
+  it 'returns new fuel level' do
+    expect(subject.new_fuel_level).to eq(ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL)
+  end
+end
+
 RSpec.describe Space::Flight::TravelComputerFactory::TravelValidator do
   let(:current_location) { instance_double('Location', id: 1) }
   let(:destination_location) { instance_double('Location', id: 2) }
