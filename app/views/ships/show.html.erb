@@ -1,50 +1,58 @@
-<% content_for :sub_navigation do %>
-  <nav class="nav nav-pills">
-    <%= active_link_to 'Ship', ship_path(@controls.ship), class: 'nav-item nav-link' %>
-  </nav>
-<% end %>
+<div class="h1"><%= @controls.ship.name %></div>
 
-<h1><%= @controls.ship.name %></h1>
+<hr />
 
 <div class="row">
-  <div class="col-sm">
-    <h2>Location</h2>
-
-    <p>You are docked at <%= @controls.ship.location.name %>.</p>
-
-    <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
-      <%= f.hidden_field :ship_id, value: @controls.ship.id %>
-      <p><%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %></p>
-    <% end %>
-
-    <h2>Crew</h2>
-
-    <ul>
-      <% @controls.ship.crew.each do |crew_member| %>
-        <li><%= crew_member.name %></li>
-      <% end %>
-    </ul>
+  <div class="col-sm-9">
+    <nav class="nav nav-pills">
+      <%= link_to 'Controls', '#controls', class: 'nav-item nav-link active', data: { toggle: 'tab' } %>
+      <%= link_to 'Crew', '#crew', class: 'nav-item nav-link', data: { toggle: 'tab' } %>
+      <%= link_to 'Computers', '#computers', class: 'nav-item nav-link', data: { toggle: 'tab' } %>
+    </nav>
   </div>
 
-  <div class="col-sm">
-    <h2>Controls</h2>
-
-    <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
-      <p>Fuel remaining: <%= @controls.ship.fuel %></p>
+  <div class="col-sm-3 text-right">
+    <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
       <%= f.hidden_field :ship_id, value: @controls.ship.id %>
-      <%= f.hidden_field :ship_slug, value: @controls.ship.slug %>
-      <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, checked: @controls.ship.location.id %>
-      <p><%= submit_tag 'Travel', class: 'btn btn-primary' %></p>
+      <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
     <% end %>
+  </div>
+</div>
 
-    <h2>Computers</h2>
+<hr />
 
-    <dl>
-      <dt><%= @controls.computers.fuel_calculator.name %></dt>
-      <dd><%= @controls.computers.fuel_calculator.description %></dd>
+<div class="row">
+  <div class="col-sm-7">
+    <div class="tab-content">
+      <div class="tab-pane active show" id="controls">
+        <p>You are docked at <%= @controls.ship.location.name %>.</p>
 
-      <dt><%= @controls.computers.travel_validator.name %></dt>
-      <dd><%= @controls.computers.travel_validator.description %></dd>
-    </dl>
+        <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
+          <p>Fuel remaining: <%= @controls.ship.fuel %></p>
+          <%= f.hidden_field :ship_id, value: @controls.ship.id %>
+          <%= f.hidden_field :ship_slug, value: @controls.ship.slug %>
+          <%= f.collection_radio_buttons :location_id, @controls.locations, :id, :name, checked: @controls.ship.location.id %>
+          <p><%= submit_tag 'Travel', class: 'btn btn-primary' %></p>
+        <% end %>
+      </div>
+
+      <div class="tab-pane" id="crew">
+        <ul>
+          <% @controls.ship.crew.each do |crew_member| %>
+            <li><%= crew_member.name %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="tab-pane" id="computers">
+        <dl>
+          <dt><%= @controls.computers.fuel_calculator.name %></dt>
+          <dd><%= @controls.computers.fuel_calculator.description %></dd>
+
+          <dt><%= @controls.computers.travel_validator.name %></dt>
+          <dd><%= @controls.computers.travel_validator.description %></dd>
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
