@@ -23,6 +23,6 @@ RSpec.feature 'Visiting a Dock' do
     expect(page).to have_content(dock.location.name)
     expect(page).to have_content(dock.name)
     expect(page).to have_content(ship.name)
-    expect(page).to have_content(ship.crew.map(&:name).join(','))
+    expect(page).to have_content(ship.crew.map(&:name).join(', '))
   end
 end
