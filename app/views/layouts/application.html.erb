@@ -25,12 +25,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <% if user_signed_in? %>
-            <nav class="navbar-nav mr-auto">
-            </nav>
-          <% end %>
-
-          <nav class="navbar-nav">
+          <nav class="navbar-nav ml-auto">
             <% if user_signed_in? %>
               <%= link_to 'Account', edit_user_registration_path, class: 'nav-item nav-link' %>
               <%= link_to 'Help', help_index_path, class: 'nav-item nav-link' %>
@@ -45,12 +40,6 @@
     </nav>
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          
-        </div>
-      </div>
-
       <div class="row">
         <div class="col-md-12">
           <%= yield %>
