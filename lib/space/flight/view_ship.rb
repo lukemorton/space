@@ -14,7 +14,7 @@ module Space
         :name,
         :slug,
 
-        :locations,
+        :destinations,
         :computers
       )
       Response::Computers = Struct.new(:fuel_calculator, :travel_validator)
@@ -51,7 +51,7 @@ module Space
           ship.name,
           ship.slug,
 
-          locations,
+          destinations,
           computers
         )
       end
@@ -73,7 +73,7 @@ module Space
         crew_ids.include?(person_id)
       end
 
-      def locations
+      def destinations
         Locations::List.new(location_gateway: location_gateway).list.locations
       end
     end
