@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="h5">Fuel Calculator</div>
+
+        <p><%= @ship.computers.fuel_calculator.name %></p>
+
+        <p><%= @ship.computers.fuel_calculator.description %></p>
+
+        <button class="btn btn-outline-primary">
+          Change
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="card mb-2">
+      <div class="card-body">
+        <div class="h5">Travel Validator</div>
+
+        <p><%= @ship.computers.travel_validator.name %></p>
+
+        <p><%= @ship.computers.travel_validator.description %></p>
+
+        <button class="btn btn-outline-primary">
+          Change
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="card mb-2">
+      <div class="card-body"></div>
+    </div>
+  </div>
+</div>

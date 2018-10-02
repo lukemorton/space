@@ -19,121 +19,14 @@
 
 <div class="tab-content">
   <div class="tab-pane active show" id="flight-deck">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card mb-3">
-          <div class="card-body text-center">
-            <p class="strong">Location</p>
-
-            <div class="h2"><%= @ship.location.name %></div>
-          </div>
-        </div>
-
-
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <p class="strong">Fuel</p>
-
-                <div class="h2 text-<%=@ship.fuel_status %>"><%= @ship.fuel %></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <p class="strong">Hull</p>
-
-                <div class="h2 text-<%=@ship.hull_status %>"><%= @ship.hull %></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <p class="strong">Shields</p>
-
-                <div class="h2 text-<%=@ship.shields_status %>"><%= @ship.shields %></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
-          <h2>Destinations</h2>
-          <%= f.hidden_field :ship_id, value: @ship.id %>
-          <%= f.hidden_field :ship_slug, value: @ship.slug %>
-
-          <nav class="mb-3">
-            <% @ship.destinations.each do |location| %>
-              <label class="card card-body bg-light border-0" data-toggle="pills" style="cursor: pointer;">
-                <div class="d-flex justify-content-between align-items-center">
-                  <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.id == @ship.location.id %>
-
-                  <span class="badge badge-secondary badge-success">10 fuel</span>
-                </div>
-              </label>
-            <% end %>
-          </nav>
-
-          <p class="text-right"><%= f.button 'Travel', class: 'btn btn-primary btn-lg' %></p>
-        <% end %>
-      </div>
-    </div>
+    <%= render 'ships/flight_deck' %>
   </div>
 
   <div class="tab-pane" id="crew">
-    <ul>
-      <% @ship.crew.each do |crew_member| %>
-        <li><%= crew_member.name %></li>
-      <% end %>
-    </ul>
+    <%= render 'ships/crew' %>
   </div>
 
   <div class="tab-pane" id="computers">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card mb-2">
-          <div class="card-body">
-            <div class="h5">Fuel Calculator</div>
-
-            <p><%= @ship.computers.fuel_calculator.name %></p>
-
-            <p><%= @ship.computers.fuel_calculator.description %></p>
-
-            <button class="btn btn-outline-primary">
-              Change
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="card mb-2">
-          <div class="card-body">
-            <div class="h5">Travel Validator</div>
-
-            <p><%= @ship.computers.travel_validator.name %></p>
-
-            <p><%= @ship.computers.travel_validator.description %></p>
-
-            <button class="btn btn-outline-primary">
-              Change
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="card mb-2">
-          <div class="card-body"></div>
-        </div>
-      </div>
-    </div>
+    <%= render 'ships/computers' %>
   </div>
 </div>
