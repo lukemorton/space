@@ -50,7 +50,8 @@ RSpec.describe Space::Flight::ViewShip do
     end
 
     it 'should have destinations' do
-      expect(subject.destinations).to_not be_empty
+      expect(subject.destinations.first.id).to eq(location.id)
+      expect(subject.destinations.first.name).to eq(location.name)
     end
 
     it 'should have fuel calculator meta data' do

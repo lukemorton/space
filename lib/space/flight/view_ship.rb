@@ -17,8 +17,9 @@ module Space
         :destinations,
         :computers
       )
-      Response::Computers = Struct.new(:fuel_calculator, :travel_validator)
+      Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
+      Response::Destination = Struct.new(:id, :name)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
@@ -72,7 +73,9 @@ module Space
       end
 
       def destinations
-        Locations::List.new(location_gateway: location_gateway).list.locations
+        Locations::List.new(location_gateway: location_gateway).list.locations.map do |destination|
+          Response::Destination.new(destination.id, destination.name)
+        end
       end
     end
   end
