@@ -49,12 +49,12 @@
       <%= f.hidden_field :ship_slug, value: @ship.slug %>
 
       <nav class="mb-3">
-        <% @ship.destinations.each do |location| %>
+        <% @ship.destinations.each do |destination| %>
           <label class="card card-body bg-light border-0" data-toggle="pills" style="cursor: pointer;">
             <div class="d-flex justify-content-between align-items-center">
-              <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.checked?, disabled: location.disabled? %>
+              <%= f.radio_button :location_id, destination.id, label:  destination.name, checked: destination.checked?, disabled: destination.disabled? %>
 
-              <span class="badge badge-secondary badge-success">10 fuel</span>
+              <span class="badge badge-secondary badge-success"><%= destination.fuel_to_travel %> fuel</span>
             </div>
           </label>
         <% end %>
