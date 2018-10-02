@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-between align-items-center">
-  <h1><%= @controls.name %></h1>
+  <h1><%= @ship.name %></h1>
 
   <%= render 'shared/flash' %>
 
   <div>
     <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
-      <%= f.hidden_field :ship_id, value: @controls.id %>
+      <%= f.hidden_field :ship_id, value: @ship.id %>
       <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
     <% end %>
   </div>
@@ -25,7 +25,7 @@
           <div class="card-body text-center">
             <p class="strong">Location</p>
 
-            <div class="h2"><%= @controls.location.name %></div>
+            <div class="h2"><%= @ship.location.name %></div>
           </div>
         </div>
 
@@ -36,7 +36,7 @@
               <div class="card-body text-center">
                 <p class="strong">Fuel</p>
 
-                <div class="h2 text-<%=@controls.ship_fuel_status %>"><%= @controls.ship_fuel %></div>
+                <div class="h2 text-<%=@ship.ship_fuel_status %>"><%= @ship.ship_fuel %></div>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@
               <div class="card-body text-center">
                 <p class="strong">Hull</p>
 
-                <div class="h2 text-<%=@controls.ship_hull_status %>"><%= @controls.ship_hull %></div>
+                <div class="h2 text-<%=@ship.ship_hull_status %>"><%= @ship.ship_hull %></div>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
               <div class="card-body text-center">
                 <p class="strong">Shields</p>
 
-                <div class="h2 text-<%=@controls.ship_shields_status %>"><%= @controls.ship_shields %></div>
+                <div class="h2 text-<%=@ship.ship_shields_status %>"><%= @ship.ship_shields %></div>
               </div>
             </div>
           </div>
@@ -66,14 +66,14 @@
       <div class="col-md-6">
         <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
           <h2>Destinations</h2>
-          <%= f.hidden_field :ship_id, value: @controls.id %>
-          <%= f.hidden_field :ship_slug, value: @controls.slug %>
+          <%= f.hidden_field :ship_id, value: @ship.id %>
+          <%= f.hidden_field :ship_slug, value: @ship.slug %>
 
           <nav class="mb-3">
-            <% @controls.locations.each do |location| %>
+            <% @ship.locations.each do |location| %>
               <label class="card card-body bg-light border-0" data-toggle="pills" style="cursor: pointer;">
                 <div class="d-flex justify-content-between align-items-center">
-                  <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.id == @controls.location.id %>
+                  <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.id == @ship.location.id %>
 
                   <span class="badge badge-secondary badge-success">10 fuel</span>
                 </div>
@@ -89,7 +89,7 @@
 
   <div class="tab-pane" id="crew">
     <ul>
-      <% @controls.crew.each do |crew_member| %>
+      <% @ship.crew.each do |crew_member| %>
         <li><%= crew_member.name %></li>
       <% end %>
     </ul>
@@ -102,9 +102,9 @@
           <div class="card-body">
             <div class="h5">Fuel Calculator</div>
 
-            <p><%= @controls.computers.fuel_calculator.name %></p>
+            <p><%= @ship.computers.fuel_calculator.name %></p>
 
-            <p><%= @controls.computers.fuel_calculator.description %></p>
+            <p><%= @ship.computers.fuel_calculator.description %></p>
 
             <button class="btn btn-outline-primary">
               Change
@@ -118,9 +118,9 @@
           <div class="card-body">
             <div class="h5">Travel Validator</div>
 
-            <p><%= @controls.computers.travel_validator.name %></p>
+            <p><%= @ship.computers.travel_validator.name %></p>
 
-            <p><%= @controls.computers.travel_validator.description %></p>
+            <p><%= @ship.computers.travel_validator.description %></p>
 
             <button class="btn btn-outline-primary">
               Change

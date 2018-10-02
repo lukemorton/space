@@ -1,6 +1,6 @@
 class ShipsController < ApplicationController
   def show
-    @controls = ShipPresenter.new(
+    @ship = ShipPresenter.new(
       view_controls_use_case.view(params.fetch(:id), current_person.id)
     )
   rescue Space::Flight::PersonNotInCrewError
