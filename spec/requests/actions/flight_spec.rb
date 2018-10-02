@@ -89,17 +89,5 @@ RSpec.describe Actions::FlightController do
     it 'sets flash success' do
       expect(flash[:success]).to be_present
     end
-
-    context 'and travelling unsuccessful' do
-      let(:location_id) { ship.location.id }
-
-      it 'redirects' do
-        assert_redirected_to ship
-      end
-
-      it 'sets flash errors' do
-        expect(flash[:errors]).to be_present
-      end
-    end
   end
 end

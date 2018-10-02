@@ -1,3 +1,4 @@
+require_relative 'invalid_travel_error'
 require_relative 'ship'
 require_relative 'travel_validator'
 
@@ -24,22 +25,20 @@ module Space
           ship: ship
         )
 
-        if travel_validator.valid?
-          ship_gateway.update(
-            ship.id,
-            dock_id: location.establishments.first.id,
-            fuel: fuel_calculator.new_fuel_level,
-            location_id: location.id
-          )
+        raise InvalidTravelError.new(travel_validator.errors.full_messages) unless travel_validator.valid?
 
-          ship.crew.each do |member|
-            person_gateway.update(member.id, location_id: location.id)
-          end
+        ship_gateway.update(
+          ship.id,
+          dock_id: location.establishments.first.id,
+          fuel: fuel_calculator.new_fuel_level,
+          location_id: location.id
+        )
 
-          Response.new(true, {})
-        else
-          Response.new(false, travel_validator.errors.full_messages)
+        ship.crew.each do |member|
+          person_gateway.update(member.id, location_id: location.id)
         end
+
+        Response.new(true, {})
       end
 
       private

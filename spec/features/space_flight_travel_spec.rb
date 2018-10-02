@@ -13,11 +13,6 @@ RSpec.feature 'Space flight travel' do
     then_my_location_should_be_updated
   end
 
-  scenario 'Travelling without fuel' do
-    when_i_attempt_travel_without_fuel
-    then_i_should_not_be_allowed_to_travel
-  end
-
   background do
     person = create(:person, location: location, ship: ship)
     sign_in create(:user, person: person)
@@ -53,16 +48,5 @@ RSpec.feature 'Space flight travel' do
   def then_my_location_should_be_updated
     expect(page).to have_content('You travelled')
     expect(page).to have_content(new_location.name)
-  end
-
-  def when_i_attempt_travel_without_fuel
-    ship.update!(fuel: 0)
-    visit ship_url(ship)
-    choose new_location.name
-    click_button 'Travel'
-  end
-
-  def then_i_should_not_be_allowed_to_travel
-    expect(page).to have_content('Fuel too low')
   end
 end

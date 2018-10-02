@@ -76,11 +76,7 @@ RSpec.describe Space::Flight::Travel do
       let(:destination_station) { current_station }
 
       it 'disallows travel' do
-        expect(subject).to_not be_successful
-      end
-
-      it 'provides an error' do
-        expect(subject.errors).to_not be_empty
+        expect{subject}.to raise_error(Space::Flight::InvalidTravelError)
       end
     end
   end
