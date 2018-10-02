@@ -11,7 +11,11 @@ class ShipsController < ApplicationController
 
   def ship_presenter
     response = view_controls_use_case.view(params.fetch(:id), current_person.id)
-    ShipPresenter.new(response.to_h)
+    ShipPresenter.new(
+      computers: response.computers,
+      locations: response.locations,
+      ship: response
+    )
   end
 
   def view_controls_use_case

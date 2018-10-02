@@ -5,7 +5,18 @@ require_relative '../locations/list'
 module Space
   module Flight
     class ViewControls
-      Response = Struct.new(:ship, :locations, :computers)
+      Response = Struct.new(
+        :id,
+
+        :crew,
+        :fuel,
+        :location,
+        :name,
+        :slug,
+
+        :locations,
+        :computers
+      )
       Response::Computers = Struct.new(:fuel_calculator, :travel_validator)
       Response::Computer = Struct.new(:name, :description)
 
@@ -31,7 +42,18 @@ module Space
           Response::Computer.new(travel_validator.name, travel_validator.description)
         )
 
-        Response.new(ship, locations, computers)
+        Response.new(
+          ship.id,
+
+          ship.crew,
+          ship.fuel,
+          ship.location,
+          ship.name,
+          ship.slug,
+
+          locations,
+          computers
+        )
       end
 
       private

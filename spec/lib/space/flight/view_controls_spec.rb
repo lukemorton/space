@@ -20,13 +20,34 @@ RSpec.describe Space::Flight::ViewControls do
 
   context 'when viewing flight controls' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: [person], name: 'Endeavour', slug: 'endeavour') }
-    let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
+    let(:location) { instance_double('Location', id: 1, name: 'London') }
+    let(:locations) { [location] }
+    let(:ship) { instance_double('Ship', id: 1, crew: [person], fuel: 100, location: location, name: 'Endeavour', slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
 
-    it 'should have ship' do
-      expect(subject.ship.id).to eq(ship.id)
+    it 'should have id' do
+      expect(subject.id).to eq(ship.id)
+    end
+
+    it 'should have crew' do
+      expect(subject.crew).to eq(ship.crew)
+    end
+
+    it 'should have fuel' do
+      expect(subject.fuel).to eq(ship.fuel)
+    end
+
+    it 'should have location' do
+      expect(subject.location).to eq(ship.location)
+    end
+
+    it 'should have name' do
+      expect(subject.name).to eq(ship.name)
+    end
+
+    it 'should have slug' do
+      expect(subject.slug).to eq(ship.slug)
     end
 
     it 'should have locations' do
