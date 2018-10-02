@@ -6,7 +6,7 @@ class LocationsController < ApplicationController
   rescue Space::Locations::PersonNotInLocationError
     redirect_to current_person.location
   rescue Space::Locations::UnknownLocationError
-    raise_not_found
+    render_not_found
   end
 
   private

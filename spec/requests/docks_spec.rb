@@ -20,7 +20,8 @@ RSpec.describe DocksController do
     end
 
     it 'raises not found when dock not found' do
-      expect{get dock_url('not a dock')}.to raise_error(ActionController::RoutingError)
+      get dock_url('not a dock')
+      assert_response :not_found
     end
 
     it 'redirects when person is aboard ship' do

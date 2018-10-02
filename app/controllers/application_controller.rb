@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def raise_not_found
-    raise ActionController::RoutingError.new('Not Found')
+  def render_not_found
+    render file: 'public/404', status: 404
   end
 
   def redirect_if_user_does_not_have_person

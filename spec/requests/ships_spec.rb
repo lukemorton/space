@@ -17,5 +17,10 @@ RSpec.describe ShipsController do
       get ship_url(create(:ship, crew: []))
       assert_redirected_to person.location
     end
+
+    it 'raises not found when ship not found' do
+      get ship_url('not a ship')
+      assert_response :not_found
+    end
   end
 end

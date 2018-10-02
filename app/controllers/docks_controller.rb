@@ -6,7 +6,7 @@ class DocksController < ApplicationController
   rescue Space::Locations::PersonNotInLocationError
     redirect_to current_person.location
   rescue Space::Locations::UnknownDockError
-    raise_not_found
+    render_not_found
   end
 
   private

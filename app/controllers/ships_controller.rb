@@ -6,7 +6,7 @@ class ShipsController < ApplicationController
   rescue Space::Flight::PersonNotInCrewError
     redirect_to current_person.location
   rescue Space::Flight::UnknownShipError
-    raise_not_found
+    render_not_found
   end
 
   private
