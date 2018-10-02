@@ -12,7 +12,7 @@ class ShipsController < ApplicationController
   private
 
   def view_controls_use_case
-    Space::Flight::ViewControls.new(
+    Space::Flight::ViewShip.new(
       location_gateway: location_gateway,
       person_gateway: person_gateway,
       ship_gateway: ship_gateway,

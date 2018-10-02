@@ -4,7 +4,7 @@ require_relative '../locations/list'
 
 module Space
   module Flight
-    class ViewControls
+    class ViewShip
       Response = Struct.new(
         :id,
 

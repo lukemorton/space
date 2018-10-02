@@ -1,6 +1,6 @@
 require_relative '../../../../lib/space/flight/view_controls'
 
-RSpec.describe Space::Flight::ViewControls do
+RSpec.describe Space::Flight::ViewShip do
   let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B') }
   let(:travel_validator) { instance_double('Space::Flight::TravelComputerFactory::TravelValidator', name: 'A', description: 'B') }
   let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator, create_travel_validator: travel_validator) }
