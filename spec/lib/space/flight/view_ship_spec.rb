@@ -1,4 +1,4 @@
-require_relative '../../../../lib/space/flight/view_controls'
+require_relative '../../../../lib/space/flight/view_ship'
 
 RSpec.describe Space::Flight::ViewShip do
   let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B') }
