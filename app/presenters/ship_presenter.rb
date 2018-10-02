@@ -1,33 +1,39 @@
 class ShipPresenter < SimpleDelegator
   include ActionView::Helpers::NumberHelper
 
-  def ship_fuel
-    number_with_delimiter(fuel)
+  def fuel
+    number_with_delimiter(ship.fuel)
   end
 
-  def ship_fuel_status
-    if fuel > 10
+  def fuel_status
+    if ship.fuel > 10
       'success'
-    elsif fuel > 0
+    elsif ship.fuel > 0
       'warning'
     else
       'danger'
     end
   end
 
-  def ship_hull
+  def hull
     '100%'
   end
 
-  def ship_hull_status
+  def hull_status
     'success'
   end
 
-  def ship_shields
+  def shields
     '100%'
   end
 
-  def ship_shields_status
+  def shields_status
     'success'
+  end
+
+  private
+
+  def ship
+    __getobj__
   end
 end
