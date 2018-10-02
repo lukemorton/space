@@ -19,7 +19,7 @@ module Space
       )
       Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
-      Response::Destination = Struct.new(:id, :name)
+      Response::Destination = Struct.new(:id, :name, :fuel_to_travel)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
@@ -50,7 +50,7 @@ module Space
           ship.name,
           ship.slug,
 
-          destinations,
+          destinations(fuel_calculator),
           computers
         )
       end
@@ -72,9 +72,13 @@ module Space
         crew_ids.include?(person_id)
       end
 
-      def destinations
+      def destinations(fuel_calculator)
         Locations::List.new(location_gateway: location_gateway).list.locations.map do |destination|
-          Response::Destination.new(destination.id, destination.name)
+          Response::Destination.new(
+            destination.id,
+            destination.name,
+            fuel_calculator.new_fuel_level
+          )
         end
       end
     end
