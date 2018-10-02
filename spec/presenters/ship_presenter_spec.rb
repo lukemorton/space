@@ -2,12 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ShipPresenter do
   let(:computers) { double }
-  let(:locations) { double }
-  let(:ship) { double(id: 1, computers: computers, locations: locations) }
+  let(:destinations) { [double(id: 1)] }
+  let(:ship) { double(id: 1, computers: computers, destinations: destinations, location: double(id: 1)) }
 
-  subject do
-    described_class.new(ship)
-  end
+  subject { described_class.new(ship) }
 
   it 'has an id' do
     expect(subject.id).to be(ship.id)
@@ -17,8 +15,20 @@ RSpec.describe ShipPresenter do
     expect(subject.computers).to be(computers)
   end
 
-  it 'has a locations' do
-    expect(subject.locations).to be(locations)
+  context 'destinations' do
+    subject { described_class.new(ship).destinations }
+
+    it 'have ids' do
+      expect(subject.first.id).to be(ship.destinations.first.id)
+    end
+
+    it 'can be checked?' do
+      expect(subject.first).to be_checked
+    end
+
+    it 'can be disabled?' do
+      expect(subject.first).to be_disabled
+    end
   end
 
   context 'ship fuel' do

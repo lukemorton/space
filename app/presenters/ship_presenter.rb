@@ -31,9 +31,38 @@ class ShipPresenter < SimpleDelegator
     'success'
   end
 
+  def destinations
+    super.map do |destination|
+      DestinationPresenter.new(destination, ship: ship)
+    end
+  end
+
   private
 
   def ship
     __getobj__
+  end
+
+  class DestinationPresenter < SimpleDelegator
+    def initialize(destination, ship:)
+      super(destination)
+      @ship = ship
+    end
+
+    def checked?
+      destination.id == ship.location.id
+    end
+
+    def disabled?
+      destination.id == ship.location.id
+    end
+
+    private
+
+    attr_reader :ship
+
+    def destination
+      __getobj__
+    end
   end
 end

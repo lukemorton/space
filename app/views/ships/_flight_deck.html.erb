@@ -52,7 +52,7 @@
         <% @ship.destinations.each do |location| %>
           <label class="card card-body bg-light border-0" data-toggle="pills" style="cursor: pointer;">
             <div class="d-flex justify-content-between align-items-center">
-              <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.id == @ship.location.id, disabled: location.id == @ship.location.id %>
+              <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.checked?, disabled: location.disabled? %>
 
               <span class="badge badge-secondary badge-success">10 fuel</span>
             </div>
