@@ -32,31 +32,31 @@
 
         <div class="row">
           <div class="col-sm-4">
-            <div class="card border-success">
+            <div class="card">
               <div class="card-body text-center">
                 <p class="strong">Fuel</p>
 
-                <div class="h2 text-success"><%= number_with_delimiter(@controls.ship.fuel) %></div>
+                <div class="h2 text-<%=@controls.ship_fuel_status %>"><%= @controls.ship_fuel %></div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-4">
-            <div class="card border-success">
+            <div class="card">
               <div class="card-body text-center">
                 <p class="strong">Hull</p>
 
-                <div class="h2 text-success">100%</div>
+                <div class="h2 text-<%=@controls.ship_hull_status %>"><%= @controls.ship_hull %></div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-4">
-            <div class="card border-success">
+            <div class="card">
               <div class="card-body text-center">
                 <p class="strong">Shields</p>
 
-                <div class="h2 text-success">100%</div>
+                <div class="h2 text-<%=@controls.ship_shields_status %>"><%= @controls.ship_shields %></div>
               </div>
             </div>
           </div>
