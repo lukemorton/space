@@ -1,22 +1,14 @@
-class ShipPresenter
+class ShipPresenter < SimpleDelegator
   include ActionView::Helpers::NumberHelper
 
-  attr_reader :computers, :locations, :ship
-
-  def initialize(computers:, locations:, ship:)
-    @computers = computers
-    @locations = locations
-    @ship = ship
-  end
-
   def ship_fuel
-    number_with_delimiter(ship.fuel)
+    number_with_delimiter(fuel)
   end
 
   def ship_fuel_status
-    if ship.fuel > 10
+    if fuel > 10
       'success'
-    elsif ship.fuel > 0
+    elsif fuel > 0
       'warning'
     else
       'danger'

@@ -3,10 +3,14 @@ require 'rails_helper'
 RSpec.describe ShipPresenter do
   let(:computers) { double }
   let(:locations) { double }
-  let(:ship) { double }
+  let(:ship) { double(id: 1, computers: computers, locations: locations) }
 
   subject do
-    described_class.new(computers: computers, locations: locations, ship: ship)
+    described_class.new(ship)
+  end
+
+  it 'has an id' do
+    expect(subject.id).to be(ship.id)
   end
 
   it 'has a computers' do
@@ -15,10 +19,6 @@ RSpec.describe ShipPresenter do
 
   it 'has a locations' do
     expect(subject.locations).to be(locations)
-  end
-
-  it 'has a ship' do
-    expect(subject.ship).to be(ship)
   end
 
   context 'ship fuel' do

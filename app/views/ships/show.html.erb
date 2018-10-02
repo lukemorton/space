@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-between align-items-center">
-  <h1><%= @controls.ship.name %></h1>
+  <h1><%= @controls.name %></h1>
 
   <%= render 'shared/flash' %>
 
   <div>
     <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
-      <%= f.hidden_field :ship_id, value: @controls.ship.id %>
+      <%= f.hidden_field :ship_id, value: @controls.id %>
       <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
     <% end %>
   </div>
@@ -25,7 +25,7 @@
           <div class="card-body text-center">
             <p class="strong">Location</p>
 
-            <div class="h2"><%= @controls.ship.location.name %></div>
+            <div class="h2"><%= @controls.location.name %></div>
           </div>
         </div>
 
@@ -66,14 +66,14 @@
       <div class="col-md-6">
         <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
           <h2>Destinations</h2>
-          <%= f.hidden_field :ship_id, value: @controls.ship.id %>
-          <%= f.hidden_field :ship_slug, value: @controls.ship.slug %>
+          <%= f.hidden_field :ship_id, value: @controls.id %>
+          <%= f.hidden_field :ship_slug, value: @controls.slug %>
 
           <nav class="mb-3">
             <% @controls.locations.each do |location| %>
               <label class="card card-body bg-light border-0" data-toggle="pills" style="cursor: pointer;">
                 <div class="d-flex justify-content-between align-items-center">
-                  <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.id == @controls.ship.location.id %>
+                  <%= f.radio_button :location_id, location.id, label:  location.name, checked: location.id == @controls.location.id %>
 
                   <span class="badge badge-secondary badge-success">10 fuel</span>
                 </div>
@@ -89,7 +89,7 @@
 
   <div class="tab-pane" id="crew">
     <ul>
-      <% @controls.ship.crew.each do |crew_member| %>
+      <% @controls.crew.each do |crew_member| %>
         <li><%= crew_member.name %></li>
       <% end %>
     </ul>

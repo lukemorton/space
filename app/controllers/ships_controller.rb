@@ -1,6 +1,8 @@
 class ShipsController < ApplicationController
   def show
-    @controls = ship_presenter
+    @controls = ShipPresenter.new(
+      view_controls_use_case.view(params.fetch(:id), current_person.id)
+    )
   rescue Space::Flight::PersonNotInCrewError
     redirect_to current_person.location
   rescue Space::Flight::UnknownShipError
@@ -8,15 +10,6 @@ class ShipsController < ApplicationController
   end
 
   private
-
-  def ship_presenter
-    response = view_controls_use_case.view(params.fetch(:id), current_person.id)
-    ShipPresenter.new(
-      computers: response.computers,
-      locations: response.locations,
-      ship: response
-    )
-  end
 
   def view_controls_use_case
     Space::Flight::ViewControls.new(
