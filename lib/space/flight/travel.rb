@@ -1,4 +1,5 @@
 require_relative 'ship'
+require_relative 'travel_validator'
 
 module Space
   module Flight
@@ -15,12 +16,15 @@ module Space
       def travel(ship_id, to:)
         ship = ship_gateway.find(ship_id)
         location = location_gateway.find(to)
+        fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
 
-        travel_validator = travel_computer_factory.create_travel_validator(ship, location)
+        travel_validator = TravelValidator.new(
+          destination_location: location,
+          fuel_calculator: fuel_calculator,
+          ship: ship
+        )
 
         if travel_validator.valid?
-          fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
-
           ship_gateway.update(
             ship.id,
             dock_id: location.establishments.first.id,

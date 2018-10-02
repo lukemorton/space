@@ -1,7 +1,7 @@
-require_relative '../../../../lib/space/computers/basic_travel_validator'
+require_relative '../../../../lib/space/flight/travel_validator'
 require_relative '../../../../lib/space/flight/ship'
 
-RSpec.describe Space::Computers::BasicTravelValidator do
+RSpec.describe Space::Flight::TravelValidator do
   let(:current_location) { instance_double('Location', id: 1) }
   let(:destination_location) { instance_double('Location', id: 2) }
   let(:ship) { instance_double('Space::Flight::Ship', id: 1, fuel: Space::Flight::Ship::FUEL_MAX, location: current_location) }

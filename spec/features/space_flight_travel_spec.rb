@@ -42,7 +42,6 @@ RSpec.feature 'Space flight travel' do
 
   def and_i_should_see_my_ships_computers_listed
     expect(page).to have_content('Basic Fuel Calculator')
-    expect(page).to have_content('Basic Travel Validator')
   end
 
   def when_i_travel_to_a_valid_location

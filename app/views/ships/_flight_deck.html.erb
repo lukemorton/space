@@ -1,48 +1,48 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-7 col-lg-6">
     <div class="card mb-3">
       <div class="card-body text-center">
         <p class="strong">Location</p>
 
-        <div class="h2"><%= @ship.location.name %></div>
+        <div class="h3"><%= @ship.location.name %></div>
       </div>
     </div>
 
 
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-4 mb-3 md-sm-0">
         <div class="card">
           <div class="card-body text-center">
             <p class="strong">Fuel</p>
 
-            <div class="h2 text-<%=@ship.fuel_status %>"><%= @ship.fuel %></div>
+            <div class="h4 text-<%=@ship.fuel_status %>"><%= @ship.fuel %></div>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-4 mb-3 md-sm-0">
         <div class="card">
           <div class="card-body text-center">
             <p class="strong">Hull</p>
 
-            <div class="h2 text-<%=@ship.hull_status %>"><%= @ship.hull %></div>
+            <div class="h4 text-<%=@ship.hull_status %>"><%= @ship.hull %></div>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-4 mb-3 md-sm-0">
         <div class="card">
           <div class="card-body text-center">
             <p class="strong">Shields</p>
 
-            <div class="h2 text-<%=@ship.shields_status %>"><%= @ship.shields %></div>
+            <div class="h4 text-<%=@ship.shields_status %>"><%= @ship.shields %></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-5 mt-3 mt-md-0 offset-lg-1">
     <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
       <h2>Destinations</h2>
       <%= f.hidden_field :ship_id, value: @ship.id %>

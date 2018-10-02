@@ -16,8 +16,7 @@ RSpec.describe Space::Flight::Travel do
 
     let(:new_fuel_level) { ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL }
     let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', new_fuel_level: new_fuel_level) }
-    let(:travel_validator) { instance_double('Space::Flight::TravelComputerFactory::TravelValidator', valid?: true) }
-    let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator, create_travel_validator: travel_validator) }
+    let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator) }
 
     let(:use_case) do
       described_class.new(
@@ -39,14 +38,6 @@ RSpec.describe Space::Flight::Travel do
       expect(person_gateway).to have_received(:update).with(
         person.id,
         location_id: destination_station.id
-      )
-    end
-
-    it 'uses travel calculator' do
-      subject
-      expect(travel_computer_factory).to have_received(:create_travel_validator).with(
-        ship,
-        destination_station
       )
     end
 
@@ -82,14 +73,14 @@ RSpec.describe Space::Flight::Travel do
     end
 
     context 'and attempting invalid travel' do
-      let(:travel_validator) { instance_double('Space::Flight::TravelComputerFactory::TravelValidator', valid?: false, errors: double(full_messages: ['Fuel too low'])) }
+      let(:destination_station) { current_station }
 
       it 'disallows travel' do
         expect(subject).to_not be_successful
       end
 
       it 'provides an error' do
-        expect(subject.errors).to include('Fuel too low')
+        expect(subject.errors).to_not be_empty
       end
     end
   end

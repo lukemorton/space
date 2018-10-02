@@ -1,22 +1,14 @@
 require 'active_model'
 
 module Space
-  module Computers
-    class BasicTravelValidator
+  module Flight
+    class TravelValidator
       include ActiveModel::Model
 
       attr_accessor :destination_location, :fuel_calculator, :ship
 
       validate :ship_has_enough_fuel
       validate :not_travelling_to_same_location
-
-      def name
-        'Basic Travel Validator by Space Inc.'
-      end
-
-      def description
-        'A basic travel calculator.'
-      end
 
       private
 
