@@ -89,5 +89,13 @@ RSpec.describe Actions::FlightController do
     it 'sets flash success' do
       expect(flash[:success]).to be_present
     end
+
+    context 'and travelling unsuccessful' do
+      let(:location_id) { ship.location.id }
+
+      it 'renders 422' do
+        assert_response :unprocessable_entity
+      end
+    end
   end
 end

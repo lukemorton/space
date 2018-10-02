@@ -14,14 +14,10 @@ module Actions
 
     def travel
       travelling = travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
-
-      if travelling.successful?
-        flash[:success] = 'You travelled'
-      else
-        flash[:errors] = travelling.errors
-      end
-
+      flash[:success] = 'You travelled'
       redirect_to ship_url(travel_params[:ship_slug])
+    rescue Space::Flight::InvalidTravelError
+      render_unprocessable_entity
     end
 
     private
