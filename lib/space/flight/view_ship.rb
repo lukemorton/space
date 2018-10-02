@@ -77,7 +77,7 @@ module Space
           Response::Destination.new(
             destination.id,
             destination.name,
-            fuel_calculator.new_fuel_level
+            fuel_calculator.fuel_to_travel
           )
         end
       end

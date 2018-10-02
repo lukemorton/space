@@ -10,6 +10,10 @@ RSpec.describe Space::Computers::BasicFuelCalculator do
     )
   end
 
+  it 'returns fuel to travel' do
+    expect(subject.fuel_to_travel).to eq(Space::Flight::Ship::FUEL_TO_TRAVEL)
+  end
+
   it 'returns new fuel level' do
     expect(subject.new_fuel_level).to eq(ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL)
   end

@@ -13,8 +13,12 @@ module Space
         'An inefficient fuel calculator.'
       end
 
+      def fuel_to_travel
+        Space::Flight::Ship::FUEL_TO_TRAVEL
+      end
+
       def new_fuel_level
-        ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL
+        ship.fuel - fuel_to_travel
       end
 
       private

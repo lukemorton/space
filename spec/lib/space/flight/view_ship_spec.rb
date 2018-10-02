@@ -1,7 +1,7 @@
 require_relative '../../../../lib/space/flight/view_ship'
 
 RSpec.describe Space::Flight::ViewShip do
-  let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', new_fuel_level: 100) }
+  let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10) }
   let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator) }
 
   let(:use_case) do
@@ -52,7 +52,7 @@ RSpec.describe Space::Flight::ViewShip do
     it 'should have destinations' do
       expect(subject.destinations.first.id).to eq(location.id)
       expect(subject.destinations.first.name).to eq(location.name)
-      expect(subject.destinations.first.fuel_to_travel).to eq(100)
+      expect(subject.destinations.first.fuel_to_travel).to eq(10)
     end
 
     it 'should have fuel calculator meta data' do
