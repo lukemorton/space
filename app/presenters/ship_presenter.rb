@@ -32,8 +32,8 @@ class ShipPresenter < SimpleDelegator
   end
 
   def destinations
-    super.map do |destination|
-      DestinationPresenter.new(destination, ship: ship)
+    super.map.with_index do |destination, index|
+      DestinationPresenter.new(destination, index: index, ship: ship)
     end
   end
 
@@ -44,22 +44,23 @@ class ShipPresenter < SimpleDelegator
   end
 
   class DestinationPresenter < SimpleDelegator
-    def initialize(destination, ship:)
+    def initialize(destination, index:, ship:)
       super(destination)
+      @index = index
       @ship = ship
     end
 
     def checked?
-      destination.id == ship.location.id
+      index == 0
     end
 
     def disabled?
-      destination.id == ship.location.id
+      false
     end
 
     private
 
-    attr_reader :ship
+    attr_reader :index, :ship
 
     def destination
       __getobj__

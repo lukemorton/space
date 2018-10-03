@@ -50,7 +50,7 @@ module Space
           ship.name,
           ship.slug,
 
-          destinations(fuel_calculator),
+          destinations(fuel_calculator, ship.location),
           computers
         )
       end
@@ -72,14 +72,18 @@ module Space
         crew_ids.include?(person_id)
       end
 
-      def destinations(fuel_calculator)
-        Locations::List.new(location_gateway: location_gateway).list.locations.map do |destination|
-          Response::Destination.new(
-            destination.id,
-            destination.name,
-            fuel_calculator.fuel_to_travel
-          )
-        end
+      def destinations(fuel_calculator, ship_location)
+        locations = Locations::List.new(location_gateway: location_gateway).list.locations
+
+        locations
+          .delete_if { |destination| destination.id == ship_location.id }
+          .map do |destination|
+            Response::Destination.new(
+              destination.id,
+              destination.name,
+              fuel_calculator.fuel_to_travel
+            )
+          end
       end
     end
   end

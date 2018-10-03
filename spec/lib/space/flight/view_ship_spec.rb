@@ -20,7 +20,8 @@ RSpec.describe Space::Flight::ViewShip do
   context 'when viewing flight controls' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
     let(:location) { instance_double('Location', id: 1, name: 'London') }
-    let(:locations) { [location] }
+    let(:another_location) { instance_double('Location', id: 2, name: 'Paris') }
+    let(:locations) { [location, another_location] }
     let(:ship) { instance_double('Ship', id: 1, crew: [person], fuel: 100, location: location, name: 'Endeavour', slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
@@ -50,9 +51,13 @@ RSpec.describe Space::Flight::ViewShip do
     end
 
     it 'should have destinations' do
-      expect(subject.destinations.first.id).to eq(location.id)
-      expect(subject.destinations.first.name).to eq(location.name)
+      expect(subject.destinations.first.id).to eq(another_location.id)
+      expect(subject.destinations.first.name).to eq(another_location.name)
       expect(subject.destinations.first.fuel_to_travel).to eq(10)
+    end
+
+    it 'should not include current location in destinations' do
+      expect(subject.destinations.map(&:id)).to_not include(location.id)
     end
 
     it 'should have fuel calculator meta data' do

@@ -27,7 +27,7 @@ RSpec.describe ShipPresenter do
     end
 
     it 'can be disabled?' do
-      expect(subject.first).to be_disabled
+      expect(subject.first).to_not be_disabled
     end
   end
 
