@@ -13,6 +13,8 @@ module Space
 
     # Settings in config/environments/* take precedence over those specified here.
     config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
+
     config.exceptions_app = routes
 
     # Application configuration can go into files in config/initializers
