@@ -15,4 +15,7 @@ Rails.application.routes.draw do
     post :board, controller: :flight
     post :travel, controller: :flight
   end
+
+  get '404', to: 'errors#not_found'
+  get '422', to: 'errors#unprocessable_entity'
 end

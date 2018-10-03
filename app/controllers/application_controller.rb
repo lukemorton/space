@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
   private
 
   def render_not_found
-    render file: 'public/404', status: :not_found
+    render 'errors/404', status: :not_found
   end
 
   def render_unprocessable_entity
-    render file: 'public/422', status: :unprocessable_entity
+    render 'errors/422', status: :unprocessable_entity
   end
 
   def redirect_if_user_does_not_have_person
