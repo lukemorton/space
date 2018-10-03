@@ -1,9 +1,9 @@
-<div class="d-flex justify-content-between align-items-center">
+<div class="d-lg-flex justify-content-between align-items-center">
   <h1><%= @ship.name %></h1>
 
   <%= render 'shared/flash' %>
 
-  <div>
+  <div class="text-right">
     <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
       <%= f.hidden_field :ship_id, value: @ship.id %>
       <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
