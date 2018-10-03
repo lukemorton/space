@@ -19,7 +19,10 @@ module Space
       end
 
       def not_travelling_to_same_location
-        if ship.location.id.to_s == destination_location.id.to_s
+        current_location_id = ship.location.id.to_s
+        destination_location_id = destination_location.id.to_s
+
+        if current_location_id == destination_location_id
           errors.add(:destination_location, 'is same as current location')
         end
       end
