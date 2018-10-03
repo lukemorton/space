@@ -11,26 +11,46 @@
 
   <body>
     <nav class="navbar navbar-expand-md bg-light">
-      <div class="container">
-        <%= link_to 'Space', root_path, class: 'navbar-brand mb-0 h1' %>
+      <div class="container d-flex px-sm-0">
+        <%= link_to 'Space', root_path, class: 'navbar-brand mb-0 h1 mr-md-auto' %>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <nav class="navbar-nav ml-auto">
+        <div class="mr-2">
+          <div class="px-3 py-1 bg-white border rounded">
+            <strong><%= current_person.name %></strong>
+
+            <span class="ml-2">$20.00</span>
+          </div>
+        </div>
+
+        <div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+
+        <div class="d-none d-md-block">
+          <nav class="navbar-nav">
             <% if user_signed_in? %>
-              <%= link_to 'Account', edit_user_registration_path, class: 'nav-item nav-link' %>
               <%= link_to 'Help', help_index_path, class: 'nav-item nav-link' %>
-              <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
+
+              <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Settings
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <%= link_to 'Edit Account', edit_user_registration_path, class: 'nav-item nav-link' %>
+                  <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
+                </div>
+              </div>
             <% else %>
               <%= link_to 'Log in', new_user_session_path, class: 'nav-item nav-link' %>
               <%= link_to 'Sign up for free', new_user_registration_path, class: 'nav-item btn btn-outline-primary ml-2' %>
@@ -40,9 +60,26 @@
       </div>
     </nav>
 
+    <div class="collapse" id="navbarNavDropdown">
+      <div class="container">
+      <div class="row">
+        <nav class="navbar bg-light ml-auto p-0" style="font-size: .9em">
+          <% if user_signed_in? %>
+            <%= link_to 'Help', help_index_path, class: 'nav-item nav-link ml-auto' %>
+            <%= link_to 'Edit Account', edit_user_registration_path, class: 'nav-item nav-link' %>
+            <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
+          <% else %>
+            <%= link_to 'Log in', new_user_session_path, class: 'nav-item nav-link ml-auto' %>
+            <%= link_to 'Sign up for free', new_user_registration_path, class: 'nav-item btn btn-outline-primary ml-2' %>
+          <% end %>
+        </nav>
+      </div>
+      </div>
+    </div>
+
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 px-sm-0">
           <%= yield %>
         </div>
       </div>
