@@ -1,8 +1,6 @@
 <div class="d-lg-flex justify-content-between align-items-center">
   <h1><%= @ship.name %></h1>
 
-  <%= render 'shared/flash' %>
-
   <div class="text-right">
     <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
       <%= f.hidden_field :ship_id, value: @ship.id %>
@@ -10,6 +8,8 @@
     <% end %>
   </div>
 </div>
+
+<%= render 'shared/flash' %>
 
 <nav class="nav nav-tabs mt-3 mb-5">
   <%= link_to 'Flight deck', '#flight-deck', class: 'nav-item nav-link active', data: { toggle: 'tab' } %>

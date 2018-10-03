@@ -1,8 +1,6 @@
-<div class="d-flex justify-content-between align-items-center">
-  <h1><%= @dock.location.name %></h1>
+<h1><%= @dock.location.name %></h1>
 
-  <%= render 'shared/flash' %>
-</div>
+<%= render 'shared/flash' %>
 
 <nav class="nav nav-tabs my-3">
   <%= active_link_to "About #{@dock.location.name}", location_path(@dock.location), class: 'nav-item nav-link' %>
