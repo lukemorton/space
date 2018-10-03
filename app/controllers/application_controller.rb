@@ -34,6 +34,12 @@ class ApplicationController < ActionController::Base
     Space::Locations::LocationGateway.new(location_repository: Location)
   end
 
+  def money_gateway
+    Space::Folk::MoneyGateway.new(
+      double_entry: DoubleEntry
+    )
+  end
+
   def person_gateway
     Space::Folk::PersonGateway.new(person_repository: Person)
   end

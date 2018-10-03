@@ -13,7 +13,8 @@ module Space
       end
 
       def create(attrs)
-        person_repository.create(attrs)
+        person = person_repository.create(attrs)
+        Space::Folk::Person.from_object(person) unless person.nil?
       end
 
       def update(person_id, attrs)

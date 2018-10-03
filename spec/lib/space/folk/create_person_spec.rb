@@ -4,7 +4,8 @@ RSpec.describe Space::Folk::CreatePerson do
   context 'when creating person' do
     let(:location) { instance_double('Space::Locations::Location', id: 2) }
     let(:location_gateway) { instance_double('Space::Flight::LocationGateway', first: location) }
-    let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: true) }
+    let(:person) { instance_double('Space::Folk::Person', id: 1) }
+    let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: person) }
     let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', initialize_bank: true) }
 
     let(:use_case) do
@@ -44,9 +45,7 @@ RSpec.describe Space::Folk::CreatePerson do
 
     it 'creates bank account' do
       subject
-      expect(money_gateway).to have_received(:initialize_bank).with(a_hash_including(
-        user_id: 1
-      ))
+      expect(money_gateway).to have_received(:initialize_bank).with(person)
     end
 
     context 'and name not provided' do
@@ -61,8 +60,8 @@ RSpec.describe Space::Folk::CreatePerson do
       end
     end
 
-    context 'and gateway could not creatw' do
-      let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: false) }
+    context 'and gateway could not create' do
+      let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: nil) }
 
       it 'raises exception' do
         expect{subject}.to raise_error(Space::Folk::CouldNotCreatePersonError)

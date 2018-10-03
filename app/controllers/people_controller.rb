@@ -34,6 +34,7 @@ class PeopleController < ApplicationController
   def create_person_use_case
     Space::Folk::CreatePerson.new(
       location_gateway: location_gateway,
+      money_gateway: money_gateway,
       person_gateway: person_gateway
     )
   end

@@ -16,17 +16,13 @@ module Space
         validator = Validator.new(attrs)
 
         if validator.valid?
-          transaction do
-            person_creation_successful = person_gateway.create(
-              location_id: default_location_id,
-              name: attrs[:name],
-              user_id: user_id
-            )
-            bank_initialization_successful = money_gateway.initialize_bank(
-              user_id: user_id
-            )
-            raise CouldNotCreatePersonError.new unless person_creation_successful and bank_initialization_successful
-          end
+          person = person_gateway.create(
+            location_id: default_location_id,
+            name: attrs[:name],
+            user_id: user_id
+          )
+          raise CouldNotCreatePersonError.new if person.nil?
+          money_gateway.initialize_bank(person)
           Response.new(true)
         else
           Response.new(false, validator)

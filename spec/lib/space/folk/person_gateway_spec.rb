@@ -1,13 +1,7 @@
 require_relative '../../../../lib/space/folk/person_gateway'
 
 RSpec.describe Space::Folk::PersonGateway do
-  context 'when finding a person record' do
-    let(:location_record) { instance_double('Location', id: 1) }
-    let(:person_record) { instance_double('Person', id: 1, location: location_record, ship_id: nil) }
-    let(:person_repository) { class_double('Person', find_by: person_record) }
-
-    subject(:person) { described_class.new(person_repository: person_repository).find(1) }
-
+  shared_examples 'a person' do
     it { is_expected.to be_a(Space::Folk::Person) }
 
     it 'has an id' do
@@ -25,6 +19,16 @@ RSpec.describe Space::Folk::PersonGateway do
     it 'has location with id' do
       expect(person.location.id).to eq(location_record.id)
     end
+  end
+
+  context 'when finding a person record' do
+    let(:location_record) { instance_double('Location', id: 1) }
+    let(:person_record) { instance_double('Person', id: 1, name: 'Luke', location: location_record, ship_id: nil) }
+    let(:person_repository) { class_double('Person', find_by: person_record) }
+
+    subject(:person) { described_class.new(person_repository: person_repository).find(1) }
+
+    it_behaves_like 'a person'
 
     context 'and person does not exist' do
       let(:person_record) { nil }
@@ -33,17 +37,16 @@ RSpec.describe Space::Folk::PersonGateway do
   end
 
   context 'when creating a person record' do
-    let(:person_repository) { class_double('Person', create: true) }
+    let(:location_record) { instance_double('Location', id: 1) }
+    let(:person_attrs) { { location_id: 1, name: 'Luke', user_id: 1 } }
+    let(:person_record) { instance_double('Person', person_attrs.merge(id: 1, location: location_record, ship_id: nil)) }
+    let(:person_repository) { class_double('Person', create: person_record) }
 
-    subject do
-      described_class.new(person_repository: person_repository).create(
-        location_id: 1,
-        name: 'Luke',
-        user_id: 1
-      )
+    subject(:person) do
+      described_class.new(person_repository: person_repository).create(person_attrs)
     end
 
-    it { is_expected.to be(true) }
+    it_behaves_like 'a person'
 
     it 'sets name' do
       subject
