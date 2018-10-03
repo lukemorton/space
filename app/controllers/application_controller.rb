@@ -23,7 +23,15 @@ class ApplicationController < ActionController::Base
   end
 
   def current_person
-    current_user&.person
+    @current_person ||= begin
+      return unless current_user&.person
+
+      view_hud_use_case = Space::Folk::ViewHud.new(
+        money_gateway: money_gateway,
+        person_gateway: person_gateway
+      )
+      view_hud_use_case.view(current_user.person.id)
+    end
   end
 
   def dock_gateway

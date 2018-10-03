@@ -8,7 +8,7 @@ RSpec.describe Space::Folk::ViewHud do
     let(:person) { instance_double('Space::Folk::Person', id: 1, location: location, name: 'Luke', ship: ship) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', find: person) }
 
-    let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', bank_balance: Money.new(10_00)) }
+    let(:money_gateway) { instance_double('Space::Folk::MoneyGateway') } #, bank_balance: Money.new(10_00)
 
     let(:use_case) do
       described_class.new(
