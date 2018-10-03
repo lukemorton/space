@@ -10,18 +10,21 @@ module Space
         new(
           id: object.id,
           location: Location.new(
-            id: object.location.id
+            id: object.location.id,
+            slug: object.location.slug
           ),
-          ship_id: object.ship_id
+          name: object.name,
+          ship: Ship.from_object(object.ship)
         )
       end
 
       attr_accessor :id
       attr_accessor :location
-      attr_writer :ship_id
+      attr_accessor :name
+      attr_accessor :ship
 
       def aboard_ship?
-        !ship_id.nil?
+        !ship.nil?
       end
 
       private
@@ -32,6 +35,30 @@ module Space
         include ActiveModel::Model
 
         attr_accessor :id
+        attr_accessor :slug
+
+        def to_param
+          slug
+        end
+      end
+
+      class Ship
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          return if object.nil?
+          new(
+            id: object.id,
+            slug: object.slug
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :slug
+
+        def to_param
+          slug
+        end
       end
     end
   end

@@ -12,8 +12,32 @@ RSpec.describe Space::Folk::PersonGateway do
       expect(person.location).to_not be_nil
     end
 
+    it 'has a location with slug' do
+      expect(person.location.slug).to eq(location_record.slug)
+    end
+
+    it 'can generate location param from location slug' do
+      expect(person.location.to_param).to eq(location_record.slug)
+    end
+
+    it 'has name' do
+      expect(person.name).to eq(person_record.name)
+    end
+
+    it 'has ship' do
+      expect(person.ship.id).to eq(ship_record.id)
+    end
+
+    it 'has a ship with slug' do
+      expect(person.ship.slug).to eq(ship_record.slug)
+    end
+
+    it 'can generate ship param from ship slug' do
+      expect(person.ship.to_param).to eq(ship_record.slug)
+    end
+
     it 'can be aboard ship' do
-      expect(person).to_not be_aboard_ship
+      expect(person).to be_aboard_ship
     end
 
     it 'has location with id' do
@@ -22,8 +46,9 @@ RSpec.describe Space::Folk::PersonGateway do
   end
 
   context 'when finding a person record' do
-    let(:location_record) { instance_double('Location', id: 1) }
-    let(:person_record) { instance_double('Person', id: 1, name: 'Luke', location: location_record, ship_id: nil) }
+    let(:ship_record) { instance_double('Ship', id: 1, slug: 'endeavour') }
+    let(:location_record) { instance_double('Location', id: 1, slug: 'london') }
+    let(:person_record) { instance_double('Person', id: 1, name: 'Luke', location: location_record, ship: ship_record) }
     let(:person_repository) { class_double('Person', find_by: person_record) }
 
     subject(:person) { described_class.new(person_repository: person_repository).find(1) }
@@ -37,9 +62,10 @@ RSpec.describe Space::Folk::PersonGateway do
   end
 
   context 'when creating a person record' do
-    let(:location_record) { instance_double('Location', id: 1) }
+    let(:ship_record) { instance_double('Ship', id: 1, slug: 'endeavour') }
+    let(:location_record) { instance_double('Location', id: 1, slug: 'london') }
     let(:person_attrs) { { location_id: 1, name: 'Luke', user_id: 1 } }
-    let(:person_record) { instance_double('Person', person_attrs.merge(id: 1, location: location_record, ship_id: nil)) }
+    let(:person_record) { instance_double('Person', person_attrs.merge(id: 1, location: location_record, ship: ship_record)) }
     let(:person_repository) { class_double('Person', create: person_record) }
 
     subject(:person) do
