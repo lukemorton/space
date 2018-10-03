@@ -6,8 +6,9 @@ module Space
     class CreatePerson
       Response = Struct.new(:successful?, :validator)
 
-      def initialize(location_gateway:, person_gateway:)
+      def initialize(location_gateway:, money_gateway:, person_gateway:)
         @location_gateway = location_gateway
+        @money_gateway = money_gateway
         @person_gateway = person_gateway
       end
 
@@ -15,12 +16,17 @@ module Space
         validator = Validator.new(attrs)
 
         if validator.valid?
-          successful = person_gateway.create(
-            location_id: default_location_id,
-            name: attrs[:name],
-            user_id: user_id
-          )
-          raise CouldNotCreatePersonError.new unless successful
+          transaction do
+            person_creation_successful = person_gateway.create(
+              location_id: default_location_id,
+              name: attrs[:name],
+              user_id: user_id
+            )
+            bank_initialization_successful = money_gateway.initialize_bank(
+              user_id: user_id
+            )
+            raise CouldNotCreatePersonError.new unless person_creation_successful and bank_initialization_successful
+          end
           Response.new(true)
         else
           Response.new(false, validator)
@@ -30,10 +36,15 @@ module Space
       private
 
       attr_reader :location_gateway
+      attr_reader :money_gateway
       attr_reader :person_gateway
 
       def default_location_id
         location_gateway.first.id
+      end
+
+      def transaction
+        yield
       end
 
       class Validator

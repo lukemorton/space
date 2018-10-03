@@ -5,10 +5,12 @@ RSpec.describe Space::Folk::CreatePerson do
     let(:location) { instance_double('Space::Locations::Location', id: 2) }
     let(:location_gateway) { instance_double('Space::Flight::LocationGateway', first: location) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', create: true) }
+    let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', initialize_bank: true) }
 
     let(:use_case) do
       described_class.new(
         location_gateway: location_gateway,
+        money_gateway: money_gateway,
         person_gateway: person_gateway
       )
     end
@@ -36,6 +38,13 @@ RSpec.describe Space::Folk::CreatePerson do
     it 'passes user_id' do
       subject
       expect(person_gateway).to have_received(:create).with(a_hash_including(
+        user_id: 1
+      ))
+    end
+
+    it 'creates bank account' do
+      subject
+      expect(money_gateway).to have_received(:initialize_bank).with(a_hash_including(
         user_id: 1
       ))
     end
