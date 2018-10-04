@@ -1,4 +1,4 @@
-# require_relative 'person'
+require 'money'
 
 module Space
   module Folk
