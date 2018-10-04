@@ -1,7 +1,7 @@
 module Space
   module Folk
     class ViewHud
-      Response = Struct.new(:id, :location, :name, :ship)
+      Response = Struct.new(:id, :bank_balance, :location, :name, :ship)
 
       def initialize(money_gateway:, person_gateway:)
         @money_gateway = money_gateway
@@ -10,9 +10,11 @@ module Space
 
       def view(person_id)
         person = person_gateway.find(person_id)
+        bank_balance = money_gateway.bank_balance(person)
 
         Response.new(
           person.id,
+          bank_balance,
           person.location,
           person.name,
           person.ship

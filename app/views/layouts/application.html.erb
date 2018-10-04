@@ -19,7 +19,7 @@
             <div class="px-3 py-1 bg-white border rounded">
               <strong><%= current_person.name %></strong>
 
-              <span class="ml-2">$20.00</span>
+              <span class="ml-2"><%= current_person.bank_balance.format %></span>
             </div>
           </div>
         <% end %>

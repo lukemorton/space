@@ -12,11 +12,15 @@ module Space
         bank = double_entry.account(:bank, scope: person)
 
         double_entry.transfer(
-          Money.new(20_00),
+          Money.new(50_00),
           from: seed,
           to: bank,
           code: :initialize
         )
+      end
+
+      def bank_balance(person)
+        double_entry.account(:bank, scope: person).balance
       end
 
       private

@@ -7,8 +7,8 @@ RSpec.describe Space::Folk::ViewHud do
     let(:ship) { instance_double('Space::Flight::Ship', id: 3) }
     let(:person) { instance_double('Space::Folk::Person', id: 1, location: location, name: 'Luke', ship: ship) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', find: person) }
-
-    let(:money_gateway) { instance_double('Space::Folk::MoneyGateway') } #, bank_balance: Money.new(10_00)
+    let(:bank_balance) { Money.new(10_00) }
+    let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', bank_balance: bank_balance) }
 
     let(:use_case) do
       described_class.new(
@@ -21,6 +21,10 @@ RSpec.describe Space::Folk::ViewHud do
 
     it 'has id' do
       expect(subject.id).to eq(person.id)
+    end
+
+    it 'has bank_balance' do
+      expect(subject.bank_balance).to eq(bank_balance)
     end
 
     it 'has name' do
