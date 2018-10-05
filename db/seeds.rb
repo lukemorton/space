@@ -1,6 +1,8 @@
+require 'faker'
+
 london = Location.create!(name: 'London')
-Location.create!(name: 'Paris')
-Location.create!(name: 'Tokyo')
+paris = Location.create!(name: 'Paris')
+tokyo = Location.create!(name: 'Tokyo')
 
 Location.all.each do |location|
   Dock.create!(name: "#{location.name} Dock", location: location)
@@ -18,12 +20,16 @@ ship = Ship.create!(
   location: london
 )
 
-Ship.create!(
-  dock: london.establishments.first,
-  fuel: Space::Flight::Ship::FUEL_MAX,
-  name: 'Deadly',
-  location: london
-)
+50.times do
+  location = [london, paris, tokyo].sample
+
+  Ship.create!(
+    dock: location.establishments.first,
+    fuel: Space::Flight::Ship::FUEL_MAX,
+    name: Faker::Space.meteorite,
+    location: location
+  )
+end
 
 %i(Jim Gem).each do |name|
   user = User.create!(
