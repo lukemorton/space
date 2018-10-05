@@ -4,6 +4,10 @@ london = Location.create!(name: 'London')
 paris = Location.create!(name: 'Paris')
 tokyo = Location.create!(name: 'Tokyo')
 
+30.times do
+  Location.create!(name: Faker::Address.city)
+end
+
 Location.all.each do |location|
   Dock.create!(name: "#{location.name} Dock", location: location)
 end
