@@ -8,19 +8,10 @@ RSpec.describe ShipsController do
   end
 
   describe '#show' do
-    it 'returns successfully' do
-      get ship_url(create(:ship, crew: [person]))
-      assert_response :success
-    end
-
-    it 'redirects when person not in crew' do
-      get ship_url(create(:ship, crew: []))
-      assert_redirected_to person.location
-    end
-
-    it 'raises not found when ship not found' do
-      get ship_url('not a ship')
-      assert_response :not_found
+    it 'redirects to flight deck' do
+      ship = create(:ship, crew: [person])
+      get ship_path(ship)
+      assert_redirected_to ship_flight_deck_path(ship)
     end
   end
 end

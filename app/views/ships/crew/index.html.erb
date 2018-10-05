@@ -13,6 +13,12 @@
 
 <nav class="nav nav-tabs mt-3 mb-5">
   <%= link_to 'Flight deck', ship_flight_deck_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= link_to 'Crew', ship_crew_index_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= link_to 'Computers', ship_computers_path(@ship), class: 'nav-item nav-link' %>
+  <%= link_to 'Crew', ship_crew_index_path(@ship.slug), class: 'nav-item nav-link active' %>
+  <%= link_to 'Computers', ship_computers_path(@ship.slug), class: 'nav-item nav-link' %>
 </nav>
+
+<ul>
+  <% @ship.crew.each do |crew_member| %>
+    <li><%= crew_member.name %></li>
+  <% end %>
+</ul>

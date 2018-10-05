@@ -6,8 +6,17 @@ Rails.application.routes.draw do
   resources :help, only: :index
 
   resources :docks, only: :show
+
   resources :locations, only: :show
-  resources :ships, only: :show
+
+  resources :ships, only: :show do
+    scope module: :ships do
+      resources :computers, only: :index
+      resources :crew, only: :index
+      resource :flight_deck, only: :show
+    end
+  end
+
   resources :people, only: [:new, :create]
 
   scope module: :actions do

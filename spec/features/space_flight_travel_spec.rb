@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Space flight travel' do
   scenario 'Before travelling' do
     when_viewing_controls
-    then_my_current_location_should_be_selected
-    and_i_should_see_my_crew_listed
-    and_i_should_see_my_ships_computers_listed
+    then_i_should_see_my_current_location
   end
 
   scenario 'Travelling' do
@@ -27,16 +25,8 @@ RSpec.feature 'Space flight travel' do
     visit ship_url(ship)
   end
 
-  def then_my_current_location_should_be_selected
-    expect(page).to have_css('input[type=radio][checked]')
-  end
-
-  def and_i_should_see_my_crew_listed
-    expect(page).to have_content(ship.crew.first.name)
-  end
-
-  def and_i_should_see_my_ships_computers_listed
-    expect(page).to have_content('Basic Fuel Calculator')
+  def then_i_should_see_my_current_location
+    expect(page).to have_content(location.name)
   end
 
   def when_i_travel_to_a_valid_location
