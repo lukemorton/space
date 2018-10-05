@@ -1,21 +1,4 @@
-<div class="d-lg-flex justify-content-between align-items-center">
-  <h1><%= @ship.name %></h1>
-
-  <div class="text-right">
-    <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
-      <%= f.hidden_field :ship_id, value: @ship.id %>
-      <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
-    <% end %>
-  </div>
-</div>
-
-<%= render 'shared/flash' %>
-
-<nav class="nav nav-tabs mt-3 mb-5">
-  <%= link_to 'Flight deck', ship_flight_deck_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= link_to 'Crew', ship_crew_index_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= link_to 'Computers', ship_computers_path(@ship.slug), class: 'nav-item nav-link active' %>
-</nav>
+<%= render 'ships/shared/header' %>
 
 <div class="row mb-3">
   <div class="col-sm-4">
