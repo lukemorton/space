@@ -19,7 +19,9 @@
             <div class="px-3 py-1 bg-white border rounded">
               <strong><%= current_person.name %></strong>
 
-              <span class="ml-2"><%= current_person.bank_balance.format %></span>
+              <span class="ml-2"><%= current_person.level %></span>
+
+              <span class="ml-2"><%= current_person.bank_balance %></span>
             </div>
           </div>
         <% end %>

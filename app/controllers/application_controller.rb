@@ -30,7 +30,10 @@ class ApplicationController < ActionController::Base
         money_gateway: money_gateway,
         person_gateway: person_gateway
       )
-      view_hud_use_case.view(current_user.person.id)
+
+      CurrentPersonPresenter.new(
+        view_hud_use_case.view(current_user.person.id)
+      )
     end
   end
 
