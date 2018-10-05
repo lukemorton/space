@@ -6,12 +6,12 @@ class ShipPresenter < SimpleDelegator
   end
 
   def fuel_status
-    if ship.fuel > 10
-      'success'
-    elsif ship.fuel > 0
+    if ship.out_of_fuel?
+      'danger'
+    elsif ship.low_on_fuel?
       'warning'
     else
-      'danger'
+      'success'
     end
   end
 
@@ -55,7 +55,17 @@ class ShipPresenter < SimpleDelegator
     end
 
     def disabled?
-      false
+      !destination.within_ship_fuel_range?
+    end
+
+    def fuel_to_travel_status
+      if destination.just_within_ship_fuel_range?
+        'warning'
+      elsif destination.within_ship_fuel_range?
+        'success'
+      else
+        'danger'
+      end
     end
 
     private

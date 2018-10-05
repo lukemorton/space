@@ -1,7 +1,7 @@
 require_relative '../../../../lib/space/flight/view_ship'
 
 RSpec.describe Space::Flight::ViewShip do
-  let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10) }
+  let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: 90) }
   let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator) }
 
   let(:use_case) do
@@ -38,6 +38,14 @@ RSpec.describe Space::Flight::ViewShip do
       expect(subject.fuel).to eq(ship.fuel)
     end
 
+    it 'indicate low on fuel' do
+      expect(subject).to_not be_low_on_fuel
+    end
+
+    it 'indicate out of fuel' do
+      expect(subject).to_not be_out_of_fuel
+    end
+
     it 'should have location' do
       expect(subject.location).to eq(ship.location)
     end
@@ -54,6 +62,7 @@ RSpec.describe Space::Flight::ViewShip do
       expect(subject.destinations.first.id).to eq(another_location.id)
       expect(subject.destinations.first.name).to eq(another_location.name)
       expect(subject.destinations.first.fuel_to_travel).to eq(10)
+      expect(subject.destinations.first).to be_within_ship_fuel_range
     end
 
     it 'should not include current location in destinations' do
@@ -63,6 +72,23 @@ RSpec.describe Space::Flight::ViewShip do
     it 'should have fuel calculator meta data' do
       expect(subject.computers.fuel_calculator.name).to eq(fuel_calculator.name)
       expect(subject.computers.fuel_calculator.description).to eq(fuel_calculator.description)
+    end
+
+    context 'and ship out of fuel' do
+      let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: -10) }
+
+      it 'should not have enough fuel to reach destination' do
+        expect(subject.destinations.first).to_not be_within_ship_fuel_range
+      end
+    end
+
+    context 'and ship almost out of fuel' do
+      let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level:  0) }
+
+      it 'should just about have enough fuel to reach destination' do
+        expect(subject.destinations.first).to be_within_ship_fuel_range
+        expect(subject.destinations.first).to be_just_within_ship_fuel_range
+      end
     end
   end
 

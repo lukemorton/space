@@ -56,7 +56,7 @@
             <div class="d-flex justify-content-between align-items-center">
               <%= f.radio_button :location_id, destination.id, label:  destination.name, checked: destination.checked?, disabled: destination.disabled? %>
 
-              <span class="badge badge-secondary badge-success"><%= destination.fuel_to_travel %> fuel</span>
+              <span class="badge badge-secondary badge-<%= destination.fuel_to_travel_status %>"><%= destination.fuel_to_travel %> fuel</span>
             </div>
           </label>
         <% end %>

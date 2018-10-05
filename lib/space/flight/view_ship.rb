@@ -5,11 +5,17 @@ require_relative '../locations/list'
 module Space
   module Flight
     class ViewShip
+      EMPTY_FUEL = 0
+      ALMOST_EMPTY_FUEL = 1
+      LOW_FUEL = 10
+
       Response = Struct.new(
         :id,
 
         :crew,
         :fuel,
+        :low_on_fuel?,
+        :out_of_fuel?,
         :location,
         :name,
         :slug,
@@ -19,7 +25,7 @@ module Space
       )
       Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
-      Response::Destination = Struct.new(:id, :name, :fuel_to_travel)
+      Response::Destination = Struct.new(:id, :name, :fuel_to_travel, :within_ship_fuel_range?, :just_within_ship_fuel_range?)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
@@ -46,6 +52,8 @@ module Space
 
           ship.crew,
           ship.fuel,
+          ship.fuel > ALMOST_EMPTY_FUEL && ship.fuel <= LOW_FUEL,
+          ship.fuel.zero?,
           ship.location,
           ship.name,
           ship.slug,
@@ -81,7 +89,9 @@ module Space
             Response::Destination.new(
               destination.id,
               destination.name,
-              fuel_calculator.fuel_to_travel
+              fuel_calculator.fuel_to_travel,
+              fuel_calculator.new_fuel_level >= EMPTY_FUEL,
+              fuel_calculator.new_fuel_level >= EMPTY_FUEL && fuel_calculator.new_fuel_level < LOW_FUEL
             )
           end
       end
