@@ -1,23 +1,24 @@
-class ActiveRecordScopeFactory
+module ActiveRecordScopeFactoryWithClassName
   def initialize(active_record_class)
     @active_record_class = active_record_class
   end
 
   def scope_identifier
     lambda do |value|
-      if value.class.name == @active_record_class.name
+      if value.is_a?(@active_record_class) || value.class.name == @active_record_class.name
         value.id
       else
-        fail AccountScopeMismatchError, "Expected instance of `#{@active_record_class}`, received instance of `#{value.class}`"
+        super.call(value)
       end
     end
   end
 end
 
+DoubleEntry::Account::ActiveRecordScopeFactory.prepend(ActiveRecordScopeFactoryWithClassName)
 
 DoubleEntry.configure do |config|
   config.define_accounts do |accounts|
-    person_scope = ActiveRecordScopeFactory.new(Space::Folk::Person).scope_identifier
+    person_scope = accounts.active_record_scope_identifier(Space::Folk::Person)
     accounts.define(identifier: :seed)
     accounts.define(identifier: :bank, scope_identifier: person_scope, positive_only: true)
   end
