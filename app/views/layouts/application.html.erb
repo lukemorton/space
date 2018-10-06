@@ -9,14 +9,14 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="bg-light">
     <nav class="navbar navbar-expand-md bg-light">
       <div class="container d-flex px-sm-0">
         <%= link_to 'Space', root_path, class: 'navbar-brand mb-0 h1 mr-md-auto' %>
 
         <% if current_person.present? %>
           <div class="mr-2">
-            <div class="px-3 py-1 bg-white border rounded shadow-sm">
+            <div class="px-3 py-1 bg-white rounded shadow-sm">
               <strong><%= current_person.name %></strong>
 
               <span class="ml-2"><%= current_person.level %></span>

@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-md-7 col-lg-6">
-    <div class="card bg-light shadow-sm mb-3">
+    <div class="card border-0 shadow-sm mb-3">
       <div class="card-body text-center">
         <p class="strong">Location</p>
 
@@ -13,7 +13,7 @@
 
     <div class="row">
       <div class="col-4 mb-3 md-sm-0">
-        <div class="card bg-light shadow-sm">
+        <div class="card border-0 shadow-sm">
           <div class="card-body text-center">
             <p class="strong">Fuel</p>
 
@@ -23,7 +23,7 @@
       </div>
 
       <div class="col-4 mb-3 md-sm-0">
-        <div class="card bg-light shadow-sm">
+        <div class="card border-0 shadow-sm">
           <div class="card-body text-center">
             <p class="strong">Hull</p>
 
@@ -33,7 +33,7 @@
       </div>
 
       <div class="col-4 mb-3 md-sm-0">
-        <div class="card bg-light shadow-sm">
+        <div class="card border-0 shadow-sm">
           <div class="card-body text-center">
             <p class="strong">Shields</p>
 
@@ -45,7 +45,7 @@
   </div>
 
   <div class="col-md-5 mt-3 mt-md-0 offset-lg-1">
-    <div class="card bg-light shadow-sm">
+    <div class="card border-0 shadow-sm">
       <div class="card-body">
         <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
           <h3>Travel to destination</h3>
@@ -55,11 +55,11 @@
           <%= f.hidden_field :ship_id, value: @ship.id %>
           <%= f.hidden_field :ship_slug, value: @ship.slug %>
 
-          <div class="my-4" style="max-height: 22rem; overflow: auto;">
+          <div class="my-4" style="max-height: 17rem; overflow: auto;">
             <% @ship.destinations.each do |destination| %>
-              <label class="d-block bg-white border-0 p-3 js-destination" style="cursor: pointer;" id="destination-<%= destination %>">
+              <label class="d-block border rounded px-3 py-2 js-destination" style="cursor: pointer;" id="destination-<%= destination %>">
                 <div class="d-flex justify-content-between align-items-center">
-                  <%= f.radio_button :location_id, destination.id, label:  destination.name, label_class: 'align-middle ml-3', checked: destination.checked?, disabled: destination.disabled? %>
+                  <%= f.radio_button :location_id, destination.id, label:  destination.name, label_class: 'align-middle ml-2', checked: destination.checked?, disabled: destination.disabled? %>
 
                   <span class="badge badge-secondary badge-<%= destination.fuel_to_travel_status %>"><%= destination.fuel_to_travel %> fuel</span>
                 </div>
