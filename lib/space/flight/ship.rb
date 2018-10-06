@@ -18,8 +18,8 @@ module Space
           name: object.name,
           slug: object.slug,
           computer_references: ComputerReferences.new(
-            :space_computers_basic_fuel_calculator,
-            :space_computers_basic_travel_validator
+            :space_computers_euclidean_distance_calculator,
+            :space_computers_basic_fuel_calculator
           )
         )
       end
@@ -43,8 +43,8 @@ module Space
       end
 
       ComputerReferences = Struct.new(
-        :fuel_calculator,
-        :travel_validator
+        :distance_calculator,
+        :fuel_calculator
       )
 
       class CrewMember

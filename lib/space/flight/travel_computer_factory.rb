@@ -19,7 +19,10 @@ module Space
 
       def create_fuel_calculator(ship)
         fuel_calculator_class = computers.fetch(ship.computer_references.fuel_calculator)
-        fuel_calculator_class.new(ship: ship)
+        fuel_calculator_class.new(
+          distance_calculator: create_distance_calculator(ship),
+          ship: ship
+        )
       end
     end
   end

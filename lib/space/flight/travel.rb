@@ -30,7 +30,7 @@ module Space
         ship_gateway.update(
           ship.id,
           dock_id: location.establishments.first.id,
-          fuel: fuel_calculator.new_fuel_level,
+          fuel: fuel_calculator.new_fuel_level(location),
           location_id: location.id
         )
 

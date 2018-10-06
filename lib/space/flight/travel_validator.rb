@@ -13,7 +13,7 @@ module Space
       private
 
       def ship_has_enough_fuel
-        if fuel_calculator.new_fuel_level < 0
+        if fuel_calculator.new_fuel_level(destination_location) < 0
           errors.add(:fuel, 'too low')
         end
       end

@@ -86,13 +86,15 @@ module Space
         locations
           .delete_if { |destination| destination.id == ship_location.id }
           .map do |destination|
+            new_fuel_level = fuel_calculator.new_fuel_level(destination)
+
             Response::Destination.new(
               destination.id,
               destination.coordinates,
               destination.name,
-              fuel_calculator.fuel_to_travel,
-              fuel_calculator.new_fuel_level >= EMPTY_FUEL,
-              fuel_calculator.new_fuel_level >= EMPTY_FUEL && fuel_calculator.new_fuel_level < LOW_FUEL
+              fuel_calculator.fuel_to_travel(destination),
+              new_fuel_level >= EMPTY_FUEL,
+              new_fuel_level >= EMPTY_FUEL && new_fuel_level < LOW_FUEL
             )
           end
       end

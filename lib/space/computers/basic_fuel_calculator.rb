@@ -1,7 +1,7 @@
 module Space
   module Computers
     class BasicFuelCalculator
-      def initialize(ship:)
+      def initialize(distance_calculator:, ship:)
         @ship = ship
       end
 
@@ -13,12 +13,12 @@ module Space
         'An inefficient fuel calculator.'
       end
 
-      def fuel_to_travel
+      def fuel_to_travel(destination)
         Space::Flight::Ship::FUEL_TO_TRAVEL
       end
 
-      def new_fuel_level
-        ship.fuel - fuel_to_travel
+      def new_fuel_level(destination)
+        ship.fuel - fuel_to_travel(destination)
       end
 
       private
