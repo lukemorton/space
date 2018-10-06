@@ -7,4 +7,7 @@ class Location < ApplicationRecord
 
   validates :name, presence: true
   validates :slug, presence: true
+  validates :coordinate_x, presence: true
+  validates :coordinate_y, presence: true
+  validates :coordinate_z, presence: true
 end

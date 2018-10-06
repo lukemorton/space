@@ -1,11 +1,19 @@
 require 'faker'
 
-london = Location.create!(name: 'London')
-paris = Location.create!(name: 'Paris')
-tokyo = Location.create!(name: 'Tokyo')
+def rand_coordinates
+  {
+    coordinate_x: Faker::Number.between(1, 100),
+    coordinate_y: Faker::Number.between(1, 100),
+    coordinate_z: Faker::Number.between(1, 100),
+  }
+end
+
+london = Location.create!(rand_coordinates.merge(name: 'London'))
+paris = Location.create!(rand_coordinates.merge(name: 'Paris'))
+tokyo = Location.create!(rand_coordinates.merge(name: 'Tokyo'))
 
 30.times do
-  Location.create!(name: Faker::Address.city)
+  Location.create!(rand_coordinates.merge(name: Faker::Address.city))
 end
 
 Location.all.each do |location|

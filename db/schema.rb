@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_29_124305) do
+ActiveRecord::Schema.define(version: 2018_10_06_060747) do
 
   create_table "docks", force: :cascade do |t|
     t.integer "location_id"
@@ -103,6 +103,9 @@ ActiveRecord::Schema.define(version: 2018_09_29_124305) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.integer "coordinate_x"
+    t.integer "coordinate_y"
+    t.integer "coordinate_z"
     t.index ["slug"], name: "index_locations_on_slug", unique: true
   end
 
