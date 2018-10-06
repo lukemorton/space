@@ -97,6 +97,7 @@ module Space
               new_fuel_level >= EMPTY_FUEL && new_fuel_level < LOW_FUEL
             )
           end
+          .sort_by { |destination| destination.fuel_to_travel }
       end
     end
   end
