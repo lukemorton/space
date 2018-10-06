@@ -11,9 +11,12 @@ RSpec.describe Space::Locations::LocationGateway do
     instance_double(
       'Location',
       id: location_record_id,
+      coordinate_x: 1,
+      coordinate_y: 2,
+      coordinate_z: 3,
       establishments: [dock_record],
       name: 'London',
-      slug: location_record_slug
+      slug: 'london'
     )
   end
 
@@ -22,6 +25,14 @@ RSpec.describe Space::Locations::LocationGateway do
 
     it 'has an id' do
       expect(location.id).to eq(location_record.id)
+    end
+
+    it 'has coordinates' do
+      expect(location.coordinates).to eq([
+        location_record.coordinate_x,
+        location_record.coordinate_y,
+        location_record.coordinate_z
+      ])
     end
 
     it 'has establishements' do

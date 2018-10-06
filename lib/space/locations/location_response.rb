@@ -1,5 +1,5 @@
 module Space
   module Locations
-    LocationResponse = Struct.new(:id, :name, :establishments, :to_param)
+    LocationResponse = Struct.new(:id, :coordinates, :name, :establishments, :to_param)
   end
 end

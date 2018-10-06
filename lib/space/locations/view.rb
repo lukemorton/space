@@ -14,6 +14,7 @@ module Space
 
         LocationResponse.new(
           location.id,
+          location.coordinates,
           location.name,
           location.establishments,
           location.slug

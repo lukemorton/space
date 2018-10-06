@@ -8,6 +8,11 @@ module Space
       def self.from_object(object)
         new(
           id: object.id,
+          coordinates: [
+            object.coordinate_x,
+            object.coordinate_y,
+            object.coordinate_z,
+          ],
           establishments: object.establishments.map { |establishment| Establishment.from_object(establishment) },
           name: object.name,
           slug: object.slug
@@ -15,8 +20,9 @@ module Space
       end
 
       attr_accessor :id
-      attr_accessor :name
+      attr_accessor :coordinates
       attr_accessor :establishments
+      attr_accessor :name
       attr_accessor :slug
 
       def to_param

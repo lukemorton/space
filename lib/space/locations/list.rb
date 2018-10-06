@@ -12,7 +12,7 @@ module Space
       def list
         Response.new(
           location_gateway.all.map do |location|
-            LocationResponse.new(location.id, location.name, [])
+            LocationResponse.new(location.id, location.coordinates, location.name, [])
           end
         )
       end

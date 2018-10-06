@@ -19,8 +19,8 @@ RSpec.describe Space::Flight::ViewShip do
 
   context 'when viewing flight controls' do
     let(:person) { instance_double('Space::Folk::Person', id: 1, name: 'Luke') }
-    let(:location) { instance_double('Space::Locations::Location', id: 1, name: 'London') }
-    let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris') }
+    let(:location) { instance_double('Space::Locations::Location', id: 1, name: 'London', coordinates: [1, 2, 3]) }
+    let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [4, 5, 6]) }
     let(:locations) { [location, another_location] }
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 100, location: location, name: 'Endeavour', slug: 'endeavour') }
 
@@ -62,6 +62,7 @@ RSpec.describe Space::Flight::ViewShip do
       expect(subject.destinations.first.id).to eq(another_location.id)
       expect(subject.destinations.first.name).to eq(another_location.name)
       expect(subject.destinations.first.fuel_to_travel).to eq(10)
+      expect(subject.destinations.first.coordinates).to eq(another_location.coordinates)
       expect(subject.destinations.first).to be_within_ship_fuel_range
     end
 

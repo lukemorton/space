@@ -25,7 +25,7 @@ module Space
       )
       Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
-      Response::Destination = Struct.new(:id, :name, :fuel_to_travel, :within_ship_fuel_range?, :just_within_ship_fuel_range?)
+      Response::Destination = Struct.new(:id, :coordinates, :name, :fuel_to_travel, :within_ship_fuel_range?, :just_within_ship_fuel_range?)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
@@ -88,6 +88,7 @@ module Space
           .map do |destination|
             Response::Destination.new(
               destination.id,
+              destination.coordinates,
               destination.name,
               fuel_calculator.fuel_to_travel,
               fuel_calculator.new_fuel_level >= EMPTY_FUEL,

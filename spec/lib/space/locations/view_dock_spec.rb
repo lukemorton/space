@@ -14,7 +14,7 @@ RSpec.describe Space::Locations::ViewDock do
   end
 
   let(:location_gateway) { instance_double('Space::Locations::LocationGateway', find_by_slug: nil) }
-  let(:location) { instance_double('Space::Locations::Location', id: 1, establishments: [], name: 'London', slug: 'london') }
+  let(:location) { instance_double('Space::Locations::Location', id: 1, coordinates: [1, 2, 3], establishments: [], name: 'London', slug: 'london') }
 
   let(:person_gateway) { instance_double('Space::Locations::LocationGateway', find: person) }
   let(:person) { instance_double('Space::Locations::Person', id: 1, location: location, aboard_ship?: false) }
