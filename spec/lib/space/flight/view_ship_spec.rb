@@ -18,11 +18,11 @@ RSpec.describe Space::Flight::ViewShip do
   end
 
   context 'when viewing flight controls' do
-    let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:location) { instance_double('Location', id: 1, name: 'London') }
-    let(:another_location) { instance_double('Location', id: 2, name: 'Paris') }
+    let(:person) { instance_double('Space::Folk::Person', id: 1, name: 'Luke') }
+    let(:location) { instance_double('Space::Locations::Location', id: 1, name: 'London') }
+    let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris') }
     let(:locations) { [location, another_location] }
-    let(:ship) { instance_double('Ship', id: 1, crew: [person], fuel: 100, location: location, name: 'Endeavour', slug: 'endeavour') }
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 100, location: location, name: 'Endeavour', slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
 
