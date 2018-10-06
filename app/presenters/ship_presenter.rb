@@ -50,6 +50,10 @@ class ShipPresenter < SimpleDelegator
       @ship = ship
     end
 
+    def coordinates
+      destination.coordinates.join(',')
+    end
+
     def checked?
       index == 0
     end

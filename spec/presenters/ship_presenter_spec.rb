@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShipPresenter do
   let(:computers) { double }
-  let(:destinations) { [double(id: 1, within_ship_fuel_range?: true, just_within_ship_fuel_range?: false)] }
+  let(:destinations) { [double(id: 1, coordinates: [1, 2, 3], within_ship_fuel_range?: true, just_within_ship_fuel_range?: false)] }
   let(:ship) { double(id: 1, computers: computers, destinations: destinations, location: double(id: 1)) }
 
   subject { described_class.new(ship) }
@@ -20,6 +20,10 @@ RSpec.describe ShipPresenter do
 
     it 'have ids' do
       expect(subject.first.id).to be(ship.destinations.first.id)
+    end
+
+    it 'have coordinates' do
+      expect(subject.first.coordinates).to eq('1,2,3')
     end
 
     it 'can be checked?' do
