@@ -24,7 +24,7 @@ RSpec.describe Space::Flight::ViewShip do
     let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [4, 5, 6]) }
     let(:yet_another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [1, 2, 4]) }
     let(:locations) { [location, another_location, yet_another_location] }
-    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 100, location: location, name: 'Endeavour', slug: 'endeavour') }
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 1000, location: location, name: 'Endeavour', slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
 

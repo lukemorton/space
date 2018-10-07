@@ -7,7 +7,7 @@ module Space
     class ViewShip
       EMPTY_FUEL = 0
       ALMOST_EMPTY_FUEL = 1
-      LOW_FUEL = 10
+      LOW_FUEL = 100
 
       Response = Struct.new(
         :id,
