@@ -2,6 +2,7 @@ module Space
   module Computers
     class BasicFuelCalculator
       def initialize(distance_calculator:, ship:)
+        @distance_calculator = distance_calculator
         @ship = ship
       end
 
@@ -14,7 +15,7 @@ module Space
       end
 
       def fuel_to_travel(destination)
-        Space::Flight::Ship::FUEL_TO_TRAVEL
+        (distance(destination) * Space::Flight::Ship::FUEL_TO_TRAVEL).to_i
       end
 
       def new_fuel_level(destination)
@@ -23,7 +24,11 @@ module Space
 
       private
 
-      attr_reader :ship
+      attr_reader :distance_calculator, :ship
+
+      def distance(destination)
+        distance_calculator.distance_between(ship.location, destination)
+      end
     end
   end
 end

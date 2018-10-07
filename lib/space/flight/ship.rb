@@ -89,12 +89,18 @@ module Space
           return if object.nil?
           new(
             id: object.id,
+            coordinates: [
+              object.coordinate_x,
+              object.coordinate_y,
+              object.coordinate_z
+            ],
             name: object.name,
             slug: object.slug
           )
         end
 
         attr_accessor :id
+        attr_accessor :coordinates
         attr_accessor :name
         attr_accessor :slug
 

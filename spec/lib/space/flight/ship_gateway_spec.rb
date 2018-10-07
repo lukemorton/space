@@ -10,7 +10,7 @@ RSpec.describe Space::Flight::ShipGateway do
   end
 
   let(:location_record) do
-    instance_double('Location', id: 1, name: 'London', slug: 'london')
+    instance_double('Location', id: 1, coordinate_x: 1, coordinate_y: 2, coordinate_z: 3, name: 'London', slug: 'london')
   end
 
   let(:ship_record_id) { 1 }
@@ -100,6 +100,14 @@ RSpec.describe Space::Flight::ShipGateway do
 
     it 'has a location with id' do
       expect(ship.location.id).to eq(location_record.id)
+    end
+
+    it 'has a location with coordinates' do
+      expect(ship.location.coordinates).to eq([
+        location_record.coordinate_x,
+        location_record.coordinate_y,
+        location_record.coordinate_z
+      ])
     end
 
     it 'has a location with name' do
