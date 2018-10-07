@@ -82,10 +82,11 @@ module Space
       end
 
       def destinations(distance_calculator, fuel_calculator, ship_location)
-        locations = ListDestinations.new(location_gateway: location_gateway).list.destinations
+        locations = ListDestinations.new(
+          location_gateway: location_gateway
+        ).list(ship_location).destinations
 
         locations
-          .delete_if { |destination| destination.id == ship_location.id }
           .map do |destination|
             new_fuel_level = fuel_calculator.new_fuel_level(destination)
 

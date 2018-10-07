@@ -1,18 +1,20 @@
 module Space
   module Flight
     class ListDestinations
-      Response = Struct.new(:locations)
-      LocationResponse = Struct.new(:id, :coordinates, :name, :establishments, :to_param)
+      Response = Struct.new(:destinations)
+      Response::Destination = Struct.new(:id, :coordinates, :name)
 
       def initialize(location_gateway:)
         @location_gateway = location_gateway
       end
 
-      def list
+      def list(current_location)
         Response.new(
-          location_gateway.all.map do |location|
-            LocationResponse.new(location.id, location.coordinates, location.name, [])
-          end
+          location_gateway.all
+            .delete_if { |destination| destination.id == current_location.id }
+            .map do |destination|
+              Response::Destination.new(destination.id, destination.coordinates, destination.name)
+            end
         )
       end
 

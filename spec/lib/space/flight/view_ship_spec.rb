@@ -74,10 +74,6 @@ RSpec.describe Space::Flight::ViewShip do
       expect(subject.destinations.first.fuel_to_travel).to be < subject.destinations.last.fuel_to_travel
     end
 
-    it 'should not include current location in destinations' do
-      expect(subject.destinations.map(&:id)).to_not include(location.id)
-    end
-
     it 'should have fuel calculator meta data' do
       expect(subject.computers.fuel_calculator.name).to eq(fuel_calculator.name)
       expect(subject.computers.fuel_calculator.description).to eq(fuel_calculator.description)
