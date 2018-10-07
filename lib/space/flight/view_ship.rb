@@ -8,21 +8,18 @@ module Space
     class ViewShip
       Response = Struct.new(
         :id,
-
+        :computers,
         :crew,
-        :fuel,
-        :low_on_fuel?,
-        :out_of_fuel?,
-        :location,
-        :name,
-        :slug,
-
         :destinations,
-        :computers
+        :fuel,
+        :location,
+        :low_on_fuel?,
+        :name,
+        :out_of_fuel?,
+        :slug
       )
       Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
-      Response::Destination = Struct.new(:id, :coordinates, :distance, :name, :fuel_to_travel, :within_ship_fuel_range?, :just_within_ship_fuel_range?)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
@@ -38,32 +35,28 @@ module Space
         person = person(person_id)
         raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
 
-        distance_calculator = travel_computer_factory.create_distance_calculator(ship)
-        fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
-
-        computers = Response::Computers.new(
-          Response::Computer.new(fuel_calculator.name, fuel_calculator.description)
-        )
+        computers = build_computers(ship)
 
         Response.new(
           ship.id,
-
+          build_computers(ship),
           ship.crew,
+          build_destinations(ship),
           ship.fuel,
-          ship.fuel > Ship::ALMOST_EMPTY_FUEL && ship.fuel <= Ship::LOW_FUEL,
-          ship.fuel.zero?,
           ship.location,
+          ship.fuel > Ship::ALMOST_EMPTY_FUEL && ship.fuel <= Ship::LOW_FUEL,
           ship.name,
-          ship.slug,
-
-          destinations(distance_calculator, fuel_calculator, ship.location),
-          computers
+          ship.fuel.zero?,
+          ship.slug
         )
       end
 
       private
 
-      attr_reader :location_gateway, :person_gateway, :ship_gateway, :travel_computer_factory
+      attr_reader :location_gateway,
+                  :person_gateway,
+                  :ship_gateway,
+                  :travel_computer_factory
 
       def ship(ship_slug)
         ship_gateway.find_by_slug(ship_slug)
@@ -78,12 +71,24 @@ module Space
         crew_ids.include?(person_id)
       end
 
-      def destinations(distance_calculator, fuel_calculator, ship_location)
+      def build_computers(ship)
+        fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
+
+        Response::Computers.new(
+          Response::Computer.new(fuel_calculator.name, fuel_calculator.description)
+        )
+      end
+
+      def build_destinations(ship)
+        list_destinations_use_case(ship).list(ship.location).destinations
+      end
+
+      def list_destinations_use_case(ship)
         ListDestinations.new(
-          distance_calculator: distance_calculator,
-          fuel_calculator: fuel_calculator,
+          distance_calculator: travel_computer_factory.create_distance_calculator(ship),
+          fuel_calculator: travel_computer_factory.create_fuel_calculator(ship),
           location_gateway: location_gateway
-        ).list(ship_location).destinations
+        )
       end
     end
   end
