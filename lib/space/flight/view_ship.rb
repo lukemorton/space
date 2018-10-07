@@ -21,8 +21,8 @@ module Space
       Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
 
-      def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
-        @location_gateway = location_gateway
+      def initialize(list_destinations_use_case:, person_gateway:, ship_gateway:, travel_computer_factory:)
+        @list_destinations_use_case = list_destinations_use_case
         @person_gateway = person_gateway
         @ship_gateway = ship_gateway
         @travel_computer_factory = travel_computer_factory
@@ -53,7 +53,7 @@ module Space
 
       private
 
-      attr_reader :location_gateway,
+      attr_reader :list_destinations_use_case,
                   :person_gateway,
                   :ship_gateway,
                   :travel_computer_factory
@@ -81,13 +81,6 @@ module Space
 
       def build_destinations(ship)
         list_destinations_use_case.list(ship).destinations
-      end
-
-      def list_destinations_use_case
-        ListDestinations.new(
-          travel_computer_factory: travel_computer_factory,
-          location_gateway: location_gateway
-        )
       end
     end
   end

@@ -15,10 +15,17 @@ class Ships::BaseController < ApplicationController
 
   def view_controls_use_case
     Space::Flight::ViewShip.new(
-      location_gateway: location_gateway,
+      list_destinations_use_case: list_destinations_use_case,
       person_gateway: person_gateway,
       ship_gateway: ship_gateway,
       travel_computer_factory: travel_computer_factory
+    )
+  end
+
+  def list_destinations_use_case
+    Space::Flight::ListDestinations.new(
+      travel_computer_factory: travel_computer_factory,
+      location_gateway: location_gateway
     )
   end
 end

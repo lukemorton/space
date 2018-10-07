@@ -1,9 +1,8 @@
 require_relative '../../../../lib/space/flight/view_ship'
 
 RSpec.describe Space::Flight::ViewShip do
-  let(:distance_calculator) { instance_double('Space::Computers::EudclideanDistanceCalculator', distance_between: 10) }
   let(:fuel_calculator) { instance_double('Space::Computers::BasicFuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: 90) }
-  let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_distance_calculator: distance_calculator, create_fuel_calculator: fuel_calculator) }
+  let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator) }
 
   let(:use_case) do
     ship_gateway = instance_double('Space::Flight::ShipGateway', find_by_slug: nil).tap do |double|
@@ -11,7 +10,7 @@ RSpec.describe Space::Flight::ViewShip do
     end
 
     described_class.new(
-      location_gateway: instance_double('Space::Locations::LocationGateway', all: locations),
+      list_destinations_use_case: instance_double('Space::Flight::ListDestinations', list: double(destinations: destinations)),
       person_gateway: instance_double('Space::Locations::PersonGateway', find: person),
       ship_gateway: ship_gateway,
       travel_computer_factory: travel_computer_factory
@@ -23,7 +22,7 @@ RSpec.describe Space::Flight::ViewShip do
     let(:location) { instance_double('Space::Locations::Location', id: 1, name: 'London', coordinates: [1, 2, 3]) }
     let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [4, 5, 6]) }
     let(:yet_another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [1, 2, 4]) }
-    let(:locations) { [location, another_location, yet_another_location] }
+    let(:destinations) { [location, another_location, yet_another_location] }
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 1000, location: location, name: 'Endeavour', slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
@@ -61,7 +60,7 @@ RSpec.describe Space::Flight::ViewShip do
     end
 
     it 'should have destinations' do
-      expect(subject.destinations).to_not be_empty
+      expect(subject.destinations).to eq(destinations)
     end
 
     it 'should have fuel calculator meta data' do
@@ -73,7 +72,7 @@ RSpec.describe Space::Flight::ViewShip do
   context 'when not in crew' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
     let(:ship) { instance_double('Ship', id: 1, crew: [], name: 'Endeavour', slug: 'endeavour') }
-    let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
+    let(:destinations) { [instance_double('Location', id: 1, name: 'London')] }
 
     subject { use_case.view(ship.slug, person.id) }
 
@@ -85,7 +84,7 @@ RSpec.describe Space::Flight::ViewShip do
   context 'when ship unknown' do
     let(:person) { instance_double('Person', id: 1, name: 'Luke') }
     let(:ship) { instance_double('Ship', id: 1, crew: [], name: 'Endeavour', slug: 'endeavour') }
-    let(:locations) { [instance_double('Location', id: 1, name: 'London')] }
+    let(:destinations) { [instance_double('Location', id: 1, name: 'London')] }
 
     subject { use_case.view(nil, person.id) }
 
