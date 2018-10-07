@@ -13,7 +13,8 @@ module Space
         x1, y1, z1 = location_a.coordinates
         x2, y2, z2 = location_b.coordinates
 
-        Math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2) + ((z1 - z2) ** 2))
+        distance = Math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2) + ((z1 - z2) ** 2))
+        distance.round(3)
       end
     end
   end
