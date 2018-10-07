@@ -31,6 +31,10 @@ class ShipPresenter < SimpleDelegator
     'success'
   end
 
+  def travel_disabled?
+    destinations.all? { |destination| !destination.within_ship_fuel_range? }
+  end
+
   def destinations
     super.map.with_index do |destination, index|
       DestinationPresenter.new(destination, index: index, ship: ship)

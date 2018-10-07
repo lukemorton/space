@@ -15,6 +15,18 @@ RSpec.describe ShipPresenter do
     expect(subject.computers).to be(computers)
   end
 
+  it 'can have travel disabled' do
+    expect(subject).to_not be_travel_disabled
+  end
+
+  context 'and all destinations to far for fuel' do
+    let(:destinations) { [double(id: 1, coordinates: [1, 2, 3], within_ship_fuel_range?: false, just_within_ship_fuel_range?: false)] }
+
+    it 'can have travel disabled' do
+      expect(subject).to be_travel_disabled
+    end
+  end
+
   context 'destinations' do
     subject { described_class.new(ship).destinations }
 
