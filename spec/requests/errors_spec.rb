@@ -6,6 +6,16 @@ RSpec.describe ErrorsController do
       get '/500'
       assert_response :internal_server_error
     end
+
+    it 'returns internal server error if requested by xhr' do
+      get '/500', xhr: true
+      assert_response :internal_server_error
+    end
+
+    it 'returns internal server error if request by xhr' do
+      get '/500', xhr: true
+      expect(response.content_type).to include('text/javascript')
+    end
   end
 
   describe '#not_found' do
