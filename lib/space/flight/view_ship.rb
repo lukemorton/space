@@ -25,7 +25,7 @@ module Space
       )
       Response::Computers = Struct.new(:fuel_calculator)
       Response::Computer = Struct.new(:name, :description)
-      Response::Destination = Struct.new(:id, :coordinates, :name, :fuel_to_travel, :within_ship_fuel_range?, :just_within_ship_fuel_range?)
+      Response::Destination = Struct.new(:id, :coordinates, :distance, :name, :fuel_to_travel, :within_ship_fuel_range?, :just_within_ship_fuel_range?)
 
       def initialize(location_gateway:, person_gateway:, ship_gateway:, travel_computer_factory:)
         @location_gateway = location_gateway
@@ -41,6 +41,7 @@ module Space
         person = person(person_id)
         raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
 
+        distance_calculator = travel_computer_factory.create_distance_calculator(ship)
         fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
 
         computers = Response::Computers.new(
@@ -58,7 +59,7 @@ module Space
           ship.name,
           ship.slug,
 
-          destinations(fuel_calculator, ship.location),
+          destinations(distance_calculator, fuel_calculator, ship.location),
           computers
         )
       end
@@ -80,7 +81,7 @@ module Space
         crew_ids.include?(person_id)
       end
 
-      def destinations(fuel_calculator, ship_location)
+      def destinations(distance_calculator, fuel_calculator, ship_location)
         locations = Locations::List.new(location_gateway: location_gateway).list.locations
 
         locations
@@ -91,6 +92,7 @@ module Space
             Response::Destination.new(
               destination.id,
               destination.coordinates,
+              distance_calculator.distance_between(ship_location, destination),
               destination.name,
               fuel_calculator.fuel_to_travel(destination),
               new_fuel_level >= EMPTY_FUEL,

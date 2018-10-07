@@ -1,8 +1,9 @@
 require_relative '../../../../lib/space/flight/view_ship'
 
 RSpec.describe Space::Flight::ViewShip do
-  let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: 90) }
-  let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_fuel_calculator: fuel_calculator) }
+  let(:distance_calculator) { instance_double('Space::Computers::EudclideanDistanceCalculator', distance_between: 10) }
+  let(:fuel_calculator) { instance_double('Space::Computers::BasicFuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: 90) }
+  let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_distance_calculator: distance_calculator, create_fuel_calculator: fuel_calculator) }
 
   let(:use_case) do
     ship_gateway = instance_double('Space::Flight::ShipGateway', find_by_slug: nil).tap do |double|
@@ -61,9 +62,10 @@ RSpec.describe Space::Flight::ViewShip do
 
     it 'should have destinations' do
       expect(subject.destinations.first.id).to eq(another_location.id)
-      expect(subject.destinations.first.name).to eq(another_location.name)
-      expect(subject.destinations.first.fuel_to_travel).to eq(10)
       expect(subject.destinations.first.coordinates).to eq(another_location.coordinates)
+      expect(subject.destinations.first.distance).to eq(10)
+      expect(subject.destinations.first.fuel_to_travel).to eq(10)
+      expect(subject.destinations.first.name).to eq(another_location.name)
       expect(subject.destinations.first).to be_within_ship_fuel_range
     end
 
