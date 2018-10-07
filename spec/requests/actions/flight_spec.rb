@@ -68,6 +68,24 @@ RSpec.describe Actions::FlightController do
     end
   end
 
+  describe '#refuel' do
+    let(:person) { create(:person, ship: ship) }
+
+    subject do
+      post(refuel_url, params: {
+        refuel: {
+          ship_id: ship_id,
+          ship_slug: ship.slug
+        }
+      })
+    end
+
+    it 'redirects' do
+      subject
+      assert_redirected_to ship_dock_services_url(ship)
+    end
+  end
+
   describe '#travel' do
     let(:location) { create(:location) }
     let(:location_id) { location.id }

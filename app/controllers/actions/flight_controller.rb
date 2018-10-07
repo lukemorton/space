@@ -12,10 +12,14 @@ module Actions
       redirect_to location_url(current_person.location)
     end
 
+    def refuel
+      redirect_to ship_dock_services_url(refuel_params.fetch(:ship_slug))
+    end
+
     def travel
       travelling = travel_use_case.travel(travel_params.fetch(:ship_id), to: travel_params.fetch(:location_id))
       flash[:success] = 'You travelled'
-      redirect_to ship_url(travel_params[:ship_slug])
+      redirect_to ship_url(travel_params.fetch(:ship_slug))
     rescue Space::Flight::InvalidTravelError
       render_unprocessable_entity
     end
@@ -49,6 +53,10 @@ module Actions
 
     def disembark_params
       params.require(:disembark).permit(:ship_id)
+    end
+
+    def refuel_params
+      params.require(:refuel).permit(:ship_id, :ship_slug)
     end
 
     def travel_params
