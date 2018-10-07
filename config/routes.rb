@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     scope module: :ships do
       resources :computers, only: :index
       resources :crew, only: :index
+      resources :dock_services, only: :index
       resource :flight_deck, only: :show
     end
   end

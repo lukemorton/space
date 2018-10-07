@@ -10,38 +10,6 @@
       </div>
     </div>
 
-
-    <div class="row">
-      <div class="col-4 mb-3 md-sm-0">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body text-center">
-            <p class="strong">Fuel</p>
-
-            <div class="h4 text-<%=@ship.fuel_status %>"><%= @ship.fuel %></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-4 mb-3 md-sm-0">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body text-center">
-            <p class="strong">Hull</p>
-
-            <div class="h4 text-<%=@ship.hull_status %>"><%= @ship.hull %></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-4 mb-3 md-sm-0">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body text-center">
-            <p class="strong">Shields</p>
-
-            <div class="h4 text-<%=@ship.shields_status %>"><%= @ship.shields %></div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="col-lg-6">
@@ -70,7 +38,7 @@
 
           <div class="d-flex">
             <% if @ship.travel_disabled? %>
-              <div class="align-self-center text-warning">Your fuel is too low to travel anywhere.</div>
+              <div class="align-self-center"><strong class="text-warning">Your fuel is too low to travel anywhere.</strong><br />Refuel at <%= link_to 'Dock Services', ship_dock_services_path(@ship.slug) %>.</div>
             <% end %>
 
             <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary btn-lg', disabled: @ship.travel_disabled? %></div>
