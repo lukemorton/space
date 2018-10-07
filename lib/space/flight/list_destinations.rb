@@ -1,9 +1,8 @@
-require_relative 'location_response'
-
 module Space
-  module Locations
-    class List
+  module Flight
+    class ListDestinations
       Response = Struct.new(:locations)
+      LocationResponse = Struct.new(:id, :coordinates, :name, :establishments, :to_param)
 
       def initialize(location_gateway:)
         @location_gateway = location_gateway

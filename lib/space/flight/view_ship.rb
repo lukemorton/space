@@ -1,6 +1,6 @@
+require_relative 'list_destinations'
 require_relative 'person_not_in_crew_error'
 require_relative 'unknown_ship_error'
-require_relative '../locations/list'
 
 module Space
   module Flight
@@ -82,7 +82,7 @@ module Space
       end
 
       def destinations(distance_calculator, fuel_calculator, ship_location)
-        locations = Locations::List.new(location_gateway: location_gateway).list.locations
+        locations = ListDestinations.new(location_gateway: location_gateway).list.destinations
 
         locations
           .delete_if { |destination| destination.id == ship_location.id }
