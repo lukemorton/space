@@ -7,6 +7,9 @@ module Space
 
       FUEL_MAX = 5000
       FUEL_TO_TRAVEL = 10
+      EMPTY_FUEL = 0
+      ALMOST_EMPTY_FUEL = 1
+      LOW_FUEL = 100
 
       def self.from_object(object)
         new(

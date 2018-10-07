@@ -61,39 +61,12 @@ RSpec.describe Space::Flight::ViewShip do
     end
 
     it 'should have destinations' do
-      expect(subject.destinations.first.id).to eq(another_location.id)
-      expect(subject.destinations.first.coordinates).to eq(another_location.coordinates)
-      expect(subject.destinations.first.distance).to eq(10)
-      expect(subject.destinations.first.fuel_to_travel).to eq(10)
-      expect(subject.destinations.first.name).to eq(another_location.name)
-      expect(subject.destinations.first).to be_within_ship_fuel_range
-    end
-
-    it 'should order destinations by fuel ascending' do
-      expect(fuel_calculator).to receive(:fuel_to_travel).and_return(12, 10)
-      expect(subject.destinations.first.fuel_to_travel).to be < subject.destinations.last.fuel_to_travel
+      expect(subject.destinations).to_not be_empty
     end
 
     it 'should have fuel calculator meta data' do
       expect(subject.computers.fuel_calculator.name).to eq(fuel_calculator.name)
       expect(subject.computers.fuel_calculator.description).to eq(fuel_calculator.description)
-    end
-
-    context 'and ship out of fuel' do
-      let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: -10) }
-
-      it 'should not have enough fuel to reach destination' do
-        expect(subject.destinations.first).to_not be_within_ship_fuel_range
-      end
-    end
-
-    context 'and ship almost out of fuel' do
-      let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level:  0) }
-
-      it 'should just about have enough fuel to reach destination' do
-        expect(subject.destinations.first).to be_within_ship_fuel_range
-        expect(subject.destinations.first).to be_just_within_ship_fuel_range
-      end
     end
   end
 

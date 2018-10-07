@@ -1,14 +1,11 @@
 require_relative 'list_destinations'
 require_relative 'person_not_in_crew_error'
+require_relative 'ship'
 require_relative 'unknown_ship_error'
 
 module Space
   module Flight
     class ViewShip
-      EMPTY_FUEL = 0
-      ALMOST_EMPTY_FUEL = 1
-      LOW_FUEL = 100
-
       Response = Struct.new(
         :id,
 
@@ -53,7 +50,7 @@ module Space
 
           ship.crew,
           ship.fuel,
-          ship.fuel > ALMOST_EMPTY_FUEL && ship.fuel <= LOW_FUEL,
+          ship.fuel > Ship::ALMOST_EMPTY_FUEL && ship.fuel <= Ship::LOW_FUEL,
           ship.fuel.zero?,
           ship.location,
           ship.name,
@@ -82,25 +79,11 @@ module Space
       end
 
       def destinations(distance_calculator, fuel_calculator, ship_location)
-        locations = ListDestinations.new(
+        ListDestinations.new(
+          distance_calculator: distance_calculator,
+          fuel_calculator: fuel_calculator,
           location_gateway: location_gateway
         ).list(ship_location).destinations
-
-        locations
-          .map do |destination|
-            new_fuel_level = fuel_calculator.new_fuel_level(destination)
-
-            Response::Destination.new(
-              destination.id,
-              destination.coordinates,
-              distance_calculator.distance_between(ship_location, destination),
-              destination.name,
-              fuel_calculator.fuel_to_travel(destination),
-              new_fuel_level >= EMPTY_FUEL,
-              new_fuel_level >= EMPTY_FUEL && new_fuel_level < LOW_FUEL
-            )
-          end
-          .sort_by { |destination| destination.fuel_to_travel }
       end
     end
   end
