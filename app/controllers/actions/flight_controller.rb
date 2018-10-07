@@ -1,19 +1,19 @@
 module Actions
   class FlightController < ApplicationController
     def board
-      board_use_case.board(current_person.id, board_params[:ship_id])
+      board_use_case.board(current_person.id, board_params.fetch(:ship_id))
       flash[:success] = 'You boarded'
       redirect_to ship_url(board_params[:ship_slug])
     end
 
     def disembark
-      disembark_use_case.disembark(current_person.id, disembark_params[:ship_id])
+      disembark_use_case.disembark(current_person.id, disembark_params.fetch(:ship_id))
       flash[:success] = 'You disembarked'
       redirect_to location_url(current_person.location)
     end
 
     def travel
-      travelling = travel_use_case.travel(travel_params[:ship_id], to: travel_params[:location_id])
+      travelling = travel_use_case.travel(travel_params.fetch(:ship_id), to: travel_params.fetch(:location_id))
       flash[:success] = 'You travelled'
       redirect_to ship_url(travel_params[:ship_slug])
     rescue Space::Flight::InvalidTravelError
