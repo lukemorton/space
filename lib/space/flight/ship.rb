@@ -5,7 +5,7 @@ module Space
     class Ship
       include ActiveModel::Model
 
-      FUEL_MAX = 100
+      FUEL_MAX = 5000
       FUEL_TO_TRAVEL = 10
 
       def self.from_object(object)
