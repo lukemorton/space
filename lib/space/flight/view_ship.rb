@@ -80,13 +80,12 @@ module Space
       end
 
       def build_destinations(ship)
-        list_destinations_use_case(ship).list(ship.location).destinations
+        list_destinations_use_case.list(ship).destinations
       end
 
-      def list_destinations_use_case(ship)
+      def list_destinations_use_case
         ListDestinations.new(
-          distance_calculator: travel_computer_factory.create_distance_calculator(ship),
-          fuel_calculator: travel_computer_factory.create_fuel_calculator(ship),
+          travel_computer_factory: travel_computer_factory,
           location_gateway: location_gateway
         )
       end

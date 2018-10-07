@@ -4,6 +4,7 @@ RSpec.describe Space::Flight::ListDestinations do
   context 'when listing locations' do
     let(:distance_calculator) { instance_double('Space::Computers::EudclideanDistanceCalculator', distance_between: 10) }
     let(:fuel_calculator) { instance_double('Space::Computers::BasicFuelCalculator', name: 'A', description: 'B', fuel_to_travel: 10, new_fuel_level: 90) }
+    let(:travel_computer_factory) { instance_double('Space::Flight::TravelComputerFactory', create_distance_calculator: distance_calculator, create_fuel_calculator: fuel_calculator) }
 
     let(:current_location) { instance_double('Space::Locations::Location', id: 1, coordinates: [1, 2, 3], name: 'London') }
     let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [4, 5, 6]) }
@@ -12,15 +13,16 @@ RSpec.describe Space::Flight::ListDestinations do
     let(:locations) { [current_location, another_location, yet_another_location] }
     let(:location_gateway) { instance_double('Space::Locations::LocationGateway', all: locations) }
 
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, location: current_location) }
+
     let(:list_destinations_use_case) do
       described_class.new(
-        distance_calculator: distance_calculator,
-        fuel_calculator: fuel_calculator,
+        travel_computer_factory: travel_computer_factory,
         location_gateway: location_gateway
       )
     end
 
-    subject { list_destinations_use_case.list(current_location) }
+    subject { list_destinations_use_case.list(ship) }
 
     it 'should have destinations' do
       expect(subject.destinations).to_not be_empty
@@ -36,7 +38,7 @@ RSpec.describe Space::Flight::ListDestinations do
     end
 
     context 'a destination' do
-      subject { list_destinations_use_case.list(current_location).destinations.first }
+      subject { list_destinations_use_case.list(ship).destinations.first }
 
       it 'has id' do
         expect(subject.id).to eq(another_location.id)
