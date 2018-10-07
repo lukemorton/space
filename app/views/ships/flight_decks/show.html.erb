@@ -61,7 +61,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <%= f.radio_button :location_id, destination.id, label:  destination.name, label_class: 'align-middle ml-2', checked: destination.checked?, disabled: destination.disabled? %>
 
-                  <span class="badge badge-dark  ml-auto"><%= destination.coordinates %></span>
+                  <span class="badge badge-dark ml-auto" title="<%= destination.coordinates %>"><%= destination.distance %></span>
                   <span class="badge badge-<%= destination.fuel_to_travel_status %> ml-2"><%= destination.fuel_to_travel %> fuel</span>
                 </div>
               </label>

@@ -54,6 +54,10 @@ class ShipPresenter < SimpleDelegator
       destination.coordinates.join(',')
     end
 
+    def distance
+      "#{destination.distance.round(1)} au"
+    end
+
     def checked?
       index == 0
     end
