@@ -1,7 +1,6 @@
 module Actions
   class FlightController < ApplicationController
     rescue_from Space::Flight::UnknownShipError,
-                Space::Flight::CannotDisembarkError,
                 Space::Locations::UnknownLocationError,
                 with: :render_unprocessable_entity
 
@@ -18,8 +17,14 @@ module Actions
     end
 
     def disembark
-      disembark_use_case.disembark(current_person.id, disembark_params.fetch(:ship_id))
-      flash[:success] = 'You disembarked'
+      disembarking = disembark_use_case.disembark(current_person.id, disembark_params.fetch(:ship_id))
+
+      if disembarking.successful?
+        flash[:success] = 'You disembarked'
+      else
+        flash[:errors] = disembarking.errors
+      end
+
       redirect_to location_url(current_person.location)
     end
 

@@ -29,15 +29,17 @@ RSpec.describe Space::Flight::Disembark do
       let(:ship) { nil }
 
       it 'disallows person to disembark' do
-        expect{subject}.to raise_error(Space::Flight::CannotDisembarkError)
+        expect{subject}.to raise_error(Space::Flight::UnknownShipError)
       end
     end
 
     context 'and person is not part of crew' do
-      let(:ship) { Space::Flight::Ship.new(id: 1, crew: []) }
+      let(:ship) { Space::Flight::Ship.new(id: ship_id, crew: []) }
+
+      it { is_expected.to_not be_successful }
 
       it 'disallows person to disembark' do
-        expect{subject}.to raise_error(Space::Flight::CannotDisembarkError)
+        expect(subject.errors).to_not be_empty
       end
     end
   end

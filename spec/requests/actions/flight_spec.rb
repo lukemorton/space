@@ -37,7 +37,7 @@ RSpec.describe Actions::FlightController do
     end
 
     context 'and already part of crew' do
-      let(:ship) { create(:ship, crew: [person]) }
+      let(:person) { create(:person, ship: ship) }
 
       it 'redirects' do
         assert_redirected_to ship
@@ -66,6 +66,18 @@ RSpec.describe Actions::FlightController do
 
     it 'sets flash success' do
       expect(flash[:success]).to be_present
+    end
+
+    context 'and not in crew' do
+      let(:person) { create(:person) }
+
+      it 'redirects' do
+        assert_redirected_to person.location
+      end
+
+      it 'sets errors flash' do
+        expect(flash[:errors]).to_not be_empty
+      end
     end
 
     context 'and disembarking unsuccessful' do
