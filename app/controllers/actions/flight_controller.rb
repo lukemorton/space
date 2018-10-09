@@ -1,7 +1,6 @@
 module Actions
   class FlightController < ApplicationController
     rescue_from Space::Flight::UnknownShipError,
-                Space::Flight::InvalidTravelError,
                 Space::Flight::CannotBoardError,
                 Space::Flight::CannotDisembarkError,
                 Space::Locations::UnknownLocationError,

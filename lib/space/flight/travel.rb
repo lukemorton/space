@@ -1,5 +1,4 @@
 require_relative 'unknown_ship_error'
-require_relative 'invalid_travel_error'
 require_relative '../locations/unknown_location_error'
 require_relative 'ship'
 require_relative 'travel_validator'
