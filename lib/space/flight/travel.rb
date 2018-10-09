@@ -1,4 +1,6 @@
+require_relative 'unknown_ship_error'
 require_relative 'invalid_travel_error'
+require_relative '../locations/unknown_location_error'
 require_relative 'ship'
 require_relative 'travel_validator'
 
@@ -16,7 +18,11 @@ module Space
 
       def travel(ship_id, to:)
         ship = ship_gateway.find(ship_id)
+        raise UnknownShipError.new if ship.nil?
+
         location = location_gateway.find(to)
+        raise Locations::UnknownLocationError.new if location.nil?
+
         fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
 
         travel_validator = TravelValidator.new(

@@ -72,6 +72,22 @@ RSpec.describe Space::Flight::Travel do
       )
     end
 
+    context 'and no ship found' do
+      let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: nil) }
+
+      it 'disallows travel' do
+        expect{subject}.to raise_error(Space::Flight::UnknownShipError)
+      end
+    end
+
+    context 'and no location found' do
+      let(:location_gateway) { instance_double('Space::Flight::LocationGateway', find: nil) }
+
+      it 'disallows travel' do
+        expect{subject}.to raise_error(Space::Locations::UnknownLocationError)
+      end
+    end
+
     context 'and attempting invalid travel' do
       let(:destination_station) { current_station }
 
