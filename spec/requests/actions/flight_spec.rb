@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Actions::FlightController do
-  let(:person) { create(:person) }
   let(:ship) { create(:ship) }
   let(:ship_id) { ship.id }
 
@@ -10,6 +9,8 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#board' do
+    let(:person) { create(:person) }
+
     subject do
       post(board_url, params: {
         board: {
@@ -88,6 +89,7 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#travel' do
+    let(:person) { create(:person, ship: ship) }
     let(:location) { create(:location) }
     let(:location_id) { location.id }
 
@@ -107,6 +109,22 @@ RSpec.describe Actions::FlightController do
 
     it 'sets flash success' do
       expect(flash[:success]).to be_present
+    end
+
+    context 'and ship not found' do
+      let(:ship_id) { nil }
+
+      it 'renders 422' do
+        assert_response :unprocessable_entity
+      end
+    end
+
+    context 'and location not found' do
+      let(:location_id) { nil }
+
+      it 'renders 422' do
+        assert_response :unprocessable_entity
+      end
     end
 
     context 'and travelling unsuccessful' do

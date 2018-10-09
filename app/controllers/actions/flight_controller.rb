@@ -18,9 +18,13 @@ module Actions
     end
 
     def travel
-      travelling = travel_use_case.travel(travel_params.fetch(:ship_id), to: travel_params.fetch(:location_id))
+      travelling = travel_use_case.travel(travel_params.fetch(:ship_id), current_person: current_person.id, to: travel_params.fetch(:location_id))
       flash[:success] = 'You travelled'
       redirect_to ship_url(travel_params.fetch(:ship_slug))
+    rescue Space::Flight::UnknownShipError
+      render_unprocessable_entity
+    rescue Space::Locations::UnknownLocationError
+      render_unprocessable_entity
     rescue Space::Flight::InvalidTravelError
       render_unprocessable_entity
     end

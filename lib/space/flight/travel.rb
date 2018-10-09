@@ -16,7 +16,7 @@ module Space
         @travel_computer_factory = travel_computer_factory
       end
 
-      def travel(ship_id, to:)
+      def travel(ship_id, current_person:, to:)
         ship = ship_gateway.find(ship_id)
         raise UnknownShipError.new if ship.nil?
 
@@ -26,6 +26,7 @@ module Space
         fuel_calculator = travel_computer_factory.create_fuel_calculator(ship)
 
         travel_validator = TravelValidator.new(
+          current_person_id: current_person,
           destination_location: location,
           fuel_calculator: fuel_calculator,
           ship: ship

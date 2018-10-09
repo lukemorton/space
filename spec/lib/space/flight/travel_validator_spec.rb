@@ -4,7 +4,7 @@ require_relative '../../../../lib/space/flight/ship'
 RSpec.describe Space::Flight::TravelValidator do
   let(:current_location) { instance_double('Location', id: 1) }
   let(:destination_location) { instance_double('Location', id: 2) }
-  let(:ship) { instance_double('Space::Flight::Ship', id: 1, fuel: Space::Flight::Ship::FUEL_MAX, location: current_location) }
+  let(:ship) { instance_double('Space::Flight::Ship', id: 1, fuel: Space::Flight::Ship::FUEL_MAX, has_crew_member_id?: true, location: current_location) }
   let(:new_fuel_level) { ship.fuel - Space::Flight::Ship::FUEL_TO_TRAVEL }
   let(:fuel_calculator) { instance_double('Space::Flight::TravelComputerFactory::FuelCalculator', new_fuel_level: new_fuel_level) }
 
@@ -21,7 +21,7 @@ RSpec.describe Space::Flight::TravelValidator do
   end
 
   context 'and trying to travel without enough fuel' do
-    let(:ship) { instance_double('Space::Flight::Ship', id: 1, fuel: 0, location: current_location) }
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, fuel: 0, has_crew_member_id?: true, location: current_location) }
 
     it 'disallows travel' do
       expect(subject).to_not be_valid
@@ -43,6 +43,19 @@ RSpec.describe Space::Flight::TravelValidator do
     it 'provides an error' do
       subject.valid?
       expect(subject.errors.full_messages).to include('Destination location is same as current location')
+    end
+  end
+
+  context 'and person not in crew' do
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [], fuel: Space::Flight::Ship::FUEL_MAX, has_crew_member_id?: false, location: current_location) }
+
+    it 'disallows travel' do
+      expect(subject).to_not be_valid
+    end
+
+    it 'disallows travel' do
+      subject.valid?
+      expect(subject.errors.full_messages).to include('Current person not in crew')
     end
   end
 end
