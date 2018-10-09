@@ -3,14 +3,22 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :redirect_if_user_does_not_have_person
   helper_method :current_person
+  rescue_from StandardError, with: :render_internal_server_error
 
   private
 
-  def render_not_found
+  def render_internal_server_error(error)
+    Rails.logger.error(error) unless error.nil?
+    render 'errors/500', status: :internal_server_error
+  end
+
+  def render_not_found(error)
+    Rails.logger.debug(error) unless error.nil?
     render 'errors/404', status: :not_found
   end
 
-  def render_unprocessable_entity
+  def render_unprocessable_entity(error)
+    Rails.logger.debug(error) unless error.nil?
     render 'errors/422', status: :unprocessable_entity
   end
 
