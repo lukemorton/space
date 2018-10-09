@@ -13,37 +13,43 @@
   </div>
 
   <div class="col-lg-6">
-    <div class="card border-0 shadow-sm">
-      <div class="card-body">
-        <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
-          <h3>Travel to destination</h3>
+    <div>
+      <div class="border rounded p-4 position-relative">
+        <div class="position-absolute text-center" style="bottom: -.7em; width: 100%;">
+          <small class="bg-light p-2" style="color: #bbb;">BasicFlight by Space Inc</small>
+        </div>
 
-          <p>Pilot your ship to one of the destinations below.</p>
+        <div>
+          <%= bootstrap_form_with scope: :travel, url: travel_url do |f| %>
+            <h3>Travel to destination</h3>
 
-          <%= f.hidden_field :ship_id, value: @ship.id %>
-          <%= f.hidden_field :ship_slug, value: @ship.slug %>
+            <p>Pilot your ship to one of the destinations below.</p>
 
-          <div class="my-4" style="max-height: 17rem; overflow: auto;">
-            <% @ship.destinations.each do |destination| %>
-              <label class="d-block border rounded px-3 py-2 js-destination" style="cursor: pointer;" id="destination-<%= destination %>">
-                <div class="d-flex justify-content-between align-items-center">
-                  <%= f.radio_button :location_id, destination.id, label:  destination.name, label_class: 'align-middle ml-2', checked: destination.checked?, disabled: destination.disabled? %>
+            <%= f.hidden_field :ship_id, value: @ship.id %>
+            <%= f.hidden_field :ship_slug, value: @ship.slug %>
 
-                  <span class="badge badge-dark ml-auto" title="<%= destination.coordinates %>"><%= destination.distance %></span>
-                  <span class="badge badge-<%= destination.fuel_to_travel_status %> ml-2"><%= destination.fuel_to_travel %> fuel</span>
-                </div>
-              </label>
-            <% end %>
-          </div>
+            <div class="my-4" style="max-height: 17rem; overflow: auto;">
+              <% @ship.destinations.each do |destination| %>
+                <label class="d-block border bg-white rounded px-3 py-2 js-destination" style="border-color: #eee !important; <%= destination.disabled? ? 'opacity: 0.5;' : 'cursor: pointer;' %>" id="destination-<%= destination %>">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <%= f.radio_button :location_id, destination.id, label:  destination.name, label_class: 'align-middle ml-2', checked: destination.checked?, disabled: destination.disabled? %>
 
-          <div class="d-flex">
-            <% if @ship.travel_disabled? %>
-              <div class="align-self-center"><strong class="text-warning">Your fuel is too low to travel anywhere.</strong><br />Refuel at <%= link_to 'Dock Services', ship_dock_services_path(@ship.slug) %>.</div>
-            <% end %>
+                    <span class="badge badge-dark ml-auto" title="<%= destination.coordinates %>"><%= destination.distance %></span>
+                    <span class="badge badge-<%= destination.fuel_to_travel_status %> ml-2"><%= destination.fuel_to_travel %> fuel</span>
+                  </div>
+                </label>
+              <% end %>
+            </div>
 
-            <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary btn-lg', disabled: @ship.travel_disabled? %></div>
-          </div>
-        <% end %>
+            <div class="d-flex">
+              <% if @ship.travel_disabled? %>
+                <div class="align-self-center"><strong class="text-warning">Your fuel is too low to travel anywhere.</strong><br />Refuel at <%= link_to 'Dock Services', ship_dock_services_path(@ship.slug) %>.</div>
+              <% end %>
+
+              <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary btn-lg', disabled: @ship.travel_disabled? %></div>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

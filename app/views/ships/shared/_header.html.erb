@@ -1,37 +1,57 @@
-<div class="d-lg-flex justify-content-between align-items-center">
-  <h1 class="mr-auto"><%= @ship.name %></h1>
+<div class="d-flex justify-content-center">
+  <div class="d-md-flex justify-content-center border rounded py-3 position-relative">
+    <div class="position-absolute text-center" style="bottom: -.7em; width: 100%;">
+      <small class="bg-light p-2" style="color: #bbb;">ShipStat by Space Inc</small>
+    </div>
 
-  <div class="text-center" style="width: 8rem">
-    <div class="strong">Fuel</div>
+    <div class="d-flex justify-content-center">
+      <div class="text-center px-4">
+        <small class="text-uppercase" style="color: #777;">Name</small>
 
-    <div class="h4 text-<%=@ship.fuel_status %> mb-0"><%= @ship.fuel %></div>
-  </div>
+        <div class="h5 mt-1"><%= @ship.name %></div>
+      </div>
 
-  <div class="text-center" style="width: 8rem">
-    <div class="strong">Hull</div>
+      <div class="text-center px-4">
+        <small class="text-uppercase" style="color: #777;">Prototype</small>
 
-    <div class="h4 text-<%=@ship.hull_status %> mb-0"><%= @ship.hull %></div>
-  </div>
+        <div class="h5 mt-1">Maxwell D</div>
+      </div>
+    </div>
 
-  <div class="text-center" style="width: 8rem">
-    <div class="strong">Shields</div>
+    <div class="d-flex justify-content-center mt-3 mt-md-0">
+      <div class="text-center px-4">
+        <small class="text-uppercase" style="color: #777;">Fuel</small>
 
-    <div class="h4 text-<%=@ship.shields_status %> mb-0"><%= @ship.shields %></div>
-  </div>
+        <div class="h5 text-<%=@ship.fuel_status %> mt-1"><%= @ship.fuel %></div>
+      </div>
 
-  <div class="ml-4">
-    <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
-      <%= f.hidden_field :ship_id, value: @ship.id %>
-      <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
-    <% end %>
+      <div class="text-center px-4">
+        <small class="text-uppercase" style="color: #777;">Hull</small>
+
+        <div class="h5 text-<%=@ship.hull_status %> mt-1"><%= @ship.hull %></div>
+      </div>
+
+      <div class="text-center px-4">
+        <small class="text-uppercase" style="color: #777;">Shields</small>
+
+        <div class="h5 text-<%=@ship.shields_status %> mt-1"><%= @ship.shields %></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <%= render 'shared/flash' %>
 
-<nav class="nav nav-pills my-3">
-  <%= active_link_to 'Flight deck', ship_flight_deck_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= active_link_to 'Crew', ship_crew_index_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= active_link_to 'Computers', ship_computers_path(@ship.slug), class: 'nav-item nav-link' %>
-  <%= active_link_to 'Dock Services', ship_dock_services_path(@ship.slug), class: 'nav-item nav-link' %>
+<nav class="d-flex flex-nowrap my-4 nav nav-pills" style="overflow-y: auto;">
+  <%= active_link_to 'Flight deck', ship_flight_deck_path(@ship.slug), class: 'nav-item nav-link text-nowrap' %>
+  <%= active_link_to 'Crew', ship_crew_index_path(@ship.slug), class: 'nav-item nav-link text-nowrap' %>
+  <%= active_link_to 'Computers', ship_computers_path(@ship.slug), class: 'nav-item nav-link text-nowrap' %>
+  <%= active_link_to 'Dock Services', ship_dock_services_path(@ship.slug), class: 'nav-item nav-link text-nowrap' %>
+
+  <div class="ml-md-auto">
+    <%= bootstrap_form_with scope: :disembark, url: disembark_url do |f| %>
+      <%= f.hidden_field :ship_id, value: @ship.id %>
+      <%= submit_tag 'Disembark', class: 'btn btn-outline-danger' %>
+    <% end %>
+  </div>
 </nav>

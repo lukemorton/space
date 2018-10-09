@@ -1,106 +1,106 @@
 <%= render 'ships/shared/header' %>
 
-<div class="row mb-3">
-  <div class="col-sm-4">
-    <div class="card mb-2 bg-white border-0 shadow-sm">
+<div class="row">
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 bg-white border-0 shadow-sm">
       <div class="card-body">
-        <div class="h5">Fuel Calculator</div>
+        <small class="text-uppercase">Ship statistics computer</small>
 
-        <p><%= @ship.computers.fuel_calculator.name %></p>
+        <div class="h5 my-3 d-flex">ShipStat by Space Inc <span class="badge badge-dark ml-auto">v0.1</span></div>
 
         <p><%= @ship.computers.fuel_calculator.description %></p>
+      </div>
 
-        <div class="text-right">
-          <button class="btn btn-outline-primary">
-            Configure
-          </button>
-        </div>
+      <div class="card-footer border-0 bg-white text-right pb-3">
+        <button class="btn btn-outline-primary">
+          Configure
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="card mb-2 bg-white border-0 shadow-sm">
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 bg-white border-0 shadow-sm">
       <div class="card-body">
-        <div class="h5">Defence Computer</div>
+        <small class="text-uppercase">Ship flight computer</small>
 
-        <p>Basic Defence Computer by Space Inc.</p>
+        <div class="h5 my-3 d-flex">BasicFlight by Space Inc <span class="badge badge-dark ml-auto">v0.1</span></div>
 
-        <p>A trusty but basic hull and shield computer.</p>
+        <p>A basic flight computer that includes an inefficient fuel calculator, single destination path planner and location information.</p>
+      </div>
 
-        <div class="text-right">
-          <button class="btn btn-outline-primary">
-            Configure
-          </button>
-        </div>
+      <div class="card-footer border-0 bg-white text-right pb-3">
+        <button class="btn btn-outline-primary">
+          Configure
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="card mb-2 bg-white border-0 shadow-sm">
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 bg-white border-0 shadow-sm">
       <div class="card-body">
-        <div class="h5">Weapons Computer</div>
+        <small class="text-uppercase">Battle computer</small>
 
-        <p>Basic Weapons Computer by Space Inc.</p>
+        <div class="h5 my-3 d-flex">BattleTech by Space Inc <span class="badge badge-dark ml-auto">v0.1</span></div>
+
+        <p>A relic from the early wars. A basic but trusty hull and shield computer. Less than ideal weapons automation.</p>
+      </div>
+
+      <div class="card-footer border-0 bg-white text-right pb-3">
+        <button class="btn btn-outline-primary">
+          Configure
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 bg-white border-0 shadow-sm">
+      <div class="card-body">
+        <small class="text-uppercase">Security computer</small>
+
+        <div class="h5 my-3 d-flex">Securitron by Space Inc <span class="badge badge-dark ml-auto">v0.1</span></div>
 
         <p>A relic from the early wars.</p>
-
-        <div class="text-right">
-          <button class="btn btn-outline-primary">
-            Configure
-          </button>
-        </div>
       </div>
-    </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-sm-4">
-    <div class="card mb-2 bg-light" style="border-style: dashed;">
-      <div class="card-body text-center text-muted">
-        <div class="h5">Computer slot #4</div>
-
-        <p>Add another computer here.</p>
-
-        <div class="mt-3">
-          <button class="btn btn-outline-secondary">
-            Add another computer
-          </button>
-        </div>
+      <div class="card-footer border-0 bg-white text-right pb-3">
+        <button class="btn btn-outline-primary">
+          Configure
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="card mb-2 bg-light" style="border-style: dashed;">
-      <div class="card-body text-center text-muted">
-        <div class="h5">Computer slot #5</div>
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 bg-light" style="border-style: dashed;">
+      <div class="card-body text-muted">
+        <small class="text-uppercase">Computer slot #5</small>
 
-        <p>Add another computer here.</p>
+        <p class="mt-3">Add another computer here.</p>
+      </div>
 
-        <div class="mt-3">
-          <button class="btn btn-outline-secondary">
-            Add another computer
-          </button>
-        </div>
+      <div class="card-footer border-0 bg-light text-right pb-3">
+        <button class="btn btn-outline-secondary">
+          Add another computer
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-4">
-    <div class="card mb-2 bg-light" style="border-style: dashed;">
-      <div class="card-body text-center text-muted">
-        <div class="h5">Computer slot #6</div>
+  <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 bg-light" style="border-style: dashed;">
+      <div class="card-body text-muted">
+        <small class="text-uppercase">Computer slot #6</small>
 
-        <p>Add another computer here.</p>
+        <p class="mt-3">Add another computer here.</p>
+      </div>
 
-        <div class="mt-3">
-          <button class="btn btn-outline-secondary">
-            Add another computer
-          </button>
-        </div>
+      <div class="card-footer border-0 bg-light text-right pb-3">
+        <button class="btn btn-outline-secondary">
+          Add another computer
+        </button>
       </div>
     </div>
   </div>
