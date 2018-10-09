@@ -49,7 +49,7 @@
                 <div class="align-self-center"><strong class="text-warning">Your fuel is too low to travel anywhere.</strong><br />Refuel at <%= link_to 'Dock Services', ship_dock_services_path(@ship.slug) %>.</div>
               <% end %>
 
-              <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary', disabled: @ship.travel_disabled? %></div>
+              <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary', disabled: @ship.travel_disabled?, data: { disable_with: 'Travelling...' } %></div>
             </div>
           <% end %>
         </div>
