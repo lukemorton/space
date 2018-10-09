@@ -3,6 +3,8 @@ require 'money'
 module Space
   module Folk
     class MoneyGateway
+      INITIAL_BANK_BALANCE = 1000_00
+
       def initialize(double_entry:)
         @double_entry = double_entry
       end
@@ -12,7 +14,7 @@ module Space
         bank = double_entry.account(:bank, scope: person)
 
         double_entry.transfer(
-          Money.new(50_00),
+          Money.new(INITIAL_BANK_BALANCE),
           from: seed,
           to: bank,
           code: :initialize

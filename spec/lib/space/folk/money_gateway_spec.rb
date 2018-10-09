@@ -25,7 +25,7 @@ RSpec.describe Space::Folk::MoneyGateway do
 
       subject
 
-      expect(double_entry).to have_received(:transfer).with(Money.new(50_00), a_hash_including(
+      expect(double_entry).to have_received(:transfer).with(Money.new(Space::Folk::MoneyGateway::INITIAL_BANK_BALANCE), a_hash_including(
         from: seed,
         to: bank,
         code: :initialize

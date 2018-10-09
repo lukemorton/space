@@ -70,7 +70,7 @@ RSpec.describe Actions::FlightController do
   end
 
   describe '#refuel' do
-    let(:person) { create(:person, ship: ship) }
+    let(:person) { create(:person, :with_bank, ship: ship) }
 
     subject do
       post(refuel_url, params: {

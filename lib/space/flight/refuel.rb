@@ -1,3 +1,4 @@
+require 'money'
 require_relative 'ship'
 require_relative 'person_not_in_crew_error'
 require_relative 'unknown_ship_error'
@@ -7,8 +8,9 @@ module Space
     class Refuel
       Response = Struct.new(:successful?)
 
-      def initialize(money_gateway:, ship_gateway:)
+      def initialize(money_gateway:, person_gateway:, ship_gateway:)
         @money_gateway = money_gateway
+        @person_gateway = person_gateway
         @ship_gateway = ship_gateway
       end
 
@@ -17,6 +19,9 @@ module Space
         raise UnknownShipError.new if ship.nil?
 
         raise PersonNotInCrewError.new unless ship.has_crew_member_id?(current_person)
+        person = person_gateway.find(current_person)
+
+        money_gateway.pay_seed(person, Money.new(refuel == 'full_tank' ? 300_00 : 150_00))
 
         ship_gateway.update(
           ship.id,
@@ -29,6 +34,7 @@ module Space
       private
 
       attr_reader :money_gateway
+      attr_reader :person_gateway
       attr_reader :ship_gateway
     end
   end

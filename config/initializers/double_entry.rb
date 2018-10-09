@@ -25,6 +25,6 @@ DoubleEntry.configure do |config|
 
   config.define_transfers do |transfers|
     transfers.define(from: :seed, to: :bank, code: :initialize)
-    transfers.define(from: :bank, to: :bank, code: :send)
+    transfers.define(from: :bank, to: :seed, code: :pay_seed)
   end
 end

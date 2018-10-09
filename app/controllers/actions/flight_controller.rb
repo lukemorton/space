@@ -55,6 +55,7 @@ module Actions
     def refuel_use_case
       Space::Flight::Refuel.new(
         money_gateway: money_gateway,
+        person_gateway: person_gateway,
         ship_gateway: ship_gateway
       )
     end

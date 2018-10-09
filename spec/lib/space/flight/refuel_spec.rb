@@ -5,26 +5,39 @@ RSpec.describe Space::Flight::Refuel do
     let(:current_location) { instance_double('Location', id: 1) }
 
     let(:person) { instance_double('Person', id: 1, location: current_location, :location= => nil) }
-    let(:person_gateway) { instance_double('Space::Folk::PersonGateway', update: true) }
+    let(:person_gateway) { instance_double('Space::Folk::PersonGateway', find: person) }
 
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::LOW_FUEL, has_crew_member_id?: true, location: current_location) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, update: true) }
 
+    let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', pay_seed: nil) }
+
     let(:use_case) do
       described_class.new(
-        money_gateway: double,
+        money_gateway: money_gateway,
+        person_gateway: person_gateway,
         ship_gateway: ship_gateway,
       )
     end
 
     subject { use_case.refuel(ship.id, current_person: person.id, refuel: 'full_tank') }
 
+    it { is_expected.to be_successful }
+
     context 'and fully refueling' do
       subject { use_case.refuel(ship.id, current_person: person.id, refuel: 'full_tank') }
 
       it { is_expected.to be_successful }
 
-      it 'consumes ship fuel' do
+      it 'pays seed bank 300' do
+        subject
+        expect(money_gateway).to have_received(:pay_seed).with(
+          person,
+          Money.new(300_00)
+        )
+      end
+
+      it 'increases ship fuel to max' do
         subject
         expect(ship_gateway).to have_received(:update).with(
           ship.id,
@@ -38,7 +51,15 @@ RSpec.describe Space::Flight::Refuel do
 
       it { is_expected.to be_successful }
 
-      it 'consumes ship fuel' do
+      it 'pays seed bank 150' do
+        subject
+        expect(money_gateway).to have_received(:pay_seed).with(
+          person,
+          Money.new(150_00)
+        )
+      end
+
+      it 'increases ship fuel to half max' do
         subject
         expect(ship_gateway).to have_received(:update).with(
           ship.id,

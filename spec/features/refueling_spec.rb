@@ -12,7 +12,7 @@ RSpec.feature 'Refueling a ship' do
   end
 
   given(:ship) { create(:ship, :with_crew) }
-  given(:person) { create(:person, location: ship.location, ship: ship) }
+  given(:person) { create(:person, :with_bank, location: ship.location, ship: ship) }
 
   background do
     sign_in create(:user, person: person)
@@ -27,6 +27,7 @@ RSpec.feature 'Refueling a ship' do
   def then_i_should_be_fully_refueled
     expect(page).to have_content('Refuel')
     expect(page).to have_content('Fuel 5,000')
+    expect(page).to have_content('λ700.00')
   end
 
   def when_i_refuel_my_ship_half_full
@@ -38,5 +39,6 @@ RSpec.feature 'Refueling a ship' do
   def then_i_should_be_half_refueled
     expect(page).to have_content('Refuel')
     expect(page).to have_content('Fuel 2,500')
+    expect(page).to have_content('λ850.00')
   end
 end
