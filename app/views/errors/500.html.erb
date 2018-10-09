@@ -3,7 +3,7 @@
 
   <h1 class="font-weight-normal mb-5">We're sorry, but something went wrong</h1>
 
-  <p class="lead">This should not have happened and was unexpected. Something is likely broken in our code.</p>
+  <p class="lead">This should not have happened and was unexpected. Something is likely broken in our code. <% if @error_reference.present? %>Your unique error reference in case you want to report this issue is <code><%= @error_reference %></code>.<% end %></p>
 
   <p class="lead">Try going back to the <a href="/">homepage</a>.</p>
 
@@ -13,7 +13,7 @@
 
   <ul class="mt-3">
     <li>We collect data about what happened before, during and after the issue occurred.</li>
-    <li>We record which account the error happened to.</li>
+    <li>We record which user account the error happened to.</li>
     <li>Our Engineers are alerted of the issue.</li>
     <li>The issue will be investigated within 4 hours if urgent, otherwise within 24 hours.</li>
   </ul>

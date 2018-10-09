@@ -8,8 +8,14 @@ class ApplicationController < ActionController::Base
   private
 
   def render_internal_server_error(error)
-    Raven.capture_exception(error, user: { id: current_user&.id, email: current_user&.email }) unless error.nil?
-    Rails.logger.error(error) unless error.nil?
+    if error.nil?
+      @error_reference = params[:error_reference]
+    else
+      Raven.capture_exception(error, user: { id: current_user&.id, email: current_user&.email })
+      Rails.logger.error(error)
+      @error_reference = Raven.last_event_id
+    end
+
     render 'errors/500', status: :internal_server_error
   end
 
