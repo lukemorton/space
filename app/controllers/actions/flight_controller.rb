@@ -1,14 +1,19 @@
 module Actions
   class FlightController < ApplicationController
     rescue_from Space::Flight::UnknownShipError,
-                Space::Flight::CannotBoardError,
                 Space::Flight::CannotDisembarkError,
                 Space::Locations::UnknownLocationError,
                 with: :render_unprocessable_entity
 
     def board
-      board_use_case.board(current_person.id, board_params.fetch(:ship_id))
-      flash[:success] = 'You boarded'
+      boarding = board_use_case.board(current_person.id, board_params.fetch(:ship_id))
+
+      if boarding.successful?
+        flash[:success] = 'You boarded'
+      else
+        flash[:errors] = boarding.errors
+      end
+
       redirect_to ship_url(board_params[:ship_slug])
     end
 

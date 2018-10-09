@@ -29,15 +29,17 @@ RSpec.describe Space::Flight::Board do
       let(:ship) { nil }
 
       it 'disallows person to board' do
-        expect{subject}.to raise_error(Space::Flight::CannotBoardError)
+        expect{subject}.to raise_error(Space::Flight::UnknownShipError)
       end
     end
 
     context 'and person is part of crew' do
       let(:ship) { Space::Flight::Ship.new(id: ship_id, crew: [person]) }
 
+      it { is_expected.to_not be_successful }
+
       it 'disallows person to board' do
-        expect{subject}.to raise_error(Space::Flight::CannotBoardError)
+        expect(subject.errors).to_not be_empty
       end
     end
   end

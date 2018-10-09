@@ -11,7 +11,7 @@ RSpec.describe Actions::FlightController do
   describe '#board' do
     let(:person) { create(:person) }
 
-    subject do
+    before do
       post(board_url, params: {
         board: {
           ship_id: ship_id,
@@ -21,21 +21,30 @@ RSpec.describe Actions::FlightController do
     end
 
     it 'redirects' do
-      subject
       assert_redirected_to ship
     end
 
     it 'sets flash success' do
-      subject
       expect(flash[:success]).to be_present
     end
 
-    context 'and boarding unsuccessful' do
-      let(:ship_id) { 0 }
+    context 'and ship not found' do
+      let(:ship_id) { nil }
 
-      it 'raises error' do
-        subject
+      it 'renders 422' do
         assert_response :unprocessable_entity
+      end
+    end
+
+    context 'and already part of crew' do
+      let(:ship) { create(:ship, crew: [person]) }
+
+      it 'redirects' do
+        assert_redirected_to ship
+      end
+
+      it 'sets errors flash' do
+        expect(flash[:errors]).to_not be_empty
       end
     end
   end
@@ -43,7 +52,7 @@ RSpec.describe Actions::FlightController do
   describe '#disembark' do
     let(:person) { create(:person, ship: ship) }
 
-    subject do
+    before do
       post(disembark_url, params: {
         disembark: {
           ship_id: ship_id
@@ -52,19 +61,17 @@ RSpec.describe Actions::FlightController do
     end
 
     it 'redirects' do
-      subject
       assert_redirected_to person.location
     end
 
     it 'sets flash success' do
-      subject
       expect(flash[:success]).to be_present
     end
 
     context 'and disembarking unsuccessful' do
       let(:ship_id) { nil }
 
-        it 'raises error' do
+      it 'raises error' do
         subject
         assert_response :unprocessable_entity
       end
