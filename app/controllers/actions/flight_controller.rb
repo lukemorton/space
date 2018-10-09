@@ -13,12 +13,7 @@ module Actions
     end
 
     def refuel
-      if refuel_params.fetch(:refuel) == 'full_tank'
-        Ship.find(refuel_params.fetch(:ship_id)).update!(fuel: 1000)
-      else
-        Ship.find(refuel_params.fetch(:ship_id)).update!(fuel: 500)
-      end
-
+      refuel_use_case.refuel(refuel_params.fetch(:ship_id), refuel: refuel_params.fetch(:refuel))
       redirect_to ship_dock_services_url(refuel_params.fetch(:ship_slug))
     end
 
@@ -50,6 +45,13 @@ module Actions
         person_gateway: person_gateway,
         ship_gateway: ship_gateway,
         travel_computer_factory: travel_computer_factory
+      )
+    end
+
+    def refuel_use_case
+      Space::Flight::Refuel.new(
+        money_gateway: money_gateway,
+        ship_gateway: ship_gateway
       )
     end
 

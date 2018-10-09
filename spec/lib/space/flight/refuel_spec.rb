@@ -18,7 +18,7 @@ RSpec.describe Space::Flight::Refuel do
     end
 
     context 'and fully refueling' do
-      subject { use_case.refuel(ship, refuel: 'full_tank') }
+      subject { use_case.refuel(ship.id, refuel: 'full_tank') }
 
       it { is_expected.to be_successful }
 
@@ -32,7 +32,7 @@ RSpec.describe Space::Flight::Refuel do
     end
 
     context 'and half refueling' do
-      subject { use_case.refuel(ship, refuel: 'half_tank') }
+      subject { use_case.refuel(ship.id, refuel: 'half_tank') }
 
       it { is_expected.to be_successful }
 

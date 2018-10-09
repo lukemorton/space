@@ -75,7 +75,8 @@ RSpec.describe Actions::FlightController do
       post(refuel_url, params: {
         refuel: {
           ship_id: ship_id,
-          ship_slug: ship.slug
+          ship_slug: ship.slug,
+          refuel: 'full_tank'
         }
       })
     end

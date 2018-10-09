@@ -26,7 +26,7 @@ RSpec.feature 'Refueling a ship' do
 
   def then_i_should_be_fully_refueled
     expect(page).to have_content('Refuel')
-    expect(page).to have_content('Fuel 1,000')
+    expect(page).to have_content('Fuel 5,000')
   end
 
   def when_i_refuel_my_ship_half_full
@@ -37,6 +37,6 @@ RSpec.feature 'Refueling a ship' do
 
   def then_i_should_be_half_refueled
     expect(page).to have_content('Refuel')
-    expect(page).to have_content('Fuel 500')
+    expect(page).to have_content('Fuel 2,500')
   end
 end
