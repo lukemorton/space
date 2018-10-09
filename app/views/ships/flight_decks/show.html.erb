@@ -1,22 +1,25 @@
 <%= render 'ships/shared/header' %>
 
 <div class="row">
-  <div class="col-lg-6">
-    <div class="card border-0 shadow-sm mb-3">
-      <div class="card-body text-center">
-        <p class="strong">Location</p>
+  <div class="col-lg-6 mb-4">
+    <div class="border rounded p-4 position-relative">
+      <div class="position-absolute text-center" style="bottom: -.7em; left: 0; width: 100%;">
+        <small class="bg-light p-2" style="color: #bbb;">BasicFlight::LocationInfo by Space Inc</small>
+      </div>
+
+      <div>
+        <small class="text-uppercase" style="color: #777;">Location</small>
 
         <div class="h3"><%= @ship.location.name %></div>
       </div>
     </div>
-
   </div>
 
-  <div class="col-lg-6">
+  <div class="col-lg-6 mb-4">
     <div>
       <div class="border rounded p-4 position-relative">
-        <div class="position-absolute text-center" style="bottom: -.7em; width: 100%;">
-          <small class="bg-light p-2" style="color: #bbb;">BasicFlight by Space Inc</small>
+        <div class="position-absolute text-center" style="bottom: -.7em; left: 0; width: 100%;">
+          <small class="bg-light p-2" style="color: #bbb;">BasicFlight::PathPlanner by Space Inc</small>
         </div>
 
         <div>
@@ -46,7 +49,7 @@
                 <div class="align-self-center"><strong class="text-warning">Your fuel is too low to travel anywhere.</strong><br />Refuel at <%= link_to 'Dock Services', ship_dock_services_path(@ship.slug) %>.</div>
               <% end %>
 
-              <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary btn-lg', disabled: @ship.travel_disabled? %></div>
+              <div class="ml-auto"><%= f.button 'Travel', class: 'btn btn-primary', disabled: @ship.travel_disabled? %></div>
             </div>
           <% end %>
         </div>
