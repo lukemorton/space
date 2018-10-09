@@ -5,8 +5,8 @@ class DocksController < ApplicationController
     redirect_to ship_path(current_person.ship)
   rescue Space::Locations::PersonNotInLocationError
     redirect_to location_path(current_person.location)
-  rescue Space::Locations::UnknownDockError
-    render_not_found
+  rescue Space::Locations::UnknownDockError => e
+    render_not_found(e)
   end
 
   private

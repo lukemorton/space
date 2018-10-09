@@ -34,7 +34,8 @@ RSpec.describe Actions::FlightController do
       let(:ship_id) { 0 }
 
       it 'raises error' do
-        expect{subject}.to raise_error(Space::Flight::CannotBoardError)
+        subject
+        assert_response :unprocessable_entity
       end
     end
   end
@@ -63,8 +64,9 @@ RSpec.describe Actions::FlightController do
     context 'and disembarking unsuccessful' do
       let(:ship_id) { nil }
 
-      it 'raises error' do
-        expect{subject}.to raise_error(Space::Flight::CannotDisembarkError)
+        it 'raises error' do
+        subject
+        assert_response :unprocessable_entity
       end
     end
   end

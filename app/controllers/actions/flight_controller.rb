@@ -1,5 +1,12 @@
 module Actions
   class FlightController < ApplicationController
+    rescue_from Space::Flight::UnknownShipError,
+                Space::Flight::InvalidTravelError,
+                Space::Flight::CannotBoardError,
+                Space::Flight::CannotDisembarkError,
+                Space::Locations::UnknownLocationError,
+                with: :render_unprocessable_entity
+
     def board
       board_use_case.board(current_person.id, board_params.fetch(:ship_id))
       flash[:success] = 'You boarded'
@@ -21,12 +28,6 @@ module Actions
       travelling = travel_use_case.travel(travel_params.fetch(:ship_id), current_person: current_person.id, to: travel_params.fetch(:location_id))
       flash[:success] = 'You travelled'
       redirect_to ship_url(travel_params.fetch(:ship_slug))
-    rescue Space::Flight::UnknownShipError
-      render_unprocessable_entity
-    rescue Space::Locations::UnknownLocationError
-      render_unprocessable_entity
-    rescue Space::Flight::InvalidTravelError
-      render_unprocessable_entity
     end
 
     private

@@ -9,8 +9,8 @@ class Ships::BaseController < ApplicationController
     )
   rescue Space::Flight::PersonNotInCrewError
     redirect_to location_path(current_person.location)
-  rescue Space::Flight::UnknownShipError
-    render_not_found
+  rescue Space::Flight::UnknownShipError => e
+    render_not_found(e)
   end
 
   def view_controls_use_case
