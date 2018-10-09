@@ -13,7 +13,7 @@ module Actions
     end
 
     def refuel
-      refuel_use_case.refuel(refuel_params.fetch(:ship_id), refuel: refuel_params.fetch(:refuel))
+      refuel_use_case.refuel(refuel_params.fetch(:ship_id), current_person: current_person.id, refuel: refuel_params.fetch(:refuel))
       redirect_to ship_dock_services_url(refuel_params.fetch(:ship_slug))
     end
 
