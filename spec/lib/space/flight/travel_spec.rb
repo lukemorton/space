@@ -3,12 +3,12 @@ require_relative '../../../../lib/space/flight/ship'
 
 RSpec.describe Space::Flight::Travel do
   context 'when travelling from station to station' do
-    let(:current_station) { instance_double('Location', id: 1) }
-    let(:destination_dock) { instance_double('Dock', id: 1) }
-    let(:destination_station) { instance_double('Location', id: 2, establishments: [destination_dock]) }
+    let(:current_station) { instance_double('Space::Locations::Location', id: 1) }
+    let(:destination_dock) { instance_double('Space::Locations::Dock', id: 1) }
+    let(:destination_station) { instance_double('Space::Locations::Location', id: 2, establishments: [destination_dock]) }
     let(:location_gateway) { instance_double('Space::Locations::LocationGateway', find: destination_station) }
 
-    let(:person) { instance_double('Person', id: 1, location: current_station, :location= => nil) }
+    let(:person) { instance_double('Space::Folk::Person', id: 1, location: current_station, :location= => nil) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', update: true) }
 
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::FUEL_MAX, has_crew_member_id?: true, location: current_station) }

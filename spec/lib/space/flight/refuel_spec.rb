@@ -2,9 +2,9 @@ require_relative '../../../../lib/space/flight/refuel'
 
 RSpec.describe Space::Flight::Refuel do
   context 'when refueling' do
-    let(:current_location) { instance_double('Location', id: 1) }
+    let(:current_location) { instance_double('Space::Locations::Location', id: 1) }
 
-    let(:person) { instance_double('Person', id: 1, location: current_location, :location= => nil) }
+    let(:person) { instance_double('Space::Folk::Person', id: 1, location: current_location, :location= => nil) }
     let(:person_gateway) { instance_double('Space::Folk::PersonGateway', find: person) }
 
     let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: Space::Flight::Ship::LOW_FUEL, has_crew_member_id?: true, location: current_location) }

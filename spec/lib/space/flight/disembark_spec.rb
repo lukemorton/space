@@ -3,7 +3,7 @@ require_relative '../../../../lib/space/flight/ship'
 
 RSpec.describe Space::Flight::Disembark do
   context 'when disembarking ship' do
-    let(:person) { instance_double('Person', id: 1) }
+    let(:person) { instance_double('Space::Folk::Person', id: 1) }
     let(:ship_id) { 1 }
     let(:ship) { Space::Flight::Ship.new(id: ship_id, crew: [person]) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship, remove_crew_member: true) }
