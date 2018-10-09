@@ -49,4 +49,36 @@ RSpec.describe Space::Folk::MoneyGateway do
       expect(subject).to eq(bank.balance)
     end
   end
+
+  context 'when paying seed' do
+    let(:double_entry) { class_double('DoubleEntry', account: nil, transfer: nil) }
+    let(:person) { instance_double('Space::Folk::Person') }
+    let(:seed) { double }
+    let(:bank) { double }
+
+    subject { described_class.new(double_entry: double_entry).pay_seed(person, Money.new(10_00)) }
+
+    it 'should load seed account' do
+      subject
+      expect(double_entry).to have_received(:account).with(:seed)
+    end
+
+    it 'should load bank account' do
+      subject
+      expect(double_entry).to have_received(:account).with(:bank, scope: person)
+    end
+
+    it 'should transfer from personal bank to seed' do
+      allow(double_entry).to receive(:account).with(:seed).and_return(seed)
+      allow(double_entry).to receive(:account).with(:bank, scope: person).and_return(bank)
+
+      subject
+
+      expect(double_entry).to have_received(:transfer).with(Money.new(10_00), a_hash_including(
+        from: bank,
+        to: seed,
+        code: :pay_seed
+      ))
+    end
+  end
 end
