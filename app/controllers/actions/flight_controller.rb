@@ -26,7 +26,13 @@ module Actions
 
     def travel
       travelling = travel_use_case.travel(travel_params.fetch(:ship_id), current_person: current_person.id, to: travel_params.fetch(:location_id))
-      flash[:success] = 'You travelled'
+
+      if travelling.successful?
+        flash[:success] = 'You travelled'
+      else
+        flash[:errors] = travelling.errors
+      end
+
       redirect_to ship_url(travel_params.fetch(:ship_slug))
     end
 

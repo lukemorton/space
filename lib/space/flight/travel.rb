@@ -32,20 +32,22 @@ module Space
           ship: ship
         )
 
-        raise InvalidTravelError.new(travel_validator.errors.full_messages) unless travel_validator.valid?
+        if travel_validator.valid?
+          ship_gateway.update(
+            ship.id,
+            dock_id: location.establishments.first.id,
+            fuel: fuel_calculator.new_fuel_level(location),
+            location_id: location.id
+          )
 
-        ship_gateway.update(
-          ship.id,
-          dock_id: location.establishments.first.id,
-          fuel: fuel_calculator.new_fuel_level(location),
-          location_id: location.id
-        )
+          ship.crew.each do |member|
+            person_gateway.update(member.id, location_id: location.id)
+          end
 
-        ship.crew.each do |member|
-          person_gateway.update(member.id, location_id: location.id)
+          Response.new(true, [])
+        else
+          Response.new(false, travel_validator.errors.full_messages)
         end
-
-        Response.new(true, {})
       end
 
       private

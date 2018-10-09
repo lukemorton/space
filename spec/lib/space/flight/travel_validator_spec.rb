@@ -55,7 +55,7 @@ RSpec.describe Space::Flight::TravelValidator do
 
     it 'disallows travel' do
       subject.valid?
-      expect(subject.errors.keys).to include(:current_person_id)
+      expect(subject.errors.keys).to include(:you)
     end
   end
 end

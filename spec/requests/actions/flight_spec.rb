@@ -132,8 +132,12 @@ RSpec.describe Actions::FlightController do
     context 'and travelling unsuccessful' do
       let(:location_id) { ship.location.id }
 
-      it 'renders 422' do
-        assert_response :unprocessable_entity
+      it 'redirects' do
+        assert_redirected_to ship
+      end
+
+      it 'sets errors flash' do
+        expect(flash[:errors]).to be_present
       end
     end
   end

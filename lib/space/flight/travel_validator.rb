@@ -18,7 +18,7 @@ module Space
 
       def person_in_ship_crew
         unless ship.has_crew_member_id?(current_person_id)
-          errors.add(:current_person_id, 'not in crew. Did you disembark already?')
+          errors.add(:you, 'are not in crew. Did you disembark already?')
         end
       end
 
