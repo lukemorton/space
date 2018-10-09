@@ -29,7 +29,7 @@ RSpec.describe Space::Flight::TravelValidator do
 
     it 'provides an error' do
       subject.valid?
-      expect(subject.errors.full_messages).to include('Fuel too low')
+      expect(subject.errors.keys).to include(:fuel)
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe Space::Flight::TravelValidator do
 
     it 'provides an error' do
       subject.valid?
-      expect(subject.errors.full_messages).to include('Destination location is same as current location')
+      expect(subject.errors.keys).to include(:destination_location)
     end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe Space::Flight::TravelValidator do
 
     it 'disallows travel' do
       subject.valid?
-      expect(subject.errors.full_messages).to include('Current person not in crew')
+      expect(subject.errors.keys).to include(:current_person_id)
     end
   end
 end

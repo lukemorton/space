@@ -18,13 +18,13 @@ module Space
 
       def person_in_ship_crew
         unless ship.has_crew_member_id?(current_person_id)
-          errors.add(:current_person_id, 'not in crew')
+          errors.add(:current_person_id, 'not in crew. Did you disembark already?')
         end
       end
 
       def ship_has_enough_fuel
         if fuel_calculator.new_fuel_level(destination_location) < 0
-          errors.add(:fuel, 'too low')
+          errors.add(:fuel, 'too low. Did you travel in already?')
         end
       end
 
@@ -33,7 +33,7 @@ module Space
         destination_location_id = destination_location.id.to_s
 
         if current_location_id == destination_location_id
-          errors.add(:destination_location, 'is same as current location')
+          errors.add(:destination_location, 'is same as current location. Did you travel in already?')
         end
       end
     end
