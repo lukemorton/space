@@ -13,6 +13,12 @@ module Actions
     end
 
     def refuel
+      if refuel_params.fetch(:refuel) == 'full_tank'
+        Ship.find(refuel_params.fetch(:ship_id)).update!(fuel: 1000)
+      else
+        Ship.find(refuel_params.fetch(:ship_id)).update!(fuel: 500)
+      end
+
       redirect_to ship_dock_services_url(refuel_params.fetch(:ship_slug))
     end
 
@@ -56,7 +62,7 @@ module Actions
     end
 
     def refuel_params
-      params.require(:refuel).permit(:ship_id, :ship_slug)
+      params.require(:refuel).permit(:ship_id, :ship_slug, :refuel)
     end
 
     def travel_params
