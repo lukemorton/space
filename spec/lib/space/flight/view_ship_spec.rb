@@ -23,7 +23,7 @@ RSpec.describe Space::Flight::ViewShip do
     let(:another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [4, 5, 6]) }
     let(:yet_another_location) { instance_double('Space::Locations::Location', id: 2, name: 'Paris', coordinates: [1, 2, 4]) }
     let(:destinations) { [location, another_location, yet_another_location] }
-    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 1000, location: location, name: 'Endeavour', slug: 'endeavour') }
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, crew: [person], fuel: 1000, has_crew_member_id?: true, location: location, name: 'Endeavour', slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
 
@@ -70,26 +70,26 @@ RSpec.describe Space::Flight::ViewShip do
   end
 
   context 'when not in crew' do
-    let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: [], name: 'Endeavour', slug: 'endeavour') }
-    let(:destinations) { [instance_double('Location', id: 1, name: 'London')] }
+    let(:person) { instance_double('Space::Folk::Person', id: 1, name: 'Luke') }
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, has_crew_member_id?: false, slug: 'endeavour') }
+    let(:destinations) { [instance_double('Space::Locations::Location', id: 1, name: 'London')] }
 
     subject { use_case.view(ship.slug, person.id) }
 
     it 'should raise an error' do
-      expect { subject }.to raise_error(Space::Flight::PersonNotInCrewError)
+      expect{subject}.to raise_error(Space::Flight::PersonNotInCrewError)
     end
   end
 
   context 'when ship unknown' do
-    let(:person) { instance_double('Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Ship', id: 1, crew: [], name: 'Endeavour', slug: 'endeavour') }
-    let(:destinations) { [instance_double('Location', id: 1, name: 'London')] }
+    let(:person) { instance_double('Space::Folk::Person', id: 1, name: 'Luke') }
+    let(:ship) { instance_double('Space::Flight::Ship', id: 1, slug: 'endeavour') }
+    let(:destinations) { [instance_double('Space::Locations::Location', id: 1, name: 'London')] }
 
     subject { use_case.view(nil, person.id) }
 
     it 'should raise an error' do
-      expect { subject }.to raise_error(Space::Flight::UnknownShipError)
+      expect{subject}.to raise_error(Space::Flight::UnknownShipError)
     end
   end
 end

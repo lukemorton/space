@@ -33,7 +33,7 @@ module Space
         raise UnknownShipError.new if ship.nil?
 
         person = person(person_id)
-        raise PersonNotInCrewError.new unless person_in_crew?(person.id, ship.crew)
+        raise PersonNotInCrewError.new unless ship.has_crew_member_id?(person.id)
 
         computers = build_computers(ship)
 
