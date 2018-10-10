@@ -5,7 +5,7 @@ class Ships::BaseController < ApplicationController
 
   def load_ship
     @ship = ShipPresenter.new(
-      view_controls_use_case.view(params.fetch(:ship_id), current_person.id)
+      view_ship_use_case.view(params.fetch(:ship_id), current_person.id)
     )
   rescue Space::Flight::PersonNotInCrewError
     redirect_to location_path(current_person.location)
@@ -13,7 +13,7 @@ class Ships::BaseController < ApplicationController
     render_not_found(e)
   end
 
-  def view_controls_use_case
+  def view_ship_use_case
     Space::Flight::ViewShip.new(
       list_destinations_use_case: list_destinations_use_case,
       person_gateway: person_gateway,
