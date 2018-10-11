@@ -1,9 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe ShipDockServicesPresenter do
-  let(:current_person) { double }
+  let(:dock_services) do
+    double(
+      refuel_service: double(
+        options: [
+          double(type: :full_tank, cost: Money.new(300_00)),
+          double(type: :half_tank, cost: Money.new(150_00))
+        ]
+      )
+    )
+  end
 
-  subject { described_class.new(current_person) }
+  subject { described_class.new(dock_services) }
 
   it 'has an refuel_options' do
     expect(subject.refuel_options).to_not be_empty
@@ -11,7 +20,7 @@ RSpec.describe ShipDockServicesPresenter do
 
   context 'fuel options' do
     context 'full tank' do
-      subject { described_class.new(current_person).refuel_options.first }
+      subject { described_class.new(dock_services).refuel_options.first }
 
       it 'has type' do
         expect(subject.type).to eq(:full_tank)
@@ -31,7 +40,7 @@ RSpec.describe ShipDockServicesPresenter do
     end
 
     context 'half tank' do
-      subject { described_class.new(current_person).refuel_options.last }
+      subject { described_class.new(dock_services).refuel_options.last }
 
       it 'has type' do
         expect(subject.type).to eq(:half_tank)
