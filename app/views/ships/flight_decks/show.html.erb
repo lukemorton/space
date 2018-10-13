@@ -33,7 +33,7 @@
 
             <div class="my-4" style="max-height: 17rem; overflow: auto;">
               <% @ship.destinations.each do |destination| %>
-                <label class="d-block border bg-white rounded px-3 py-2 js-destination" style="border-color: #eee !important; <%= destination.disabled? ? 'opacity: 0.5;' : 'cursor: pointer;' %>" id="destination-<%= destination %>">
+                <label class="d-block border bg-white rounded px-3 py-2 js-destination" style="border-color: #eee !important; <%= destination.disabled? ? 'opacity: 0.7;' : 'cursor: pointer;' %>" id="destination-<%= destination %>">
                   <div class="d-flex justify-content-between align-items-center">
                     <%= f.radio_button :location_id, destination.id, label:  destination.name, label_class: 'align-middle ml-2', checked: destination.checked?, disabled: destination.disabled? %>
 
