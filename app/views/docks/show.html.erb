@@ -41,7 +41,7 @@
               <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
                 <%= f.hidden_field :ship_id, value: ship.id %>
                 <%= f.hidden_field :ship_slug, value: ship.slug %>
-                <%= submit_tag 'Board', class: 'btn btn-primary', data: { disable_with: 'Boarding...' } %>
+                <%= submit_tag 'Request to board', class: 'btn btn-primary', data: { disable_with: 'Requesting...' } %>
               <% end %>
             </td>
           </tr>
