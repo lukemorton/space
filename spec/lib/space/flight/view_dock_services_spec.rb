@@ -1,6 +1,8 @@
 require_relative '../../../../lib/space/flight/view_dock_services'
 
 RSpec.describe Space::Flight::ViewDockServices do
+  let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', bank_balance: Money.new(500_00)) }
+
   let(:person) { instance_double('Space::Folk::Person', id: 1, name: 'Luke') }
   let(:person_gateway) { instance_double('Space::Locations::PersonGateway', find: person) }
 
@@ -9,6 +11,7 @@ RSpec.describe Space::Flight::ViewDockServices do
 
   let(:use_case) do
     described_class.new(
+      money_gateway: money_gateway,
       person_gateway: person_gateway,
       ship_gateway: ship_gateway
     )
@@ -37,15 +40,36 @@ RSpec.describe Space::Flight::ViewDockServices do
       expect(subject.options.last.type).to eq(:half_tank)
     end
 
-    context 'then full refuel' do
+    context 'and fully refueling' do
       subject { use_case.view(ship.slug, person.id).refuel_service.options.first }
 
-      it 'costs 300' do
-        expect(subject.cost).to eq(Money.new(300_00))
+      it 'should check person bank balance to ensure they can afford to refuel' do
+        subject
+        expect(money_gateway).to have_received(:bank_balance).with(person)
+      end
+
+      context 'and person can afford' do
+        let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', bank_balance: Money.new(500_00)) }
+
+        it 'costs 300' do
+          expect(subject.cost).to eq(Money.new(300_00))
+        end
+
+        it 'should be affordable for person' do
+          expect(subject).to be_affordable_for_person
+        end
+      end
+
+      context 'and person cannot afford' do
+        let(:money_gateway) { instance_double('Space::Folk::MoneyGateway', bank_balance: Money.new(200_00)) }
+
+        it 'should not be affordable for person' do
+          expect(subject).to_not be_affordable_for_person
+        end
       end
     end
 
-    context 'then half refuel' do
+    context 'then half refueling' do
       subject { use_case.view(ship.slug, person.id).refuel_service.options.last }
 
       it 'costs 150' do

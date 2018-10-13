@@ -11,9 +11,10 @@ module Space
         :refuel_service
       )
       Response::RefuelService = Struct.new(:options)
-      Response::RefuelService::Option = Struct.new(:type, :cost)
+      Response::RefuelService::Option = Struct.new(:type, :cost, :affordable_for_person?)
 
-      def initialize(person_gateway:, ship_gateway:)
+      def initialize(money_gateway:, person_gateway:, ship_gateway:)
+        @money_gateway = money_gateway
         @person_gateway = person_gateway
         @ship_gateway = ship_gateway
       end
@@ -26,13 +27,14 @@ module Space
         raise PersonNotInCrewError.new unless ship.has_crew_member_id?(person.id)
 
         Response.new(
-          build_refuel_service,
+          build_refuel_service(person),
         )
       end
 
       private
 
-      attr_reader :person_gateway,
+      attr_reader :money_gateway,
+                  :person_gateway,
                   :ship_gateway
 
       def ship(ship_slug)
@@ -43,11 +45,21 @@ module Space
         person_gateway.find(person_id)
       end
 
-      def build_refuel_service
+      def build_refuel_service(person)
+        bank_balance = money_gateway.bank_balance(person)
+
         Response::RefuelService.new([
-          Response::RefuelService::Option.new(:full_tank, Money.new(300_00)),
-          Response::RefuelService::Option.new(:half_tank, Money.new(150_00))
+          build_refuel_option(:full_tank, Money.new(300_00), bank_balance),
+          build_refuel_option(:half_tank, Money.new(150_00), bank_balance)
         ])
+      end
+
+      def build_refuel_option(type, cost, bank_balance)
+        Response::RefuelService::Option.new(type, cost, affordable_for_person?(bank_balance, cost))
+      end
+
+      def affordable_for_person?(bank_balance, cost)
+        bank_balance >= cost
       end
     end
   end

@@ -9,6 +9,7 @@ class Ships::DockServicesController < Ships::BaseController
 
   def view_dock_services_use_case
     Space::Flight::ViewDockServices.new(
+      money_gateway: money_gateway,
       person_gateway: person_gateway,
       ship_gateway: ship_gateway
     )
