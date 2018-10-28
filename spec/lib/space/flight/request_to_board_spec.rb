@@ -6,7 +6,7 @@ RSpec.describe Space::Flight::RequestToBoard do
     let(:ship_id) { 1 }
     let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [], has_crew_member_id?: false) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship) }
-    let(:ship_boarding_request_gateway) { instance_double('Space::Flight::ShipBoardingRequestGateway', create_request: nil) }
+    let(:ship_boarding_request_gateway) { instance_double('Space::Flight::ShipBoardingRequestGateway', create: nil) }
 
     let(:use_case) do
       described_class.new(
@@ -23,7 +23,7 @@ RSpec.describe Space::Flight::RequestToBoard do
 
     it 'should create request to board' do
       subject
-      expect(ship_boarding_request_gateway).to have_received(:create_request).with(ship_id, person.id)
+      expect(ship_boarding_request_gateway).to have_received(:create).with(ship_id, person.id)
     end
 
     context 'and ship does not exist' do

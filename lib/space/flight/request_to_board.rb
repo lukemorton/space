@@ -15,7 +15,7 @@ module Space
         raise UnknownShipError.new if ship.nil?
 
         if can_board_ship?(ship, person_id)
-          ship_boarding_request_gateway.create_request(ship.id, person_id)
+          ship_boarding_request_gateway.create(ship.id, person_id)
           Response.new(true, [])
         else
           Response.new(false, ['You are already in crew. Did you board already?'])
