@@ -10,7 +10,7 @@ module Space
         @ship_gateway = ship_gateway
       end
 
-      def request_to_board(ship_id, person_id)
+      def request(ship_id, person_id)
         ship = ship_gateway.find(ship_id)
         raise UnknownShipError.new if ship.nil?
 

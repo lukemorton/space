@@ -15,7 +15,7 @@ RSpec.describe Space::Flight::RequestToBoard do
       )
     end
 
-    subject { use_case.request_to_board(ship_id, person.id) }
+    subject { use_case.request(ship_id, person.id) }
 
     it 'allows a person to request to board' do
       expect(subject).to be_successful
