@@ -5,6 +5,7 @@ class Ship < ApplicationRecord
   belongs_to :dock
   belongs_to :location
 
+  has_many :boarding_requests, class_name: 'ShipBoardingRequest'
   has_many :crew, class_name: 'Person'
   has_many :computers, class_name: 'ShipComputer'
 
