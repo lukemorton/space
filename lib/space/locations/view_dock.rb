@@ -4,7 +4,8 @@ require_relative 'unknown_dock_error'
 module Space
   module Locations
     class ViewDock
-      Response = Struct.new(:id, :location, :name, :ships, :to_param)
+      Response = Struct.new(:id, :location, :name, :ships, :slug, :to_param)
+      Response::Ship = Struct.new(:id, :name, :crew, :has_boarding_request_from_current_person?, :slug, :to_param)
 
       def initialize(dock_gateway:, location_gateway:, person_gateway:)
         @dock_gateway = dock_gateway
@@ -21,7 +22,8 @@ module Space
           dock.id,
           dock.location,
           dock.name,
-          dock.ships,
+          dock.ships.map { |ship| build_ship(ship) },
+          dock.slug,
           dock.slug
         )
       end
@@ -39,6 +41,17 @@ module Space
 
       def ensure_person_in_location(location_slug, person_id)
         view_current_use_case.view(location_slug, person_id)
+      end
+
+      def build_ship(ship)
+        Response::Ship.new(
+          ship.id,
+          ship.name,
+          ship.crew,
+          false,
+          ship.slug,
+          ship.slug
+        )
       end
     end
   end

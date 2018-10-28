@@ -1,6 +1,25 @@
 require_relative '../../../../lib/space/locations/view_dock'
 
 RSpec.describe Space::Locations::ViewDock do
+  let(:crew_member) do
+    instance_double(
+      'Space::Locations::Dock::Ship::CrewMember',
+      id: 1,
+      name: 'Endeavour'
+    )
+  end
+
+  let(:ship) do
+    instance_double(
+      'Space::Locations::Dock::Ship',
+      id: 1,
+      crew: [crew_member],
+      name: 'Endeavour',
+      slug: 'endeavour',
+      to_param: 'endeavour'
+    )
+  end
+
   let(:dock_gateway) { instance_double('Space::Locations::DockGateway', find_by_slug: nil) }
   let(:dock) do
     instance_double(
@@ -8,7 +27,7 @@ RSpec.describe Space::Locations::ViewDock do
       id: 1,
       location: instance_double('Space::Locations::Dock::Location', slug: location.slug),
       name: 'Dock',
-      ships: [],
+      ships: [ship],
       slug: 'dock-at-london'
     )
   end
@@ -33,8 +52,48 @@ RSpec.describe Space::Locations::ViewDock do
   context 'when viewing current dock' do
     subject { use_case.view(dock.slug, person.id) }
 
-    it 'should have name' do
+    it 'has name' do
       expect(subject.name).to eq('Dock')
+    end
+
+    it 'has slug' do
+      expect(subject.slug).to eq('dock-at-london')
+    end
+
+    it 'has ships' do
+      expect(subject.ships).to_not be_empty
+    end
+
+    it 'has ships with ids' do
+      expect(subject.ships.first.id).to eq(ship.id)
+    end
+
+    it 'has ships with names' do
+      expect(subject.ships.first.name).to eq(ship.name)
+    end
+
+    it 'has ships with slugs' do
+      expect(subject.ships.first.slug).to eq(ship.slug)
+    end
+
+    it 'has ships with crew' do
+      expect(subject.ships.first.crew).to_not be_empty
+    end
+
+    it 'has ships with crew id' do
+      expect(subject.ships.first.crew.first.id).to eq(crew_member.id)
+    end
+
+    it 'has ships with crew names' do
+      expect(subject.ships.first.crew.first.name).to eq(crew_member.name)
+    end
+
+    it 'generates ship param from slug' do
+      expect(subject.ships.first.to_param).to eq(ship.to_param)
+    end
+
+    it 'has ships that can have boarding request from current person' do
+      expect(subject.ships.first).to_not have_boarding_request_from_current_person
     end
   end
 
