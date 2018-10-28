@@ -74,6 +74,10 @@ class ApplicationController < ActionController::Base
     Space::Flight::ShipGateway.new(ship_repository: Ship)
   end
 
+  def ship_boarding_request_gateway
+    Space::Flight::ShipBoardingRequestGateway.new(ship_boarding_request_repository: ShipBoardingRequest)
+  end
+
   def travel_computer_factory
     Space::Flight::TravelComputerFactory.new
   end

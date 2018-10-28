@@ -5,6 +5,8 @@ module Actions
                 with: :render_unprocessable_entity
 
     def board
+      request_to_board_use_case.request(board_params.fetch(:ship_id), current_person.id)
+
       boarding = board_use_case.board(current_person.id, board_params.fetch(:ship_id))
 
       if boarding.successful?
@@ -49,6 +51,13 @@ module Actions
 
     def board_use_case
       Space::Flight::Board.new(
+        ship_gateway: ship_gateway
+      )
+    end
+
+    def request_to_board_use_case
+      Space::Flight::RequestToBoard.new(
+        ship_boarding_request_gateway: ship_boarding_request_gateway,
         ship_gateway: ship_gateway
       )
     end
