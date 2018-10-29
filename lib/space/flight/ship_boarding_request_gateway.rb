@@ -10,7 +10,7 @@ module Space
       end
 
       def cancel(id, person_id)
-        ship_boarding_request_repository.delete(id: id, requester_id: person_id)
+        ship_boarding_request_repository.where(id: id, requester_id: person_id).delete_all > 0
       end
 
       private
