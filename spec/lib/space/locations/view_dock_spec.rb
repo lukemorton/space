@@ -89,6 +89,10 @@ RSpec.describe Space::Locations::ViewDock do
       expect(subject.ships.first).to have_boarding_request_from_current_person
     end
 
+    it 'has ships that can have boarding request from current person' do
+      expect(subject.ships.first.boarding_request_from_current_person).to eq(boarding_request)
+    end
+
     it 'has ships with crew' do
       expect(subject.ships.first.crew).to_not be_empty
     end

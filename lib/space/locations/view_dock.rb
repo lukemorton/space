@@ -5,7 +5,7 @@ module Space
   module Locations
     class ViewDock
       Response = Struct.new(:id, :location, :name, :ships, :slug, :to_param)
-      Response::Ship = Struct.new(:id, :name, :crew, :has_boarding_request_from_current_person?, :slug, :to_param)
+      Response::Ship = Struct.new(:id, :boarding_request_from_current_person, :name, :crew, :has_boarding_request_from_current_person?, :slug, :to_param)
 
       def initialize(dock_gateway:, location_gateway:, person_gateway:)
         @dock_gateway = dock_gateway
@@ -43,6 +43,10 @@ module Space
         view_current_use_case.view(location_slug, person_id)
       end
 
+      def ship_boarding_request_from_person(ship, person_id)
+        ship.boarding_requests.find { |boarding_request| boarding_request.requester_id == person_id }
+      end
+
       def ship_has_boarding_request_from_person?(ship, person_id)
         ship.boarding_requests.any? { |boarding_request| boarding_request.requester_id == person_id }
       end
@@ -50,6 +54,7 @@ module Space
       def build_ship(ship, person_id)
         Response::Ship.new(
           ship.id,
+          ship_boarding_request_from_person(ship, person_id),
           ship.name,
           ship.crew,
           ship_has_boarding_request_from_person?(ship, person_id),
