@@ -2,7 +2,7 @@
 
 <%= render 'shared/flash' %>
 
-<nav class="nav nav-tabs my-3">
+<nav class="nav nav-pills my-3">
   <%= active_link_to "About #{@location.name}", location_path(@location), class: 'nav-item nav-link' %>
 
   <% @location.establishments.each do |establishment| %>

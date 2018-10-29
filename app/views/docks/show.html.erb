@@ -2,7 +2,7 @@
 
 <%= render 'shared/flash' %>
 
-<nav class="nav nav-tabs my-3">
+<nav class="nav nav-pills my-3">
   <%= active_link_to "About #{@dock.location.name}", location_path(@dock.location), class: 'nav-item nav-link' %>
 
   <% @dock.location.establishments.each do |establishment| %>
@@ -17,8 +17,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="border-top-0">Ship</th>
-          <th class="border-top-0">Crew</th>
+          <th class="border-top-0" style="width:25%">Ship</th>
+          <th class="border-top-0" style="width:35%">Crew</th>
           <th class="border-top-0 text-right">Action</th>
         </tr>
       </thead>
@@ -42,14 +42,14 @@
                 <%= bootstrap_form_with scope: :ship_boarding_request, url: cancel_boarding_request_url do |f| %>
                   <%= f.hidden_field :id, value: ship.boarding_request_from_current_person.id %>
                   <%= f.hidden_field :dock_slug, value: @dock.slug %>
-                  <%= submit_tag 'Cancel request to board', class: 'btn btn-danger', data: { disable_with: 'Cancelling...' } %>
+                  <%= submit_tag 'Cancel request to board', class: 'btn btn-outline-danger', data: { disable_with: 'Cancelling...' } %>
                 <% end %>
               <% else %>
                 <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
                   <%= f.hidden_field :ship_id, value: ship.id %>
                   <%= f.hidden_field :ship_slug, value: ship.slug %>
                   <%= f.hidden_field :dock_slug, value: @dock.slug %>
-                  <%= submit_tag 'Request to board', class: 'btn btn-primary', data: { disable_with: 'Requesting...' } %>
+                  <%= submit_tag 'Request to board', class: 'btn btn-outline-primary', data: { disable_with: 'Requesting...' } %>
                 <% end %>
               <% end %>
             </td>
