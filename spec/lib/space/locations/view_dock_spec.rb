@@ -1,6 +1,14 @@
 require_relative '../../../../lib/space/locations/view_dock'
 
 RSpec.describe Space::Locations::ViewDock do
+  let(:boarding_request) do
+    instance_double(
+      'Space::Locations::Dock::Ship::BoardingRequest',
+      id: 1,
+      requester_id: 1
+    )
+  end
+
   let(:crew_member) do
     instance_double(
       'Space::Locations::Dock::Ship::CrewMember',
@@ -13,6 +21,7 @@ RSpec.describe Space::Locations::ViewDock do
     instance_double(
       'Space::Locations::Dock::Ship',
       id: 1,
+      boarding_requests: [boarding_request],
       crew: [crew_member],
       name: 'Endeavour',
       slug: 'endeavour',
@@ -76,6 +85,10 @@ RSpec.describe Space::Locations::ViewDock do
       expect(subject.ships.first.slug).to eq(ship.slug)
     end
 
+    it 'has ships that can have boarding request from current person' do
+      expect(subject.ships.first).to have_boarding_request_from_current_person
+    end
+
     it 'has ships with crew' do
       expect(subject.ships.first.crew).to_not be_empty
     end
@@ -90,10 +103,6 @@ RSpec.describe Space::Locations::ViewDock do
 
     it 'generates ship param from slug' do
       expect(subject.ships.first.to_param).to eq(ship.to_param)
-    end
-
-    it 'has ships that can have boarding request from current person' do
-      expect(subject.ships.first).to_not have_boarding_request_from_current_person
     end
   end
 
@@ -111,7 +120,7 @@ RSpec.describe Space::Locations::ViewDock do
   context 'when person aboard ship' do
     let(:person) { instance_double('Space::Locations::Person', id: 1, location: location, aboard_ship?: true) }
 
-      subject { use_case.view(dock.slug, person.id) }
+    subject { use_case.view(dock.slug, person.id) }
 
     it 'should raise an error' do
       expect { subject }.to raise_error(Space::Locations::PersonAboardShipError)

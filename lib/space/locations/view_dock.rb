@@ -22,7 +22,7 @@ module Space
           dock.id,
           dock.location,
           dock.name,
-          dock.ships.map { |ship| build_ship(ship) },
+          dock.ships.map { |ship| build_ship(ship, person_id) },
           dock.slug,
           dock.slug
         )
@@ -43,12 +43,16 @@ module Space
         view_current_use_case.view(location_slug, person_id)
       end
 
-      def build_ship(ship)
+      def ship_has_boarding_request_from_person?(ship, person_id)
+        ship.boarding_requests.any? { |boarding_request| boarding_request.requester_id == person_id }
+      end
+
+      def build_ship(ship, person_id)
         Response::Ship.new(
           ship.id,
           ship.name,
           ship.crew,
-          false,
+          ship_has_boarding_request_from_person?(ship, person_id),
           ship.slug,
           ship.slug
         )
