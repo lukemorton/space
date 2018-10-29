@@ -15,17 +15,14 @@ RSpec.describe Actions::FlightController do
       post(board_url, params: {
         board: {
           ship_id: ship_id,
-          ship_slug: ship.slug
+          ship_slug: ship.slug,
+          dock_slug: ship.dock.slug
         }
       })
     end
 
     it 'redirects' do
-      assert_redirected_to ship
-    end
-
-    it 'sets flash success' do
-      expect(flash[:success]).to be_present
+      assert_redirected_to ship.dock
     end
 
     context 'and ship not found' do

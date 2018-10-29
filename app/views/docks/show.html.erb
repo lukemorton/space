@@ -38,10 +38,15 @@
 
 
             <td class="text-right">
-              <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
-                <%= f.hidden_field :ship_id, value: ship.id %>
-                <%= f.hidden_field :ship_slug, value: ship.slug %>
-                <%= submit_tag 'Request to board', class: 'btn btn-primary', data: { disable_with: 'Requesting...' } %>
+              <% if ship.has_boarding_request_from_current_person? %>
+                <%= submit_tag 'Cancel request to board', class: 'btn btn-danger', data: { disable_with: 'Requesting...' } %>
+              <% else %>
+                <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
+                  <%= f.hidden_field :ship_id, value: ship.id %>
+                  <%= f.hidden_field :ship_slug, value: ship.slug %>
+                  <%= f.hidden_field :dock_slug, value: @dock.slug %>
+                  <%= submit_tag 'Request to board', class: 'btn btn-primary', data: { disable_with: 'Requesting...' } %>
+                <% end %>
               <% end %>
             </td>
           </tr>

@@ -20,5 +20,6 @@ RSpec.feature 'Requesting to board a ship' do
 
   def then_i_should_no_longer_be_able_to_request
     expect(page).to_not have_button('Request to board')
+    expect(page).to have_button('Cancel request to board')
   end
 end

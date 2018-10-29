@@ -5,17 +5,14 @@ module Actions
                 with: :render_unprocessable_entity
 
     def board
-      request_to_board_use_case.request(board_params.fetch(:ship_id), current_person.id)
+      request = request_to_board_use_case.request(board_params.fetch(:ship_id), current_person.id)
 
-      boarding = board_use_case.board(current_person.id, board_params.fetch(:ship_id))
-
-      if boarding.successful?
-        flash[:success] = 'You boarded'
+      if request.rejected_as_already_in_crew?
+        flash[:errors] = request.errors
+        redirect_to ship_url(board_params[:ship_slug])
       else
-        flash[:errors] = boarding.errors
+        redirect_to dock_url(board_params[:dock_slug])
       end
-
-      redirect_to ship_url(board_params[:ship_slug])
     end
 
     def disembark
@@ -86,7 +83,7 @@ module Actions
     end
 
     def board_params
-      params.require(:board).permit(:ship_id, :ship_slug)
+      params.require(:board).permit(:ship_id, :ship_slug, :dock_slug)
     end
 
     def disembark_params
