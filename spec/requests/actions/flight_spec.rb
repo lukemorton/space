@@ -46,6 +46,24 @@ RSpec.describe Actions::FlightController do
     end
   end
 
+  describe '#cancel_boarding_request' do
+    let(:person) { create(:person) }
+    let(:ship_boarding_request) { create(:ship_boarding_request, requester: person) }
+
+    before do
+      post(cancel_boarding_request_url, params: {
+        ship_boarding_request: {
+          id: ship_boarding_request.id,
+          dock_slug: ship.dock.slug
+        }
+      })
+    end
+
+    it 'redirects' do
+      assert_redirected_to ship.dock
+    end
+  end
+
   describe '#disembark' do
     let(:person) { create(:person, ship: ship) }
 

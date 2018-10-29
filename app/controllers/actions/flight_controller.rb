@@ -15,6 +15,11 @@ module Actions
       end
     end
 
+    def cancel_boarding_request
+      cancel_request_to_board_use_case.cancel(cancel_boarding_request_params.fetch(:id), current_person.id)
+      redirect_to dock_url(cancel_boarding_request_params[:dock_slug])
+    end
+
     def disembark
       disembarking = disembark_use_case.disembark(current_person.id, disembark_params.fetch(:ship_id))
 
@@ -59,6 +64,12 @@ module Actions
       )
     end
 
+    def cancel_request_to_board_use_case
+      Space::Flight::CancelRequestToBoard.new(
+        ship_boarding_request_gateway: ship_boarding_request_gateway
+      )
+    end
+
     def disembark_use_case
       Space::Flight::Disembark.new(
         ship_gateway: ship_gateway
@@ -84,6 +95,10 @@ module Actions
 
     def board_params
       params.require(:board).permit(:ship_id, :ship_slug, :dock_slug)
+    end
+
+    def cancel_boarding_request_params
+      params.require(:ship_boarding_request).permit(:id, :dock_slug)
     end
 
     def disembark_params

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   scope module: :actions do
     post :board, controller: :flight
+    post :cancel_boarding_request, controller: :flight
     post :disembark, controller: :flight
     post :refuel, controller: :flight
     post :travel, controller: :flight
