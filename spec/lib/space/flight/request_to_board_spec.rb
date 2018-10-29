@@ -38,6 +38,7 @@ RSpec.describe Space::Flight::RequestToBoard do
       let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [person], has_crew_member_id?: true) }
 
       it { is_expected.to_not be_successful }
+      it { is_expected.to be_rejected_as_already_in_crew }
 
       it 'disallows person to board' do
         expect(subject.errors).to_not be_empty

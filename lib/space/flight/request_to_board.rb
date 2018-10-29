@@ -3,7 +3,7 @@ require_relative 'unknown_ship_error'
 module Space
   module Flight
     class RequestToBoard
-      Response = Struct.new(:successful?, :errors)
+      Response = Struct.new(:successful?, :rejected_as_already_in_crew?, :errors)
 
       def initialize(ship_boarding_request_gateway:, ship_gateway:)
         @ship_boarding_request_gateway = ship_boarding_request_gateway
@@ -16,9 +16,9 @@ module Space
 
         if can_board_ship?(ship, person_id)
           ship_boarding_request_gateway.create(ship.id, person_id)
-          Response.new(true, [])
+          Response.new(true, false, [])
         else
-          Response.new(false, ['You are already in crew. Did you board already?'])
+          Response.new(false, true, ['You are already in crew. Did you board already?'])
         end
       end
 
