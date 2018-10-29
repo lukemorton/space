@@ -84,6 +84,7 @@ module Space
         def self.from_object(object)
           new(
             id: object.id,
+            boarding_requests: object.boarding_requests.map { |boarding_request| BoardingRequest.from_object(boarding_request) },
             crew: object.crew.map { |member| CrewMember.from_object(member) },
             name: object.name,
             slug: object.slug
@@ -91,6 +92,7 @@ module Space
         end
 
         attr_accessor :id
+        attr_accessor :boarding_requests
         attr_accessor :crew
         attr_accessor :name
         attr_accessor :slug
@@ -102,6 +104,20 @@ module Space
 
         def to_param
           slug
+        end
+
+        class BoardingRequest
+          include ActiveModel::Model
+
+          def self.from_object(object)
+            new(
+              id: object.id,
+              requester_id: object.requester_id
+            )
+          end
+
+          attr_accessor :id
+          attr_accessor :requester_id
         end
 
         class CrewMember

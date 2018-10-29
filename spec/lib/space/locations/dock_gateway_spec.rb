@@ -10,8 +10,12 @@ RSpec.describe Space::Locations::DockGateway do
       instance_double('Person', id: 1, name: 'Luke')
     end
 
+    let(:ship_boarding_request_record) do
+      instance_double('ShipBoardingRequest', id: 1, requester_id: 1)
+    end
+
     let(:ship_record) do
-      instance_double('Ship', id: 1, crew: [person_record], name: 'Endeavour', slug: 'endeavour')
+      instance_double('Ship', id: 1, boarding_requests: [ship_boarding_request_record], crew: [person_record], name: 'Endeavour', slug: 'endeavour')
     end
 
     let(:dock_record_slug) { 'london-dock' }
@@ -98,6 +102,18 @@ RSpec.describe Space::Locations::DockGateway do
 
     it 'has ships with crew names' do
       expect(dock.ships.first.crew.first.name).to eq(person_record.name)
+    end
+
+    it 'has ships with boarding requests' do
+      expect(dock.ships.first.boarding_requests).to_not be_empty
+    end
+
+    it 'has ships with boarding request id' do
+      expect(dock.ships.first.boarding_requests.first.id).to eq(ship_boarding_request_record.id)
+    end
+
+    it 'has ships with boarding request requester_id' do
+      expect(dock.ships.first.boarding_requests.first.requester_id).to eq(ship_boarding_request_record.requester_id)
     end
 
     it 'generates ship param from slug' do
