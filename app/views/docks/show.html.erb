@@ -42,14 +42,14 @@
                 <%= bootstrap_form_with scope: :ship_boarding_request, url: cancel_boarding_request_url do |f| %>
                   <%= f.hidden_field :id, value: ship.boarding_request_from_current_person.id %>
                   <%= f.hidden_field :dock_slug, value: @dock.slug %>
-                  <%= submit_tag 'Cancel request to board', class: 'btn btn-outline-danger', data: { disable_with: 'Cancelling...' } %>
+                  <%= submit_tag 'Cancel request to board', class: 'btn btn-outline-danger' %>
                 <% end %>
               <% else %>
                 <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
                   <%= f.hidden_field :ship_id, value: ship.id %>
                   <%= f.hidden_field :ship_slug, value: ship.slug %>
                   <%= f.hidden_field :dock_slug, value: @dock.slug %>
-                  <%= submit_tag 'Request to board', class: 'btn btn-outline-primary', data: { disable_with: 'Requesting...' } %>
+                  <%= submit_tag 'Request to board', class: 'btn btn-outline-primary' %>
                 <% end %>
               <% end %>
             </td>
