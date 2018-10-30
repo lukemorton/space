@@ -1,6 +1,7 @@
 module Actions
   class FlightController < ApplicationController
     rescue_from Space::Flight::UnknownShipError,
+                Space::Flight::AlreadyHasRequestToBoardError,
                 Space::Locations::UnknownLocationError,
                 with: :render_unprocessable_entity
 

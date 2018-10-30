@@ -44,6 +44,18 @@ RSpec.describe Actions::FlightController do
         expect(flash[:errors]).to_not be_empty
       end
     end
+
+    context 'and already have request to board' do
+      let(:ship) do
+        create(:ship).tap do |ship|
+          create(:ship_boarding_request, ship: ship, requester: person)
+        end
+      end
+
+      it 'renders 422' do
+        assert_response :unprocessable_entity
+      end
+    end
   end
 
   describe '#cancel_boarding_request' do
