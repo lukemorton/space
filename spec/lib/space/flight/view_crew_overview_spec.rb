@@ -13,10 +13,25 @@ RSpec.describe Space::Flight::ViewCrewOverview do
   end
 
   context 'when viewing flight controls' do
+    let(:boarding_request) do
+      instance_double(
+        'Space::Flight::Ship::BoardingRequest',
+        id: 1,
+        requester: instance_double('Space::Flight::Ship::BoardingRequest::Requester', name: 'Luke')
+      )
+    end
     let(:person) { instance_double('Space::Folk::Person', id: 1, name: 'Luke') }
-    let(:ship) { instance_double('Space::Flight::Ship', crew: [person], has_crew_member_id?: true, slug: 'endeavour') }
+    let(:ship) { instance_double('Space::Flight::Ship', boarding_requests: [boarding_request], crew: [person], has_crew_member_id?: true, slug: 'endeavour') }
 
     subject { use_case.view(ship.slug, person.id) }
+
+    it 'should have boarding requests' do
+      expect(subject.boarding_requests).to_not be_empty
+    end
+
+    it 'should have boarding requests with requester name' do
+      expect(subject.boarding_requests.first.requester.name).to eq('Luke')
+    end
 
     it 'should have crew' do
       expect(subject.crew).to eq(ship.crew)

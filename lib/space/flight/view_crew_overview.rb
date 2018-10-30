@@ -51,7 +51,11 @@ module Space
       end
 
       def build_boarding_requests(ship)
-        []
+        ship.boarding_requests do |boarding_request|
+          Response::BoardingRequest.new(
+            Response::BoardingRequest::Requester.new(boarding_request.requester.name)
+          )
+        end
       end
 
       def build_crew(ship)
