@@ -14,6 +14,7 @@ module Space
       def self.from_object(object)
         new(
           id: object.id,
+          boarding_requests: object.boarding_requests.map { |boarding_request| BoardingRequest.from_object(boarding_request) },
           crew: object.crew.map { |member| CrewMember.from_object(member) },
           dock: Dock.from_object(object.dock),
           fuel: object.fuel,
@@ -28,6 +29,7 @@ module Space
       end
 
       attr_accessor :id
+      attr_accessor :boarding_requests
       attr_accessor :crew
       attr_accessor :dock
       attr_accessor :fuel
@@ -36,6 +38,10 @@ module Space
       attr_accessor :slug
       attr_accessor :computer_references
 
+      def has_boarding_request_from_person?(person_id)
+        boarding_requests.any? { |boarding_request| boarding_request.requester_id == person_id }
+      end
+
       def has_crew_member_id?(person_id)
         crew_ids = crew.map(&:id)
         crew_ids.include?(person_id)
@@ -43,6 +49,20 @@ module Space
 
       def to_param
         slug.to_s
+      end
+
+      class BoardingRequest
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          new(
+            id: object.id,
+            requester_id: object.requester_id
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :requester_id
       end
 
       ComputerReferences = Struct.new(

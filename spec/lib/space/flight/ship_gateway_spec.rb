@@ -5,6 +5,10 @@ RSpec.describe Space::Flight::ShipGateway do
     instance_double('Person', id: 1, name: 'Luke')
   end
 
+  let(:ship_boarding_request_record) do
+    instance_double('ShipBoardingRequest', id: 1, requester_id: 1)
+  end
+
   let(:dock_record) do
     instance_double('Dock', id: 1, name: 'London Dock', slug: 'london-dock')
   end
@@ -19,6 +23,7 @@ RSpec.describe Space::Flight::ShipGateway do
     instance_double(
       'Ship',
       id: ship_record_id,
+      boarding_requests: [ship_boarding_request_record],
       crew: [person_record],
       dock: dock_record,
       fuel: 100,
@@ -55,6 +60,11 @@ RSpec.describe Space::Flight::ShipGateway do
 
     it 'can generate param from slug' do
       expect(ship.to_param).to eq(ship_record.slug)
+    end
+
+    it 'can check if person has requested to board' do
+      expect(ship.has_boarding_request_from_person?(person_record.id)).to be(true)
+      expect(ship.has_boarding_request_from_person?(0)).to be(false)
     end
 
     it 'can check if person is in crew' do
