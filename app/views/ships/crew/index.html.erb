@@ -1,7 +1,7 @@
 <%= render 'ships/shared/header' %>
 
 <ul>
-  <% @ship.crew.each do |crew_member| %>
+  <% @crew_overview.crew.each do |crew_member| %>
     <li><%= crew_member.name %></li>
   <% end %>
 </ul>
