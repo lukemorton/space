@@ -34,7 +34,7 @@ RSpec.describe Space::Flight::ViewCrewOverview do
     end
 
     it 'should have crew' do
-      expect(subject.crew).to eq(ship.crew)
+      expect(subject.crew).to_not be_empty
     end
 
     it 'should have crew names' do
