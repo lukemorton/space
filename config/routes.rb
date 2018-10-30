@@ -21,8 +21,9 @@ Rails.application.routes.draw do
   resources :people, only: [:new, :create]
 
   scope module: :actions do
-    post :board, controller: :flight
-    post :cancel_boarding_request, controller: :flight
+    post :request_to_board, controller: :requesting_to_board
+    post :cancel_boarding_request, controller: :requesting_to_board
+
     post :disembark, controller: :flight
     post :refuel, controller: :flight
     post :travel, controller: :flight

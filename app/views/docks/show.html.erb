@@ -45,7 +45,7 @@
                   <%= submit_tag 'Cancel request to board', class: 'btn btn-outline-danger' %>
                 <% end %>
               <% else %>
-                <%= bootstrap_form_with scope: :board, url: board_url do |f| %>
+                <%= bootstrap_form_with scope: :board, url: request_to_board_url do |f| %>
                   <%= f.hidden_field :ship_id, value: ship.id %>
                   <%= f.hidden_field :ship_slug, value: ship.slug %>
                   <%= f.hidden_field :dock_slug, value: @dock.slug %>
