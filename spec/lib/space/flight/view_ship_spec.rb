@@ -35,6 +35,10 @@ RSpec.describe Space::Flight::ViewShip do
       expect(subject.crew).to eq(ship.crew)
     end
 
+    it 'should have crew names' do
+      expect(subject.crew.first.name).to eq(ship.crew.first.name)
+    end
+
     it 'should have fuel' do
       expect(subject.fuel).to eq(ship.fuel)
     end
