@@ -4,7 +4,7 @@ RSpec.describe Space::Flight::RequestToBoard do
   context 'when requesting to board a ship' do
     let(:person) { instance_double('Space::Folk::Person', id: 1) }
     let(:ship_id) { 1 }
-    let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [], has_crew_member_id?: false) }
+    let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [], has_boarding_request_from_person?: false, has_crew_member_id?: false) }
     let(:ship_gateway) { instance_double('Space::Flight::ShipGateway', find: ship) }
     let(:ship_boarding_request_gateway) { instance_double('Space::Flight::ShipBoardingRequestGateway', create: nil) }
 
@@ -35,13 +35,21 @@ RSpec.describe Space::Flight::RequestToBoard do
     end
 
     context 'and person is part of crew' do
-      let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [person], has_crew_member_id?: true) }
+      let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [person], has_boarding_request_from_person?: false, has_crew_member_id?: true) }
 
       it { is_expected.to_not be_successful }
       it { is_expected.to be_rejected_as_already_in_crew }
 
       it 'disallows person to board' do
         expect(subject.errors).to_not be_empty
+      end
+    end
+
+    context 'and already have request to board' do
+      let(:ship) { instance_double('Space::Flight::Ship', id: ship_id, crew: [person], has_boarding_request_from_person?: true, has_crew_member_id?: false) }
+
+      it 'disallows person to board' do
+        expect{subject}.to raise_error(Space::Flight::AlreadyHasRequestToBoardError)
       end
     end
   end
