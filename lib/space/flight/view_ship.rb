@@ -9,7 +9,6 @@ module Space
       Response = Struct.new(
         :id,
         :computers,
-        :crew,
         :destinations,
         :fuel,
         :location,
@@ -40,7 +39,6 @@ module Space
         Response.new(
           ship.id,
           build_computers(ship),
-          ship.crew,
           build_destinations(ship),
           ship.fuel,
           ship.location,
