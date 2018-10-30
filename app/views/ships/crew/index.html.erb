@@ -1,7 +1,48 @@
 <%= render 'ships/shared/header' %>
 
-<ul>
-  <% @crew_overview.crew.each do |crew_member| %>
-    <li><%= crew_member.name %></li>
-  <% end %>
-</ul>
+<div class="row">
+  <div class="col-md-8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="border-top-0">Crew Member Name</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @crew_overview.crew.each do |crew_member| %>
+          <tr>
+            <td class="align-middle"><%= crew_member.name %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="border-top-0" width="50%">Boarding Requests</th>
+          <th class="border-top-0 text-right">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if @crew_overview.boarding_requests.empty? %>
+          <tr>
+            <td class="align-middle text-muted" colspan="2">No boarding requests</td>
+          </tr>
+        <% end %>
+
+        <% @crew_overview.boarding_requests.each do |boarding_request| %>
+          <tr>
+            <td class="align-middle"><%= boarding_request.requester.name %></td>
+            <td class="align-middle text-right">
+              <%= submit_tag 'Accept', class:'btn btn-outline-success' %>
+              <%= submit_tag 'Deny', class:'btn btn-outline-danger ml-3' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
