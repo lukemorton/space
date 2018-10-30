@@ -39,7 +39,7 @@ module Space
       attr_accessor :computer_references
 
       def has_boarding_request_from_person?(person_id)
-        boarding_requests.any? { |boarding_request| boarding_request.requester_id == person_id }
+        boarding_requests.any? { |boarding_request| boarding_request.requester.id == person_id }
       end
 
       def has_crew_member_id?(person_id)
@@ -57,12 +57,14 @@ module Space
         def self.from_object(object)
           new(
             id: object.id,
-            requester_id: object.requester_id
+            requester: Requester.new(object.requester.id, object.requester.name)
           )
         end
 
         attr_accessor :id
-        attr_accessor :requester_id
+        attr_accessor :requester
+
+        Requester = Struct.new(:id, :name)
       end
 
       ComputerReferences = Struct.new(

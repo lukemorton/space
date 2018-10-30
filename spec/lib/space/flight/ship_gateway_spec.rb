@@ -6,7 +6,7 @@ RSpec.describe Space::Flight::ShipGateway do
   end
 
   let(:ship_boarding_request_record) do
-    instance_double('ShipBoardingRequest', id: 1, requester_id: 1)
+    instance_double('ShipBoardingRequest', id: 1, requester: person_record)
   end
 
   let(:dock_record) do
@@ -70,6 +70,14 @@ RSpec.describe Space::Flight::ShipGateway do
     it 'can check if person is in crew' do
       expect(ship.has_crew_member_id?(person_record.id)).to be(true)
       expect(ship.has_crew_member_id?(0)).to be(false)
+    end
+
+    it 'has boarding requests' do
+      expect(ship.boarding_requests).to_not be_empty
+    end
+
+    it 'has boarding requests with requester name' do
+      expect(ship.boarding_requests.first.requester.name).to eq('Luke')
     end
 
     it 'has crew' do
