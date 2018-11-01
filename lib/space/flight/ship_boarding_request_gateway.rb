@@ -1,3 +1,5 @@
+require_relative 'ship_boarding_request'
+
 module Space
   module Flight
     class ShipBoardingRequestGateway
@@ -7,6 +9,11 @@ module Space
 
       def create(ship_id, person_id)
         ship_boarding_request_repository.create(ship_id: ship_id, requester_id: person_id)
+      end
+
+      def find(id)
+        boarding_request = ship_boarding_request_repository.find_by(id: id)
+        Space::Flight::ShipBoardingRequest.from_object(boarding_request) unless boarding_request.nil?
       end
 
       def cancel(id, person_id)
