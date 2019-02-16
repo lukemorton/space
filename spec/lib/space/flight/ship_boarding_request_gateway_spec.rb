@@ -3,7 +3,7 @@ require_relative '../../../../lib/space/flight/ship_boarding_request_gateway'
 RSpec.describe Space::Flight::ShipBoardingRequestGateway do
   let(:person_record) { instance_double('Person', id: 1) }
   let(:ship_record_id) { 1 }
-  let(:ship_record) { instance_double('Ship', id: ship_record_id) }
+  let(:ship_record) { instance_double('Ship', id: ship_record_id, crew: []) }
 
   context 'when creating a ship boarding request record' do
     let(:ship_boarding_request_repository) { class_double('ShipBoardingRequest', create: true) }
@@ -25,7 +25,7 @@ RSpec.describe Space::Flight::ShipBoardingRequestGateway do
 
   context 'when finding a ship boarding request record' do
     let(:ship_boarding_request_record_id) { 1 }
-    let(:ship_boarding_request_record) { instance_double('ShipBoardingRequest', id: ship_boarding_request_record_id, ship: instance_double('Ship').as_null_object, requester: instance_double('Person', id: 1, name: 'Luke')) }
+    let(:ship_boarding_request_record) { instance_double('ShipBoardingRequest', id: ship_boarding_request_record_id, ship: ship_record, requester: instance_double('Person', id: 1, name: 'Luke')) }
 
     let(:ship_boarding_request_repository) do
       class_double('ShipBoardingRequest').tap do |double|
@@ -43,8 +43,12 @@ RSpec.describe Space::Flight::ShipBoardingRequestGateway do
       expect(subject.id).to eq(ship_boarding_request_record_id)
     end
 
-    it 'has ship' do
-      expect(subject.ship).to be_a(Space::Flight::Ship)
+    it 'has ship with id' do
+      expect(subject.ship.id).to eq(ship_record_id)
+    end
+
+    it 'has ship that can check if person is in crew' do
+      expect(subject.ship).to respond_to(:has_crew_member_id?)
     end
 
     it 'has requester with id' do

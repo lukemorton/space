@@ -66,18 +66,18 @@
 
     <div class="collapse" id="navbarNavDropdown">
       <div class="container">
-      <div class="row">
-        <nav class="navbar bg-light ml-auto p-0" style="font-size: .9em">
-          <% if user_signed_in? %>
-            <%= link_to 'Help', help_index_path, class: 'nav-item nav-link ml-auto' %>
-            <%= link_to 'Edit Account', edit_user_registration_path, class: 'nav-item nav-link' %>
-            <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
-          <% else %>
-            <%= link_to 'Log in', new_user_session_path, class: 'nav-item nav-link ml-auto' %>
-            <%= link_to 'Sign up for free', new_user_registration_path, class: 'nav-item btn btn-outline-primary ml-2' %>
-          <% end %>
-        </nav>
-      </div>
+        <div class="row">
+          <nav class="navbar bg-light ml-auto p-0" style="font-size: .9em">
+            <% if user_signed_in? %>
+              <%= link_to 'Help', help_index_path, class: 'nav-item nav-link ml-auto' %>
+              <%= link_to 'Edit Account', edit_user_registration_path, class: 'nav-item nav-link' %>
+              <%= link_to 'Log out', destroy_user_session_path, class: 'nav-item nav-link', method: :delete %>
+            <% else %>
+              <%= link_to 'Log in', new_user_session_path, class: 'nav-item nav-link ml-auto' %>
+              <%= link_to 'Sign up for free', new_user_registration_path, class: 'nav-item btn btn-outline-primary ml-2' %>
+            <% end %>
+          </nav>
+        </div>
       </div>
     </div>
 

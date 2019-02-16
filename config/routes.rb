@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     post :request_to_board, controller: :requesting_to_board
     post :cancel_boarding_request, controller: :requesting_to_board
 
+    post :accept, as: :accept_boarding_request, controller: :moderating_boarding_requests
+    post :reject, as: :reject_boarding_request, controller: :moderating_boarding_requests
+
     post :disembark, controller: :flight
     post :refuel, controller: :flight
     post :travel, controller: :flight

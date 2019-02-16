@@ -20,6 +20,10 @@ module Space
         ship_boarding_request_repository.where(id: id, requester_id: person_id).delete_all > 0
       end
 
+      def delete(id)
+        ship_boarding_request_repository.delete(id)
+      end
+
       private
 
       attr_reader :ship_boarding_request_repository

@@ -4,5 +4,6 @@ FactoryBot.define do
   factory :ship_boarding_request do
     id { FactoryBot.generate(:random_id) }
     ship
+    requester { create(:person) }
   end
 end

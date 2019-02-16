@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :redirect_if_user_does_not_have_person
   helper_method :current_person
-  rescue_from StandardError, with: :render_internal_server_error
+  rescue_from StandardError, with: :render_internal_server_error unless Rails.env.test?
 
   private
 

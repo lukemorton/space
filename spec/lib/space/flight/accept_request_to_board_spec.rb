@@ -4,11 +4,11 @@ RSpec.describe Space::Flight::AcceptRequestToBoard do
   context 'when accepting request to board a ship' do
     let(:crew_member) { instance_double('Space::Folk::Person', id: 1) }
     let(:requester) { instance_double('Space::Folk::Person', id: 2) }
-    let(:ship) { instance_double('Space::Flight::Ship::BoardingRequest::Ship', has_crew_member_id?: true) }
+    let(:ship) { instance_double('Space::Flight::BoardingRequest::Ship', id: 1, has_crew_member_id?: true) }
     let(:ship_boarding_request_id) { 1 }
     let(:ship_boarding_request) do
       instance_double(
-        'Space::Flight::Ship::BoardingRequest',
+        'Space::Flight::BoardingRequest',
         id: ship_boarding_request_id,
         ship: ship,
         requester: requester
@@ -42,7 +42,7 @@ RSpec.describe Space::Flight::AcceptRequestToBoard do
 
     it 'should add requester to crew' do
       subject
-      expect(ship_gateway).to have_received(:add_crew_member).with(requester.id)
+      expect(ship_gateway).to have_received(:add_crew_member).with(ship.id, requester.id)
     end
 
     context 'when ship boarding request unknown' do

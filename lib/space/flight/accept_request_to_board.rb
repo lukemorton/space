@@ -17,7 +17,7 @@ module Space
         raise PersonNotInCrewError.new unless boarding_request.ship.has_crew_member_id?(person_id)
 
         ship_boarding_request_gateway.delete(ship_boarding_request_id)
-        ship_gateway.add_crew_member(boarding_request.requester.id)
+        ship_gateway.add_crew_member(boarding_request.ship.id, boarding_request.requester.id)
         Response.new(true)
       end
 

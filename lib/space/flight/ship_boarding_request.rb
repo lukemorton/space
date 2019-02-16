@@ -20,7 +20,24 @@ module Space
 
       Requester = Struct.new(:id, :name)
 
-      class Ship < Space::Flight::Ship; end
+      class Ship
+        include ActiveModel::Model
+
+        def self.from_object(object)
+          new(
+            id: object.id,
+            crew: object.crew
+          )
+        end
+
+        attr_accessor :id
+        attr_accessor :crew
+
+        def has_crew_member_id?(person_id)
+          crew_ids = crew.map(&:id)
+          crew_ids.include?(person_id)
+        end
+      end
     end
   end
 end

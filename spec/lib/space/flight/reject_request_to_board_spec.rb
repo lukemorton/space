@@ -4,11 +4,11 @@ RSpec.describe Space::Flight::RejectRequestToBoard do
   context 'when rejecting request to board a ship' do
     let(:crew_member) { instance_double('Space::Folk::Person', id: 1) }
     let(:requester) { instance_double('Space::Folk::Person', id: 2) }
-    let(:ship) { instance_double('Space::Flight::Ship::BoardingRequest::Ship', has_crew_member_id?: true) }
+    let(:ship) { instance_double('Space::Flight::BoardingRequest::Ship', has_crew_member_id?: true) }
     let(:ship_boarding_request_id) { 1 }
     let(:ship_boarding_request) do
       instance_double(
-        'Space::Flight::Ship::BoardingRequest',
+        'Space::Flight::BoardingRequest',
         id: ship_boarding_request_id,
         ship: ship,
         requester: requester
